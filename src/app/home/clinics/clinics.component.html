@@ -1,0 +1,30 @@
+<app-data-table [url]="url" [headers]="tableColumns" [actionTemplate]="actionTemplate" [searchTemplate]="searchTemplate" 
+[columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #actionTemplate let-id>
+    <div class="btn px-2 text-primary fs-2">
+        <i class="fa-solid fa-pen-to-square" title="Edit" (click)="editClinic(id)"></i>
+    </div>
+    <div class="btn px-1 text-danger fs-3 ps-0">
+        <i class="fa-solid fa-trash" title="Delete" (click)="delete(id)"></i>
+    </div>
+</ng-template>  
+
+<ng-template #searchTemplate let-onInputChange="onInputChange">
+    <div class="d-flex justify-content-between mb-5">
+        <div class="mb-3 mb-sm-0">
+            <div class="position-relative d-flex width-320">
+                <span class="position-absolute d-flex align-items-center top-0 bottom-0 left-0 text-gray-600 ms-3">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input class="form-control search-box ps-8" type="search" placeholder="Search" aria-label="Search" (input)="onInputChange($event.target)">
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #contactNumberTemplate let-item>
+    +{{item.region_code}} {{item.phone}}
+</ng-template>

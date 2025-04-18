@@ -1,0 +1,138 @@
+<div class="contact-page">
+    <app-hero-section [header]="'Contact Us'"></app-hero-section>
+    <section class="contact-section p-t-100 p-b-100" [style.background-color]="data().front_color">
+        <div class="container">
+            <div class="bg-white rounded-20 box-shadow main-box">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 d-none d-md-block">
+                        <div class="card bg-light contect-information">
+                            <div class="card-body">
+                                <h4 class="text-dark mb-4 pb-2">Contact Us For Any Information</h4>
+                                <div class="text-dark">
+                                    <h5 class="mb-3">Location</h5>
+                                    <p class="paragraph text-dark">{{data().address_one}}
+                                </div>
+                                <div class="text-dark">
+                                    <h5 class="mb-3">Email Phone</h5>
+                                    <a href="mailto:{{data().email}}" class="text-decoration-none text-dark d-block">
+                                        {{data().email}}
+                                    </a>
+                                    <a href="tel:+{{data().region_code}} {{data().contact_no}}" class="text-decoration-none text-dark d-block">
+                                        + {{data().region_code}} {{data().contact_no}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 ps-md-0">
+                        <form [formGroup]="enquiryForm" (ngSubmit)="sendEnquiry(enquiryForm.value, enquiryForm.valid)">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="contact-form__input-block">
+                                        <input class="form-control" id="name" placeholder="Name" formControlName="name" name="name" type="text">
+                                    </div>
+                                    @if (!enquiryForm.controls['name'].valid && (!enquiryForm.controls['name'].pristine || isSubmitted)) {
+                                        <small id="nameErrorBlock" class="text-sm text-danger" role="alert">
+                                            {{'This field is required'}}
+                                        </small>
+                                    }
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="contact-form__input-block">
+                                        <input class="form-control" id="email" formControlName="email" placeholder="Email" required="" name="email" type="email">
+                                    </div>
+                                    @if (!enquiryForm.controls['email'].valid && (!enquiryForm.controls['email'].pristine || isSubmitted)) {
+                                        <small id="emailErrorBlock" class="text-danger" role="alert">
+                                            {{'Please enter valid email follow format:example@domain.com'}}
+                                        </small>
+                                    }
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="contact-form__input-block">
+                                        <input class="form-control" placeholder="Phone" formControlName="phone" name="phone" type="tel">
+                                    </div>
+                                    @if (!enquiryForm.controls['phone'].valid && (!enquiryForm.controls['phone'].pristine || isSubmitted)) {
+                                        <small id="phoneErrorBlock" class="text-danger" role="alert">
+                                            {{'Only number allowed'}}
+                                        </small>
+                                    }
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="contact-form__input-block">
+                                        <input class="form-control" id="subject" placeholder="Subject" formControlName="subject" type="text">
+                                    </div>
+                                    @if (!enquiryForm.controls['subject'].valid && (!enquiryForm.controls['subject'].pristine || isSubmitted)) {
+                                        <small id="subjectErrorBlock" class="text-danger" role="alert">
+                                            {{'This field is required'}}
+                                        </small>
+                                    }
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="contact-form__input-block">
+                                        <textarea class="form-control form-textarea" id="message" placeholder="Message" formControlName="message" name="message" cols="50" rows="10"></textarea>
+                                    </div>
+                                    @if (!enquiryForm.controls['message'].valid && (!enquiryForm.controls['message'].pristine || isSubmitted)) {
+                                        <small id="messageErrorBlock" class="text-danger" role="alert">
+                                            {{'This field is required'}}
+                                        </small>
+                                    }
+                                </div>
+                                <div class="col-lg-12 text-end mt-3">
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                                        Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="information-section p-t-100 p-b-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-4 col-md-6 d-flex align-items-stretch">
+                    <div class="card mx-lg-2 flex-fill">
+                        <div class="card-body d-flex flex-column">
+                            <div class="contact-icon-box d-flex align-items-center justify-content-center mb-4">
+                                <i class="fa-solid fa-phone text-primary fs-3"></i>
+                            </div>
+                            <h4 class="mb-3 pt-2">Contact Number</h4>
+                            <a href="tel:+{{data().region_code}} {{data().contact_no}}" class="text-decoration-none text-dark d-block">
+                                + {{data().region_code}} {{data().contact_no}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-md-0 mt-4">
+                    <div class="card mx-lg-2 flex-fill">
+                        <div class="card-body d-flex flex-column">
+                            <div class="contact-icon-box d-flex align-items-center justify-content-center mb-4">
+                                <i class="fa-solid fa-envelope text-primary fs-3"></i>
+                            </div>
+                            <h4 class="mb-3 pt-2">Email Address</h4>
+                            <a href="mailto:{{data().email}}" class="text-decoration-none text-dark d-block">
+                                {{data().email}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-xl-0 mt-4 pt-xl-0 pt-lg-3">
+                    <div class="card mx-lg-2 flex-fill">
+                        <div class="card-body d-flex flex-column">
+                            <div class="contact-icon-box d-flex align-items-center justify-content-center mb-4">
+                                <i class="fa-solid fa-location-dot text-primary fs-3"></i>
+                            </div>
+                            <h4 class="mb-3 pt-2">Address</h4>
+                            <p class="paragraph mb-0">
+                                {{data().address_one}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

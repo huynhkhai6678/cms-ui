@@ -1,0 +1,86 @@
+    <div class="container-fluid d-flex align-items-stretch justify-content-between px-0">
+        <header class="d-flex align-items-center justify-content-between flex-grow-1 header px-3 px-xl-0">
+            <button type="button" class="btn px-0 aside-menu-container__aside-menubar d-block d-xl-none sidebar-btn">
+                <i class="fa-solid fa-bars fs-1"></i>
+            </button>
+            <nav class="navbar navbar-expand-xl navbar-light top-navbar d-xl-flex d-block px-3 px-xl-0 py-4 py-xl-0 " id="nav-header">
+                <div class="container-fluid">
+                    <div class="navbar-collapse">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            @for(route of headerRoutes();track route.name) { 
+                                <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 ">
+                                    <a class="nav-link p-0 active" [routerLink]="route.link" routerLinkActive="active">
+                                        {{route.name}}
+                                    </a>
+                                </li> 
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <ul class="nav align-items-center">     
+                <li class="px-sm-3 px-2">
+                    <i role="button" class="fa-solid text-primary fs-2 {{iconClass()}}" (click)="toggleTheme()"></i>
+                </li>
+                            
+                <li class="px-sm-3 px-2">
+                    <div class="dropdown d-flex align-items-center py-4">
+                        <div class="btn-group" dropdown placement="bottom right">
+                            <button id="profile-button" class="btn" dropdownToggle type="button" aria-controls="dropdown-basic">
+                                <div class="image image-circle image-mini" >
+                                    <img class="img-fluid" alt="img-fluid" src="https://cms-testing.myclnq.com/uploads/31/1.png">
+                                </div>
+                                MyCLNQ Super Admin
+                            </button>
+                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right py-7 pb-4 my-2" role="menu" aria-labelledby="button-basic">
+                                <div class="text-center border-bottom pb-5">
+                                    <div class="image image-circle image-tiny mb-5">
+                                        <img class="img-fluid" alt="img-fluid" src="https://cms-testing.myclnq.com/uploads/31/1.png">
+                                    </div>
+                                    <h3 class="text-gray-900">MyCLNQ Super Admin</h3>
+                                    <h4 class="mb-0 fw-400 fs-6">admin.com</h4>
+                                </div>
+                                <li role="menuitem">
+                                    <a id="accountSetting" class="dropdown-item text-gray-900" href="javascript:void(0)">
+                                        <span class="dropdown-icon me-4 text-gray-600">
+                                            <i class="fa-solid fa-user"></i>
+                                        </span>
+                                        Account Settings
+                                    </a>
+                                </li>
+                                <li role="menuitem">
+                                    <a class="dropdown-item text-gray-900" id="changePassword" href="javascript:void(0)">
+                                        <span class="dropdown-icon me-4 text-gray-600">
+                                            <i class="fa-solid fa-lock"></i>
+                                        </span>
+                                        Change Password
+                                    </a>
+                                </li>
+                                <li role="menuitem">
+                                    <a class="dropdown-item text-gray-900" id="changeLanguage" href="javascript:void(0)">
+                                       <span class="dropdown-icon me-4 text-gray-600">
+                                            <i class="fa-solid fa-globe"></i>
+                                       </span>
+                                        Change Language
+                                    </a>
+                                </li>
+                                <li role="menuitem">
+                                    <a class="dropdown-item text-gray-900 d-flex" href="javascript:void(0)">
+                                        <span class="dropdown-icon me-4 text-gray-600">
+                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                        </span>
+                                        Sign Out
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button" class="btn px-0 d-block d-xl-none header-btn pb-2">
+                        <i class="fa-solid fa-bars fs-1"></i>
+                    </button>
+                </li>
+            </ul>
+        </header>
+    </div>

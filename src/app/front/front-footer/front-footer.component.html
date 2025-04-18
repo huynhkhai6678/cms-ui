@@ -1,0 +1,65 @@
+<footer class="" [style.background-color]="setting().front_color">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 order-1 order-lg-0">
+                <h5 class="text-white mb-4 pb-1">Contact Us</h5>
+                <div class="footer-info">
+                    <div class="d-flex align-items-center footer-info__block mb-3 pb-1">
+                        <div class="footer-info__footer-icon fs-5 d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-phone text-primary "></i>
+                        </div>
+                        <a href="tel:+{{setting().region_code}} {{setting().contact_no}}" class="text-decoration-none text-white footer-info__contact-label">
+                            +{{setting().region_code}} {{setting().contact_no}}
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center footer-info__block mb-3 pb-1">
+                        <div class="footer-info__footer-icon fs-5 d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-envelope text-primary "></i>
+                        </div>
+                        <a href="mailto:{{setting().email}}" class="text-decoration-none text-white footer-info__contact-label">
+                            {{setting().email}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 order-2 order-lg-2">
+                <h5 class="text-white mb-4 pb-1">{{'messages.web.quick_links' | translate}}</h5>
+                <ul>
+                    <li>
+                        <a routerLink="medical-about-us" class="text-decoration-none  mb-2 d-block fw-light" routerLinkActive #rla1="routerLinkActive" [ngClass]="rla1.isActive ? 'text-black' : 'text-white'">About Us</a>
+                    </li>
+                    <li>
+                        <a routerLink="/medical-contact" class="text-decoration-none  mb-2 d-block fw-light" routerLinkActive #rla2="routerLinkActive" [ngClass]="rla2.isActive ? 'text-black' : 'text-white'">Contact Us</a>
+                    </li>
+                    <li>
+                        <a routerLink="faqs" class="text-decoration-none mb-2 d-block fw-light" routerLinkActive #rla3="routerLinkActive" [ngClass]="rla3.isActive ? 'text-black' : 'text-white'">FAQs</a>
+                    </li>
+                    <li>
+                        <a routerLink="term-conditions" class="text-decoration-none mb-2 d-block fw-light" routerLinkActive #rla4="routerLinkActive" [ngClass]="rla4.isActive ? 'text-black' : 'text-white'">Terms & Conditions</a>
+                    </li>
+                    <li>
+                        <a routerLink="privacy-policy" class="text-decoration-none mb-2 d-block fw-light" routerLinkActive #rla5="routerLinkActive" [ngClass]="rla5.isActive ? 'text-black' : 'text-white'">Privacy Policy</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-12 order-0 order-lg-3 mb-4 mb-lg-0">
+                <h5 class="text-white mb-4 pb-1">{{'messages.web.subscribe' | translate}}</h5>
+                <div class="footer-subcribe">
+                    <div *ngIf="showMessage" class="alert alert-success" role="alert" >
+                        {{'Subscribe created successfully'}}
+                    </div>
+                    <div class="input-group mb-md-3">
+                        <input class="form-control" id="email" placeholder="Enter Your Email" required="" name="email" type="email" [(ngModel)]="emailSubcribe">
+                        <button type="submit" class="input-group-text" id="basic-addon2" (click)="subscribe()">
+                            <i class="fa-solid fa-paper-plane text-primary"></i>
+                        </button>
+                    </div>
+                    <small *ngIf="errorEmail" class="text-white">Please input correct email</small>
+                </div>
+            </div>
+            <div class="col-12 order-4 border-top-primary text-center mt-lg-5 mt-4">
+                <p class="text-white fw-light py-4 mb-0">{{'messages.web.all_rights_reserved' | translate}} © 2025 {{setting().clinic_name}}</p>
+            </div>
+        </div>
+    </div>
+</footer>

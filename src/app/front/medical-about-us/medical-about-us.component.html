@@ -1,0 +1,13 @@
+<app-hero-section [header]="'About Us'"></app-hero-section>
+<app-about-us [setting]="setting()" [landingPage]="false"></app-about-us>
+<app-service-counter></app-service-counter>
+<section class="our-doctors-section bg-secondary p-t-100">
+    <div class="container">
+        <div class="text-center mb-5 pb-1">
+            <h5 class="text-primary top-heading fs-6 mb-3">{{'messages.web.our_doctor' | translate}}</h5>
+            <h2 class="pb-2 pb-5">{{'messages.web.Meet_best_doctors' | translate}}</h2>
+        </div>
+    </div>
+    <app-front-doctor [doctors]="doctors()"></app-front-doctor>
+</section>
+<app-testimonials></app-testimonials>

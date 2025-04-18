@@ -1,0 +1,32 @@
+<div id="sidebar" class="aside-menu-container">
+    <div class="aside-menu-container__aside-logo flex-column-auto">
+        <a routerLink="/home" class="text-decoration-none sidebar-logo">
+            <img src="https://cms.myclnq.com/uploads/151/image-8.png" alt="Logo" class="object-cover sidebar-app-logo" style="width: 170px; max-width: 180px;">
+        </a>
+        <button type="button" class="btn px-0 aside-menu-container__aside-menubar d-lg-block d-none sidebar-btn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+    <div class="d-flex position-relative aside-menu-container__aside-search search-control py-3 mt-1">
+        <div class="position-relative w-100">
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="menuSearch" [(ngModel)]="search">
+            <span class="aside-menu-container__search-icon position-absolute d-flex align-items-center top-0 bottom-0">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+        </div>
+    </div>
+    <div class="sidebar-scrolling">
+        <ul class="aside-menu-container__aside-menu nav flex-column">
+            @for(route of filteredRoutes();track route.name) { 
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link d-flex align-items-center py-4" aria-current="page" [routerLink]="route.link">
+                        <span class="aside-menu-icon pe-3">
+                            <i class="{{route.icon}}"></i>
+                        </span>
+                        <span class="aside-menu-title">{{route.name}}</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

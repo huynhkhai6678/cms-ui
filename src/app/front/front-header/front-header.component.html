@@ -1,0 +1,67 @@
+<header class="position-relative header front-header {{headerClass()}}">
+    <div class="container container-logo-fix">
+        <div class="row align-items-center">
+            <div class="col-lg-1 col-4">
+                <a href="#!" class="header-logo">
+                    <img src="https://cms.myclnq.com/uploads/151/image-8.png" alt="Infy Care" class="object-cover front-app-logo" loading="lazy">
+                </a>
+            </div>
+            <div class="col-lg-11 col-8">
+                <nav class="navbar navbar-expand-lg navbar-light justify-content-end py-0">
+                    <button class="navbar-toggler border-0 p-0" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                        <ul class="navbar-nav align-items-center py-2 py-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link " routerLink="" routerLinkActive="active">{{'messages.web.home' | translate}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " routerLink="/medical-doctors" routerLinkActive="active">{{'messages.web.our_team' | translate}}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " routerLink="/medical-services" routerLinkActive="active">{{'messages.web.services' | translate}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " routerLink="/medical-about-us" routerLinkActive="active">{{'messages.web.about_us' | translate}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/medical-contact" routerLinkActive="active">{{'messages.web.contact_us' | translate}}</a>
+                            </li>
+                            <div class="btn-group" dropdown>
+                                <a href="javascript:void(0)" dropdownToggle type="button" class="nav-link" aria-controls="dropdown-basic"> 
+                                    <i class="fas fa-language me-1"></i>
+                                    {{currentLanguage()}}
+                                </a>
+                                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                                    @for(lang of languages; track lang.name) {
+                                        <li class="d-flex languageSelection language-padding ">
+                                            <a href="javascript:void(0)" class="text-decoration-none" (click)="setLanguage(lang.code)">
+                                                <img class="rounded-1 ms-2 me-2 w-20px" 
+                                                    src="{{lang.flag}}">
+                                                <span class="language-color">{{lang.name}}</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </ul>
+                        <div class="text-lg-end header-btn-grp ms-xxl-5 ms-lg-3">
+                            <a routerLink="login"
+                                class="btn btn-outline-primary me-xxl-3 me-2 mb-3 mb-lg-0">
+                                {{'messages.web.login' | translate}}
+                            </a>
+                            <a routerLink="/medical-contact"
+                                class="btn btn-primary mb-3 mb-lg-0">
+                                {{'messages.web.book_an_appointment' | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

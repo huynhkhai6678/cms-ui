@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row justify-content-center">
+        @for(doctor of doctors; track doctor.name) {
+            <div class="col-xl-4 col-md-6 our-team-block d-flex align-items-stretch">
+                <div class="card mx-lg-2 flex-fill">
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="card-image mb-4 rounded-circle">
+                            <img src="{{doctor.avatar}}" alt="Infy Care"
+                                class="img-fluid rounded-circle object-image-cover" loading="lazy">
+                        </div>
+                        <h4 class="text-primary">{{doctor.name}}</h4>
+                        <label class="designation-label pb-4 mb-3 d-block">
+                            {{doctor.specialization}}
+                        </label>
+                        <ul class="social-media d-flex justify-content-center">
+                        </ul>
+                        <a routerLink="/medical-contact"
+                            class="doctor-appointment-btn btn btn-primary mt-auto align-self-center">
+                            <span>{{'messages.web.book_an_appointment' | translate}}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

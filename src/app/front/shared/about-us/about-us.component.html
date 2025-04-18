@@ -1,0 +1,49 @@
+<section class="about-section p-b-100" [style.background-color]="landingPage ? '#ffffff' : setting.front_color">
+    <div class="container">
+        <div class="row align-items-center flex-column-reverse flex-xl-row">
+            <div class="col-xxl-6 col-xl-5 after-rectangle-shape position-relative about-left-content left-shape">
+                <div class="row position-relative z-index-1">
+                    <div class="col-xl-6 col-md-3 about-block">
+                        <div class="about-image-box rounded-20 bg-white">
+                            <img src="https://cms.myclnq.com/uploads/49/2.png" alt="About" class="rounded-20" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-3 about-block">
+                        <div class="about-image-box rounded-20 bg-white">
+                            <img src="https://cms.myclnq.com/uploads/48/3.png" alt="About" class="rounded-20" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-3 about-block">
+                        <div class="about-content-box rounded-20 bg-white d-flex align-items-center justify-content-center h-100">
+                            <div class="text-center">
+                                <h2 class="number-big text-dark">{{setting.about_experience}}</h2>
+                                <p class="mb-0">{{'messages.web.year_experience' | translate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-3 about-block">
+                        <div class="about-image-box bg-white rounded-20">
+                            <img src="https://cms-testing.myclnq.com/uploads/179/lucas-vasques-9vnACvX2748-unsplash.jpg" alt="About" class="rounded-20" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-6 col-xl-7">
+                <div class="about-right-content mb-md-5 mb-4 mb-xl-0 text-center text-xl-start">
+                    <h5 class="top-heading fs-6 mb-3" [ngClass]="landingPage ? 'text-primary' : 'text-dark'">{{'messages.web.about_us' | translate}}</h5>
+                    <h2 class="pb-2" [ngClass]="landingPage ? '' : 'text-light'">{{setting.about_title}}</h2>
+                    <p class="paragraph pb-1" [ngClass]="landingPage ? '' : 'text-light'">
+                        {{setting.about_short_description}}
+                    </p>
+                    <ul class="d-flex ps-0 mb-4 pb-2 justify-content-center justify-content-xl-start flex-wrap">
+                        <li class="mb-2">{{'messages.web.emergency_help' | translate}}</li>
+                        <li class="mb-2">{{'messages.web.qualified_doctors' | translate}}</li>
+                        <li class="mb-2">{{'messages.web.best_professionals' | translate}}</li>
+                        <li class="mb-2">{{'messages.web.medical_treatment' | translate}}</li>
+                    </ul>
+                    <a routerLink="/medical-contact" class="btn btn-primary ">{{'messages.web.contact_us' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

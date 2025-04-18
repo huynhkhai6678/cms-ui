@@ -1,0 +1,27 @@
+<div class="our-faqs-page">
+    <app-hero-section [header]="'FAQs'"></app-hero-section>
+    <section class="our-faqs-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                @for(faq of faqs(); track faq.id) {
+                    <div class="col-lg-6">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" (click)="setAccordian(faq.id)">
+                                <button class="accordion-button"  [ngClass]="collapseItem() !== faq.id ? 'collapsed' : 'custom-class'" type="button" data-id="1" data-bs-toggle="collapse" style="box-shadow: none;">
+                                    {{faq.question}}
+                                </button>
+                            </h2>
+                            <div [ngClass]="collapseItem() !== faq.id ? 'hide' : 'show'" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <p class="mb-0">
+                                        {{faq.answer}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>
