@@ -21,6 +21,11 @@
                 <input class="form-control search-box ps-8" type="search" placeholder="Search" aria-label="Search" (input)="onInputChange($event.target)">
             </div>
         </div>
+        <div>
+            <a href="javascript:void(0)" type="button" class="btn btn-primary ms-auto" (click)="openCreateClinic()">
+                {{'messages.clinics.add_clinic' | translate}}
+            </a>
+        </div>
     </div>
 </ng-template>
 

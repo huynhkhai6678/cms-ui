@@ -1,20 +1,29 @@
 import { AfterViewInit, Component, computed, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { ApiService } from '../../services/api.service';
+import { BsModalRef, BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { ClinicModalComponent } from './clinic-modal/clinic-modal.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-clinics',
   imports: [
-    DataTableComponent
+    DataTableComponent,
+    ModalModule,
+    TranslatePipe
+  ],
+  providers: [
+      BsModalService
   ],
   standalone: true,
   templateUrl: './clinics.component.html',
   styleUrl: './clinics.component.scss'
 })
 export class ClinicsComponent implements AfterViewInit { 
-  url = '/clinics';
+  url = 'clinics';
   @ViewChild('contactNumberTemplate') contactNumberTemplate!: TemplateRef<any> ;
   columnCustomTemplates : {[key: string]: any } = {};
+  bsModalRef?: BsModalRef;
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
@@ -29,6 +38,7 @@ export class ClinicsComponent implements AfterViewInit {
 
   constructor(
     public apiService: ApiService,
+    private modalService: BsModalService,
   ) {
 
   }
@@ -43,5 +53,11 @@ export class ClinicsComponent implements AfterViewInit {
 
   delete(id: number) {
     console.log(id);
+  }
+
+  openCreateClinic() {
+    this.bsModalRef = this.modalService.show(ClinicModalComponent, { class: 'modal-lg', initialState: { 
+      title: 'messages.clinics.add_clinic'
+    }});
   }
 }

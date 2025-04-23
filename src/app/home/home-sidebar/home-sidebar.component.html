@@ -1,9 +1,9 @@
-<div id="sidebar" class="aside-menu-container">
+<div id="sidebar" class="aside-menu-container" [class.collapsed-menu]="collapse()">
     <div class="aside-menu-container__aside-logo flex-column-auto">
         <a routerLink="/home" class="text-decoration-none sidebar-logo">
             <img src="https://cms.myclnq.com/uploads/151/image-8.png" alt="Logo" class="object-cover sidebar-app-logo" style="width: 170px; max-width: 180px;">
         </a>
-        <button type="button" class="btn px-0 aside-menu-container__aside-menubar d-lg-block d-none sidebar-btn">
+        <button type="button" class="btn px-0 aside-menu-container__aside-menubar d-lg-block d-none sidebar-btn" (click)="collapseMenu()">
             <i class="fa-solid fa-bars"></i>
         </button>
     </div>

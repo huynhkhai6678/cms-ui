@@ -320,6 +320,7 @@
     "all_columns": "All Columns",
     "brand_name": "Supplier Name",
     "medicine_brands": "Suppliers",
+    "this_field": "This field is required.",
     "web": {
       "enter_your_email": "Enter Your Email",
       "emergency_help": "Emergency Help",

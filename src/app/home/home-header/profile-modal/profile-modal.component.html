@@ -1,0 +1,127 @@
+<div class="modal-header">
+    <h3>{{ 'messages.user.edit_profile' | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<form id="profileForm" [formGroup]="profileForm" (ngSubmit)="submit(profileForm.valid, profileForm.value)">
+    <div class="modal-body">
+        <div class="row mb-5">
+            <div class="col-lg-4">
+                <label for="exampleInputImage" class="form-label">{{ 'messages.patient.profile' | translate }}:</label>
+            </div>
+            <div class="col-lg-8">
+                <div class="mb-3" io-image-input="true">
+                    <app-image-upload formControlName="avatar"></app-image-upload>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <label class="col-lg-4 form-label required">{{ 'messages.patient.full_name' | translate }}:</label>
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-6 mb-5">
+                        <input id="first_name" class="form-control" placeholder="{{ 'messages.patient.first_name' | translate }}" required="" name="first_name" type="text" formControlName="first_name">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <input id="last_name" class="form-control" placeholder="{{ 'messages.patient.last_name' | translate }}" required="" name="last_name" type="text" formControlName="last_name">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <label class="col-lg-4 form-label required">{{ 'messages.patient.email' | translate }}:</label>
+            <div class="col-lg-8">
+                <input id="email" class="form-control" placeholder="{{ 'messages.patient.email' | translate }}" required="" name="email" type="email" formControlName="email">
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <label class="col-lg-4 form-label required">{{ 'messages.user.time_zone' | translate }}:</label>
+            <div class="col-lg-8">
+                <select2 [data]="TIMEZONES" formControlName="time_zone" placeholder="{{ 'messages.user.time_zone' | translate }}"></select2>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-lg-4">
+                <label class="col-lg-4 form-label required">{{ 'messages.user.contact_number' | translate }}:</label>
+            </div>
+            <div class="col-lg-8">
+                <app-phone-input formControlName="phone"></app-phone-input>
+                    @if (profileForm.controls['phone'].invalid && (profileForm.controls['phone'].touched || isSubmitted)) {
+                        <div class="invalid-feedback d-block">
+                          @if (profileForm.controls['phone'].errors?.['required']) {
+                            {{ 'messages.this_field' | translate }}
+                          }
+                      
+                          @if (profileForm.controls['phone'].errors?.['validatePhoneNumber']) {
+                            {{ 'Invalid phone' | translate }}
+                          }
+                        </div>
+                    }
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <label for="gender" class="col-lg-4 form-label required">{{ 'messages.user.gender' | translate }}:</label>
+            <div class="col-lg-8">
+                <span class="is-valid">
+                    <input class="form-check-input" type="radio" name="gender" value="1" checked="">
+                    <label class="form-label">{{ 'messages.patient.male' | translate }}</label>&nbsp;&nbsp;
+                    <input class="form-check-input" type="radio" name="gender" value="2">
+                    <label class="form-label">{{ 'messages.patient.female' | translate }}</label>
+                </span>
+            </div>
+        </div>
+
+        <div class="row pt-5">
+
+            <div class="col-md-6 mb-5">
+                <label for="dob" class="form-label">{{ 'messages.patient.dob' | translate }}:</label>
+                <input class="form-control patient-dob flatpickr-input" id="DOB" placeholder="{{ 'messages.patient.dob' | translate }}" formControlName="dob">
+            </div>
+            <div class="col-md-6 mb-5">
+                <label class="form-label">{{ 'messages.patient.blood_group' | translate }}:</label>
+                <select2 [data]="BLOODS" formControlName="blood_group" placeholder="{{ 'messages.patient.blood_group' | translate }}"></select2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-7">
+                <label for="address1" class="form-label">{{ 'messages.patient.address1' | translate }}:</label>
+                <input class="form-control" placeholder="{{ 'messages.patient.address1' | translate }}" name="address1" type="text" id="address1" formControlName="address1">
+            </div>
+            <div class="col-md-6 mb-7">
+                <label for="address2" class="form-label">{{ 'messages.patient.address2' | translate }}:</label>
+                <input class="form-control" placeholder="{{ 'messages.patient.address2' | translate }}" name="address2" type="text" id="address2" formControlName="address2">
+            </div>
+            <div class="col-md-6 mb-7">
+                <label for="country_id" class="form-label">{{ 'messages.patient.country' | translate }}:</label>
+                <select2 [data]="countries" formControlName="country_id" placeholder="{{ 'messages.user.country' | translate }}"></select2>
+            </div>
+            <div class="col-md-6 mb-7">
+                <label for="state_id" class="form-label">{{ 'messages.patient.state' | translate }}:</label>
+                <select2 [data]="states" formControlName="state_id" placeholder="{{ 'messages.user.state' | translate }}"></select2>
+            </div>
+            <div class="col-md-6 mb-7">
+                <label for="city_id" class="form-label">{{ 'messages.patient.city' | translate }}:</label>
+                <select2 [data]="cities" formControlName="city_id" placeholder="{{ 'messages.patient.city' | translate }}"></select2>
+            </div>
+            <div class="col-md-6 mb-7">
+                <label for="postalCode" class="form-label">{{ 'messages.patient.postal_code' | translate }}:</label>
+                <input class="form-control" placeholder="{{ 'messages.patient.postal_code' | translate }}" name="postal_code" type="text" id="postal_code" formControlName="postal_code">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-primary m-0" type="submit">{{ 'messages.common.save' | translate }}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{ 'messages.common.cancel' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</form>

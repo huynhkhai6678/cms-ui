@@ -1,0 +1,18 @@
+<div #wrapper>
+  <ngx-intl-tel-input
+  [cssClass]="'form-control'"
+  [preferredCountries]="[CountryISO.Malaysia]"
+  [enableAutoCountrySelect]="false"
+  [enablePlaceholder]="true"
+  [searchCountryField]="[SearchCountryField.All]"
+  [selectFirstCountry]="false"
+  [selectedCountryISO]="selectedContry"
+  [phoneValidation]="true"
+  [separateDialCode]="true"
+  [formControl]="phoneControl"
+  [enablePlaceholder]="placeholder ? true : false"
+  [customPlaceholder]="placeholder"
+  [numberFormat]="PhoneNumberFormat.National"
+  (blur)="onBlur()"
+></ngx-intl-tel-input>
+</div>

@@ -3,6 +3,9 @@ import { FrontHeaderComponent } from "./front-header/front-header.component";
 import { FrontFooterComponent } from "./front-footer/front-footer.component";
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FrontService } from './front.service';
+import { ThemeService } from '../services/theme.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-front',
@@ -16,21 +19,14 @@ export class FrontComponent implements OnInit {
 
   constructor(
     private activatedRoute : ActivatedRoute,
-    private frontService : FrontService
+    private frontService : FrontService,
+    private themeService : ThemeService
   ) {
     
   }
 
   ngOnInit(): void {
-    const front = document.getElementById('front-page-theme') as HTMLLinkElement;
-    const front3 = document.getElementById('front-third-party-theme') as HTMLLinkElement;
-    const light = document.getElementById('light-theme') as HTMLLinkElement;
-    const dark = document.getElementById('dark-theme') as HTMLLinkElement;
-
-    front3.disabled = false;
-    front.disabled = false;
-    dark.disabled = true;
-    light.disabled = true;
+    this.themeService.initFrontTheme();
 
     this.data = this.frontService.setting;
 
@@ -40,7 +36,6 @@ export class FrontComponent implements OnInit {
           this.frontService.updateSignal(response.data);
         });
     });
-
   }
 
 }

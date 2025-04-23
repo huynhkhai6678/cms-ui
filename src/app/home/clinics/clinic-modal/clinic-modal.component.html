@@ -1,0 +1,119 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="clinicForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <label for="Clinic Name" class="form-label required">Clinic Name:</label>
+                    <input class="form-control" placeholder="Clinic Name" name="name" type="text" formControlName="name">
+                    @if (!clinicForm.controls['name'].valid && (!clinicForm.controls['name'].pristine || isSubmitted)) {
+                        <div id="clinicNameValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <label for="Clinic Name" class="form-label required">User Account:</label>
+                    <input class="form-control" placeholder="User Account" name="landing_name" type="text" formControlName="landing_name">
+                    @if (!clinicForm.controls['landing_name'].valid && (!clinicForm.controls['landing_name'].pristine || isSubmitted)) {
+                        <div id="landingNameValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <label for="Type" class="form-label required">Clinic Type:</label>
+                    <select2 [data]="types" placeholder="{{'messages.clinics.type' | translate}}" formControlName="type"></select2>
+                    @if (!clinicForm.controls['type'].valid && (!clinicForm.controls['type'].pristine || isSubmitted)) {
+                        <div id="typeValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <label for="phone" class="form-label required">Contact No.:</label>
+                    <app-phone-input formControlName="phone"></app-phone-input>
+                    @if (clinicForm.controls['phone'].invalid && (clinicForm.controls['phone'].touched || isSubmitted)) {
+                        <div class="invalid-feedback d-block">
+                          @if (clinicForm.controls['phone'].errors?.['required']) {
+                            {{ 'messages.this_field' | translate }}
+                          }
+                      
+                          @if (clinicForm.controls['phone'].errors?.['validatePhoneNumber']) {
+                            {{ 'Invalid phone' | translate }}
+                          }
+                        </div>
+                      }
+
+
+                </div>
+            </div>
+        
+            <div class="col-md-6 mb-5">
+                <label for="address1" class="form-label">Address 1:</label>
+                <input class="form-control" placeholder="Address 1" name="address1" type="text" id="address1" formControlName="address1">
+            </div>
+        
+            <div class="col-md-6 mb-5">
+                <label for="country_id" class="form-label">Country:</label>
+                <select2 [data]="countries" placeholder="{{'messages.common.select_country' | translate}}" formControlName="country_id" id="country_id" (update)="onCountryChange($event)"></select2>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="address2" class="form-label">Address 2:</label>
+                <input class="form-control" placeholder="Address 2" name="address2" type="text" id="address2" formControlName="address2">
+            </div>
+            
+            <div class="col-md-6 mb-5">
+                <label for="state_id" class="form-label">State:</label>
+                <select2 [data]="states" placeholder="{{'messages.common.select_state' | translate}}" formControlName="state_id" id="state_id" (update)="onStateChange($event)"></select2>
+            </div>
+            
+            <div class="col-md-6 mb-5">
+                <label for="city_id" class="form-label">City:</label>
+                <select2 [data]="cities" placeholder="{{'messages.common.select_city' | translate}}" formControlName="city_id" id="city_id"></select2>
+            </div>
+        
+            <div class="col-md-6 mb-5">
+                <label for="postalCode" class="form-label">Postal Code:</label>
+                <input class="form-control" placeholder="Postal Code" name="postal_code" type="text" id="postal_code" formControlName="postal_code">
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="email" class="form-label required">Email:</label>
+                <input class="form-control" placeholder="Email" name="email" type="email" id="email" formControlName="email">
+                @if (!clinicForm.controls['email'].valid && (!clinicForm.controls['email'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.common.email_regex' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="social_link" class="form-label">Social Link:</label>
+                <input class="form-control" placeholder="Social Link" name="social_link" type="text" id="social_link" formControlName="social_link">
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="social_link" class="form-label">Avatar</label>
+                <div>
+                    <app-image-upload formControlName="avatar"></app-image-upload>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer pt-0">
+    <button class="btn btn-primary m-0" type="button" (click)="submit(clinicForm.value, clinicForm.valid)">Save</button>
+    <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">Discard</button>
+</div>

@@ -33,7 +33,7 @@
                                     </div>
                                     @if (!enquiryForm.controls['name'].valid && (!enquiryForm.controls['name'].pristine || isSubmitted)) {
                                         <small id="nameErrorBlock" class="text-sm text-danger" role="alert">
-                                            {{'This field is required'}}
+                                            {{'messages.this_field' | translate}}
                                         </small>
                                     }
                                 </div>
@@ -63,7 +63,7 @@
                                     </div>
                                     @if (!enquiryForm.controls['subject'].valid && (!enquiryForm.controls['subject'].pristine || isSubmitted)) {
                                         <small id="subjectErrorBlock" class="text-danger" role="alert">
-                                            {{'This field is required'}}
+                                            {{'messages.this_field' | translate}}
                                         </small>
                                     }
                                 </div>
@@ -73,7 +73,7 @@
                                     </div>
                                     @if (!enquiryForm.controls['message'].valid && (!enquiryForm.controls['message'].pristine || isSubmitted)) {
                                         <small id="messageErrorBlock" class="text-danger" role="alert">
-                                            {{'This field is required'}}
+                                            {{'messages.this_field' | translate}}
                                         </small>
                                     }
                                 </div>

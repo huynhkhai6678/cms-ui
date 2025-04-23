@@ -1,7 +1,8 @@
 import { Component, HostListener, OnInit, signal } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-front-header',
@@ -16,6 +17,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 export class FrontHeaderComponent implements OnInit {
   headerClass = signal<string>('');
   currentLanguage = signal<string>('English');
+  isLogin = signal<boolean>(false);
 
   readonly languages = [
     { name: 'English', code: 'en', flag: 'flags/united-states.svg' },
@@ -30,10 +32,13 @@ export class FrontHeaderComponent implements OnInit {
     { name: 'Italian', code: 'it', flag: 'flags/italy.svg' }
   ]
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    const light = document.getElementById('front-page-theme') as HTMLLinkElement;
+    let user = this.authService.getUser();
+    if (user) {
+      this.isLogin.set(true);
+    }
   }
 
   @HostListener('window:scroll', ['$event']) onScroll() {
@@ -48,5 +53,19 @@ export class FrontHeaderComponent implements OnInit {
     this.translateService.use(code);
     let lang = this.languages.filter(language => { return language.code === code});
     this.currentLanguage.set(lang[0]['name']);
+  }
+
+  login() {
+    if (this.isLogin()) {
+      if (this.authService.isSuperAdmin()) {
+        this.router.navigate(['/home/clinics']);
+        return;
+      } else {
+        this.router.navigate(['/home/dashboard']);
+        return;
+      }
+    }
+
+    this.router.navigate(['/login']);
   }
 }

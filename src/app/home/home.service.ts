@@ -1,6 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class HomeService {
-  
+  collapseSider = signal<boolean>(false);
+
+  updateCollapseSidebar() {
+    this.collapseSider.set(!this.collapseSider());
+  }
 }

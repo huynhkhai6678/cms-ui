@@ -40,9 +40,12 @@ export class LandingComponent {
   };
 
   chunkServicesData = computed(() => {
-    let arr = [];
-    for (let i = 0; i < this.data().services.length; i += 2) {
-      arr.push(this.data().services.slice(i, i + 2));
+    let arr : any = [];
+    if (this.data()) {
+      for (let i = 0; i < this.data().services.length; i += 2) {
+        arr.push(this.data().services.slice(i, i + 2));
+      }
+      return arr;
     }
     return arr;
   })

@@ -1,7 +1,8 @@
 <footer class="border-top w-100 pt-4 mt-7">
     <div class="d-flex justify-content-md-between">
-        <p class="fs-6 text-gray-600">All Rights Reserved © 2025
-            <a href="#" class="text-decoration-none">MyCLNQ Demo Clinic</a>
+        <p class="fs-6 text-gray-600">
+            {{'messages.all_rights_reserved' | translate }} © {{year()}}
+            <a href="#" class="text-decoration-none">{{setting().clinic_name}}</a>
         </p>
         <span class="text-muted align-content-end">v8.5.0</span>
     </div>

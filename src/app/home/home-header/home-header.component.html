@@ -30,46 +30,46 @@
                                 <div class="image image-circle image-mini" >
                                     <img class="img-fluid" alt="img-fluid" src="https://cms-testing.myclnq.com/uploads/31/1.png">
                                 </div>
-                                MyCLNQ Super Admin
+                                {{user().name}}
                             </button>
                             <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right py-7 pb-4 my-2" role="menu" aria-labelledby="button-basic">
                                 <div class="text-center border-bottom pb-5">
                                     <div class="image image-circle image-tiny mb-5">
                                         <img class="img-fluid" alt="img-fluid" src="https://cms-testing.myclnq.com/uploads/31/1.png">
                                     </div>
-                                    <h3 class="text-gray-900">MyCLNQ Super Admin</h3>
-                                    <h4 class="mb-0 fw-400 fs-6">admin.com</h4>
+                                    <h3 class="text-gray-900">{{user().name}}</h3>
+                                    <h4 class="mb-0 fw-400 fs-6">{{user().email}}</h4>
                                 </div>
                                 <li role="menuitem">
-                                    <a id="accountSetting" class="dropdown-item text-gray-900" href="javascript:void(0)">
+                                    <a id="accountSetting" class="dropdown-item text-gray-900" href="javascript:void(0)" (click)="openProfile()">
                                         <span class="dropdown-icon me-4 text-gray-600">
                                             <i class="fa-solid fa-user"></i>
                                         </span>
-                                        Account Settings
+                                        {{'messages.user.account_setting' | translate}}
                                     </a>
                                 </li>
                                 <li role="menuitem">
-                                    <a class="dropdown-item text-gray-900" id="changePassword" href="javascript:void(0)">
+                                    <a class="dropdown-item text-gray-900" id="changePassword" href="javascript:void(0)" (click)="openChangePassword()">
                                         <span class="dropdown-icon me-4 text-gray-600">
                                             <i class="fa-solid fa-lock"></i>
                                         </span>
-                                        Change Password
+                                        {{'messages.user.change_password' | translate}}
                                     </a>
                                 </li>
                                 <li role="menuitem">
-                                    <a class="dropdown-item text-gray-900" id="changeLanguage" href="javascript:void(0)">
+                                    <a class="dropdown-item text-gray-900" id="changeLanguage" href="javascript:void(0)" (click)="openChangeLanguage()">
                                        <span class="dropdown-icon me-4 text-gray-600">
                                             <i class="fa-solid fa-globe"></i>
                                        </span>
-                                        Change Language
+                                        {{'messages.user.change_language' | translate}}
                                     </a>
                                 </li>
                                 <li role="menuitem">
-                                    <a class="dropdown-item text-gray-900 d-flex" href="javascript:void(0)">
+                                    <a class="dropdown-item text-gray-900 d-flex" href="javascript:void(0)" (click)="logout()">
                                         <span class="dropdown-icon me-4 text-gray-600">
                                             <i class="fa-solid fa-right-from-bracket"></i>
                                         </span>
-                                        Sign Out
+                                        {{'messages.user.sign_out' | translate}}
                                     </a>
                                 </li>
                             </ul>

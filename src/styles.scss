@@ -1,4 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
+@use "bootstrap-icons/font/bootstrap-icons.css" as *;
 @use "@fortawesome/fontawesome-free/css/all.min.css" as *;
+
+
+:root {
+    --select2-single-height: 46px;
+    --select2-selection-line-height: 46px;
+    --select2-option-selected-text-color: #fff;
+    --select2-option-selected-background: #fe8065;
+    --select2-option-highlighted-text-color: #000;
+    --select2-option-highlighted-background: #feac9a;
+}
+
+
+
+ngx-intl-tel-input {
+    .iti--allow-dropdown {
+        width: 100%;
+    }
+
+    &.ng-invalid.ng-touched input {
+        border: 1px solid #F62947;
+    }
+
+    &.ng-valid.ng-touched input {
+        border: 1px solid #0AC074;
+    }
+}
+
+body {
+    margin: 0;
+}

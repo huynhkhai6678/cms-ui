@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h3>{{ 'messages.user.change_password' | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="mb-7">
+        <label for="current_password" class="required form-label">{{'messages.user.change_language' | translate}}:</label>
+        <div class="mb-3 position-relative">
+            <select2 [data]="languages" [(ngModel)]="selectedLanguage"></select2>
+        </div>
+    </div>
+</div>
+<div class="modal-footer pt-0">
+    <button class="btn btn-primary m-0" type="button" (click)="changeLanguage()">Save</button>
+    <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">Discard</button>
+</div>

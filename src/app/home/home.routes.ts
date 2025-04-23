@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { superAdminGuard } from '../auths/superadmin.guard';
 import { adminGuard } from '../auths/admin.guard';
+import { permissionGuard } from '../auths/permission.guard';
 
 export const homeRoutes: Routes = [
   {
@@ -11,22 +12,27 @@ export const homeRoutes: Routes = [
         {
           path: 'dashboard',
           loadComponent: () => import('./dashboard/dashboard.component').then(mod => mod.DashboardComponent),
-          canActivate: [adminGuard]
+          canActivate: [superAdminGuard]
+        },
+        {
+          path: 'appointments',
+          loadComponent: () => import('./appointments/appointments.component').then(mod => mod.AppointmentsComponent),
+          canActivate: []
         },
         {
             path: 'clinics',
             loadComponent: () => import('./clinics/clinics.component').then(mod => mod.ClinicsComponent),
-            canActivate: [superAdminGuard]
+            canActivate: [permissionGuard('manage_clinics')]
         },
         {
             path: 'clinic-chains',
             loadComponent: () => import('./clinic-chain/clinic-chain.component').then(mod => mod.ClinicChainComponent),
-            canActivate: [superAdminGuard]
+            canActivate: [permissionGuard('manage_clinic_brands')]
         },
         {
             path: 'users',
             loadComponent: () => import('./users/users.component').then(mod => mod.UsersComponent),
-            canActivate: [superAdminGuard]
+            canActivate: [permissionGuard('manage_users')]
         },
         {
           path: '',

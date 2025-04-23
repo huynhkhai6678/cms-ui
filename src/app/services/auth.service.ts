@@ -29,6 +29,14 @@ export class AuthService {
         return null;
     }
 
+    getPermission(): [] {
+        let permissions = localStorage.getItem('permissions');
+        if (permissions) {
+            return JSON.parse(permissions);
+        }
+        return [];
+    }
+
     isSuperAdmin(): boolean {
         let user = this.getUser();
         if (user) {
@@ -61,13 +69,16 @@ export class AuthService {
         localStorage.setItem('user', JSON.stringify(user));    
     }
 
+    savePermission(permissions: any): void {
+        localStorage.setItem('permissions', JSON.stringify(permissions));    
+    }
+
     login(data : any) {
-        return this.apiService.post('/auth/login', data);
+        return this.apiService.post('auth/login', data);
     }
 
     logout(): void {
         localStorage.clear();
-        // Redirect to login
-        this.router.navigate(['login']);
+        this.router.navigate(['/']);
     }
 }

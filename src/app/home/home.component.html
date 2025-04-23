@@ -1,6 +1,6 @@
 <div class="d-flex flex-row flex-column-fluid min-vh-100">
     <app-home-sidebar></app-home-sidebar>
-    <div class="wrapper d-flex flex-column flex-row-fluid">
+    <div class="wrapper home-wrapper d-flex flex-column flex-row-fluid" [class.collapsed-menu]="collapse()">
         <app-home-header></app-home-header>
         <div class="content d-flex flex-column flex-column-fluid pt-7">
             <div class="container-fluid">

@@ -4,8 +4,7 @@ import { authGuard } from './auths/auth.guard';
 export const routes: Routes = [
     {
         path: '',
-        loadChildren: () => import('./front/front.routes').then(mod => mod.frontRoutes),
-        canActivate: [authGuard] 
+        loadChildren: () => import('./front/front.routes').then(mod => mod.frontRoutes)
     },
     {
         path: 'home',
@@ -15,5 +14,13 @@ export const routes: Routes = [
     { 
         path: 'login', 
         loadComponent: () => import('./auth/login/login.component').then(mod => mod.LoginComponent) 
+    },
+    { 
+        path: 'forbidden', 
+        loadComponent: () => import('./error/forbidden/forbidden.component').then(mod => mod.ForbiddenComponent) 
+    },
+    { 
+        path: 'not-found', 
+        loadComponent: () => import('./error/not-found/not-found.component').then(mod => mod.NotFoundComponent) 
     }
 ];

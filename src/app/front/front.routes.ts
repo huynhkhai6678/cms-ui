@@ -1,47 +1,41 @@
 import { Routes } from '@angular/router';
 import { FrontComponent } from './front.component';
-import { LandingComponent } from './landing/landing.component';
-import { MedicalContactComponent } from './medical-contact/medical-contact.component';
-import { MedicalDoctorsComponent } from './medical-doctors/medical-doctors.component';
-import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
-import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
-import { MedicalAboutUsComponent } from './medical-about-us/medical-about-us.component';
-import { MedicalServicesComponent } from './medical-services/medical-services.component';
-import { FaqsComponent } from './faqs/faqs.component';
 
 export const frontRoutes: Routes = [
   {
     path: '',
     component: FrontComponent,
     children: [
-      { path: '', component: LandingComponent },
-      { 
-        path: 'medical-contact', 
-        component: MedicalContactComponent 
+      { path: '',
+        loadComponent: () => import('./landing/landing.component').then(mod => mod.LandingComponent),
       },
       { 
-        path: 'medical-doctors', 
-        component: MedicalDoctorsComponent 
+        path: 'medical-contact',
+        loadComponent: () => import('./medical-contact/medical-contact.component').then(mod => mod.MedicalContactComponent),
       },
       { 
-        path: 'medical-services', 
-        component: MedicalServicesComponent 
+        path: 'medical-doctors',
+        loadComponent: () => import('./medical-doctors/medical-doctors.component').then(mod => mod.MedicalDoctorsComponent),
       },
       { 
-        path: 'medical-about-us', 
-        component: MedicalAboutUsComponent 
+        path: 'medical-services',
+        loadComponent: () => import('./medical-services/medical-services.component').then(mod => mod.MedicalServicesComponent),
       },
       { 
-        path: 'faqs', 
-        component: FaqsComponent
+        path: 'medical-about-us',
+        loadComponent: () => import('./medical-about-us/medical-about-us.component').then(mod => mod.MedicalAboutUsComponent),
       },
       { 
-        path: 'term-conditions', 
-        component: TermsConditionsComponent
+        path: 'faqs',
+        loadComponent: () => import('./faqs/faqs.component').then(mod => mod.FaqsComponent),
       },
       { 
-        path: 'privacy-policy', 
-        component: PrivacyPolicyComponent
+        path: 'term-conditions',
+        loadComponent: () => import('./terms-conditions/terms-conditions.component').then(mod => mod.TermsConditionsComponent),
+      },
+      { 
+        path: 'privacy-policy',
+        loadComponent: () => import('./privacy-policy/privacy-policy.component').then(mod => mod.PrivacyPolicyComponent),
       }
     ]
   },

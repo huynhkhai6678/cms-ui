@@ -1,17 +1,17 @@
 import { Component, OnInit, Signal, signal, ɵunwrapWritableSignal } from '@angular/core';
 import { FrontService } from '../front.service';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { Observable, switchMap } from 'rxjs';
-import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { HeroSectionComponent } from '../shared/hero-section/hero-section.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-medical-contact',
   standalone: true,
   imports: [
+    TranslatePipe,
     HeroSectionComponent,
     RouterModule,
     FormsModule,
@@ -22,7 +22,7 @@ import { HeroSectionComponent } from '../shared/hero-section/hero-section.compon
   styleUrl: './medical-contact.component.scss'
 })
 export class MedicalContactComponent implements OnInit {
-  data = ɵunwrapWritableSignal<any>({});
+  data! : Signal<any>;
   enquiryForm! : FormGroup;
   isSubmitted = false;
 
@@ -51,7 +51,7 @@ export class MedicalContactComponent implements OnInit {
       return;
     }
 
-    value.clinic_id = this.authService.getUser().clinic_id;
+    value.clinic_id = this.data().clinic_id;
     this.frontService.sendEnquiry(value).subscribe(res => {
       this.isSubmitted = false;
       this.enquiryForm.reset();
