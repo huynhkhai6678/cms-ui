@@ -76,12 +76,10 @@ export class PhoneInputComponent implements ControlValueAccessor, Validator, OnI
   }
 
   onBlur() {
-    console.log('fddsfdfd');
     this.onTouched();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    // 🧠 Forward validation from internal phoneControl
     return this.phoneControl.errors;
   }
 }

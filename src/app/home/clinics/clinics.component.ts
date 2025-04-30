@@ -28,10 +28,10 @@ export class ClinicsComponent implements AfterViewInit {
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
     ['name', 'Name', '', true, 'string'],
-    ['type', 'Type', '', true, 'select'],
-    ['address1', 'address', '', true, 'string'],
-    ['state_name', 'State', '', true, 'string'],
-    ['postal_code', 'Postal code', '', false, 'string'],
+    ['type', 'Type', '', true, 'string'],
+    ['address.address1', 'address', '', true, 'object'],
+    ['address.state.name', 'State', '', true, 'object'],
+    ['address.postal_code', 'Postal code', '', false, 'object'],
     ['contact_number', 'Contact number', '', false, 'template'],
     ['action', 'Action', '', false, 'action'],
   ];

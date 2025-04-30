@@ -104,4 +104,9 @@ export class DataTableComponent {
   handleInputChange = (element: HTMLInputElement) => {
     this.searchString.set(element.value);
   }
+
+  
+  getNestedValue(obj: any, path: string): any {
+    return path.split('.').reduce((o, key) => (o && o[key] !== undefined) ? o[key] : null, obj);
+  }
 }

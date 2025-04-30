@@ -51,14 +51,14 @@
                 <label class="col-lg-4 form-label required">{{ 'messages.user.contact_number' | translate }}:</label>
             </div>
             <div class="col-lg-8">
-                <app-phone-input formControlName="phone"></app-phone-input>
-                    @if (profileForm.controls['phone'].invalid && (profileForm.controls['phone'].touched || isSubmitted)) {
+                <app-phone-input formControlName="contact"></app-phone-input>
+                    @if (profileForm.controls['contact'].invalid && (profileForm.controls['contact'].touched || isSubmitted)) {
                         <div class="invalid-feedback d-block">
-                          @if (profileForm.controls['phone'].errors?.['required']) {
+                          @if (profileForm.controls['contact'].errors?.['required']) {
                             {{ 'messages.this_field' | translate }}
                           }
                       
-                          @if (profileForm.controls['phone'].errors?.['validatePhoneNumber']) {
+                          @if (profileForm.controls['contact'].errors?.['validatePhoneNumber']) {
                             {{ 'Invalid phone' | translate }}
                           }
                         </div>
@@ -70,19 +70,18 @@
             <label for="gender" class="col-lg-4 form-label required">{{ 'messages.user.gender' | translate }}:</label>
             <div class="col-lg-8">
                 <span class="is-valid">
-                    <input class="form-check-input" type="radio" name="gender" value="1" checked="">
+                    <input class="form-check-input" type="radio" name="gender" value="1" formControlName="gender" [checked]="profileForm.controls['gender'].value == 1">
                     <label class="form-label">{{ 'messages.patient.male' | translate }}</label>&nbsp;&nbsp;
-                    <input class="form-check-input" type="radio" name="gender" value="2">
+                    <input class="form-check-input" type="radio" name="gender" value="2" formControlName="gender" [checked]="profileForm.controls['gender'].value == 2">
                     <label class="form-label">{{ 'messages.patient.female' | translate }}</label>
                 </span>
             </div>
         </div>
 
         <div class="row pt-5">
-
             <div class="col-md-6 mb-5">
                 <label for="dob" class="form-label">{{ 'messages.patient.dob' | translate }}:</label>
-                <input class="form-control patient-dob flatpickr-input" id="DOB" placeholder="{{ 'messages.patient.dob' | translate }}" formControlName="dob">
+                <app-date-input formControlName="dob" placeholder="Enter your date of birth" id="DOB"></app-date-input>
             </div>
             <div class="col-md-6 mb-5">
                 <label class="form-label">{{ 'messages.patient.blood_group' | translate }}:</label>
@@ -101,11 +100,11 @@
             </div>
             <div class="col-md-6 mb-7">
                 <label for="country_id" class="form-label">{{ 'messages.patient.country' | translate }}:</label>
-                <select2 [data]="countries" formControlName="country_id" placeholder="{{ 'messages.user.country' | translate }}"></select2>
+                <select2 [data]="countries" formControlName="country_id" placeholder="{{ 'messages.patient.country' | translate }}"></select2>
             </div>
             <div class="col-md-6 mb-7">
                 <label for="state_id" class="form-label">{{ 'messages.patient.state' | translate }}:</label>
-                <select2 [data]="states" formControlName="state_id" placeholder="{{ 'messages.user.state' | translate }}"></select2>
+                <select2 [data]="states" formControlName="state_id" placeholder="{{ 'messages.patient.state' | translate }}"></select2>
             </div>
             <div class="col-md-6 mb-7">
                 <label for="city_id" class="form-label">{{ 'messages.patient.city' | translate }}:</label>

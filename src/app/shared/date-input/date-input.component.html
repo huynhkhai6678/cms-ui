@@ -1,0 +1,9 @@
+<input class="form-control" 
+    mwlFlatpickr 
+    [convertModelValue]="true" 
+    [dateFormat]="'d/m/Y'" 
+    [id]="id" 
+    [placeholder]="placeholder | translate"
+    [ngModel]="value"
+    (ngModelChange)="onValueChange($event)"
+>

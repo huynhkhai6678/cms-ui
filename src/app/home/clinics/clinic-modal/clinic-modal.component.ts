@@ -18,7 +18,6 @@ import { ImageUploadComponent } from '../../../shared/image-upload/image-upload.
     TranslatePipe,
     ReactiveFormsModule,
     PhoneInputComponent,
-    ImageUploadComponent,
     NgxIntlTelInputModule,
     Select2
   ],
@@ -85,8 +84,6 @@ export class ClinicModalComponent implements OnInit {
 
   submit(value : any, valid : boolean) {
     this.isSubmitted = true;
-    console.log(value);
-
     if (!valid) {
       return;
     }

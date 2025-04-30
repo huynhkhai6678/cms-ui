@@ -35,9 +35,9 @@
                         </td>
                     }
 
-                    @if (column[4] === 'select') {
+                    @if (column[4] === 'object') {
                         <td>
-                            testing
+                            {{ getNestedValue(item, column[0]) }}
                         </td>
                     }
 

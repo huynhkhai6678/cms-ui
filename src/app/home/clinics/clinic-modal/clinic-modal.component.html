@@ -5,7 +5,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <form [formGroup]="clinicForm">
+    <form [formGroup]="clinicForm" (ngSubmit)="submit(clinicForm.value, clinicForm.valid)">
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-5">
@@ -55,7 +55,7 @@
                             {{ 'Invalid phone' | translate }}
                           }
                         </div>
-                      }
+                    }
 
 
                 </div>
@@ -103,17 +103,10 @@
                 <label for="social_link" class="form-label">Social Link:</label>
                 <input class="form-control" placeholder="Social Link" name="social_link" type="text" id="social_link" formControlName="social_link">
             </div>
-
-            <div class="col-md-6 mb-5">
-                <label for="social_link" class="form-label">Avatar</label>
-                <div>
-                    <app-image-upload formControlName="avatar"></app-image-upload>
-                </div>
-            </div>
+        </div>
+        <div class="modal-footer pt-0">
+            <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+            <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
         </div>
     </form>
-</div>
-<div class="modal-footer pt-0">
-    <button class="btn btn-primary m-0" type="button" (click)="submit(clinicForm.value, clinicForm.valid)">Save</button>
-    <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">Discard</button>
 </div>

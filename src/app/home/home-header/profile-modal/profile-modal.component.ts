@@ -8,6 +8,7 @@ import { ImageUploadComponent } from '../../../shared/image-upload/image-upload.
 import { ShareService } from '../../../services/share.service';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DateInputComponent } from '../../../shared/date-input/date-input.component';
 
 @Component({
   selector: 'app-profile-modal',
@@ -16,6 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
     ReactiveFormsModule,
     ImageUploadComponent,
     PhoneInputComponent,
+    DateInputComponent,
     TranslatePipe,
     Select2
   ],
@@ -47,7 +49,8 @@ export class ProfileModalComponent implements OnInit {
       last_name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       time_zone: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      contact: ['', [Validators.required]],
+      gender: [''],
       dob: [''],
       blood_group: [''],
       address1: [''],
@@ -71,12 +74,14 @@ export class ProfileModalComponent implements OnInit {
 
 
   submit(valid: boolean, value : any) {
-    if (valid) {
+    this.isSubmitted = true;
+    if (!valid) {
       return;
     }
 
     this.apiService.postFileWithParams('profile', value).subscribe(res => {
-      console.log(res);
+      this.isSubmitted = false;
+      this.bsModalRef.hide();
     });
   }
 

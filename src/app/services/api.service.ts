@@ -30,7 +30,12 @@ export class ApiService {
     // Append additional fields
     for (const key in params) {
       if (params.hasOwnProperty(key)) {
-        formData.append(key, params[key]);
+        if (key === 'contact') {
+          formData.append('region_code', params[key]['dialCode']);
+          formData.append('contact', params[key]['e164Number'].split(params[key]['dialCode'])[1]);
+        } else {
+          formData.append(key, params[key]);
+        }
       }
     }
     return this.httpClient.post(`${environment.apiUrl}${url}`, formData);
