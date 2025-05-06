@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { catchError, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ThemeService } from '../../services/theme.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -20,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LoginComponent implements OnInit {
   loginForm! : FormGroup;
-  showAlert : boolean = false;
+  showAlert = false;
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +56,7 @@ export class LoginComponent implements OnInit {
         }
         return this.router.navigate(['home']);
       },
-      error: (error) => {
+      error: () => {
         this.showAlert = true;
       }
     });

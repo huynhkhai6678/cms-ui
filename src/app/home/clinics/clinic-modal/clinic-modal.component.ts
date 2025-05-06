@@ -4,13 +4,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiService } from '../../../services/api.service';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
-import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
-import { Select2, Select2Option } from 'ng-select2-component';
+import { Select2 } from 'ng-select2-component';
 import { FormService } from '../../../services/form.service';
-import { Observable, tap, map } from 'rxjs';
 import { City, LocationService, State } from '../../../services/location.service';
-import { ImageUploadComponent } from '../../../shared/image-upload/image-upload.component';
 
 @Component({
   selector: 'app-clinic-modal',
@@ -21,34 +18,26 @@ import { ImageUploadComponent } from '../../../shared/image-upload/image-upload.
     NgxIntlTelInputModule,
     Select2
   ],
-  providers : [
-    FormService
-  ],
   templateUrl: './clinic-modal.component.html',
   styleUrl: './clinic-modal.component.scss'
 })
 export class ClinicModalComponent implements OnInit {
   readonly url = 'clinics';
-  readonly title: string = '';
-  clinicId: number = 0;
+  title = '';
+  clinicId = 0;
 
   readonly types = [
-    { label: 'General Practice', value: 'en'},
-    { label: 'Detal', value: 'es'},
-    { label: 'Specialist', value: 'fr'}
+    { label: 'General Practice', value: 1},
+    { label: 'Detal', value: 2},
+    { label: 'Specialist', value: 3}
   ]
 
   countries = [];
   states = [];
   cities = [];
 
-  states$?: Observable<any>;
-
   clinicForm! : FormGroup;
-  isSubmitted : boolean = false;
-  SearchCountryField = SearchCountryField;
-	CountryISO = CountryISO;
-
+  isSubmitted = false;
 
   constructor(public bsModalRef: BsModalRef, 
     private fb: FormBuilder, 
@@ -75,10 +64,23 @@ export class ClinicModalComponent implements OnInit {
     });
 
     this.formService.getInitData(`${this.url}/${this.clinicId}`).subscribe((response : any) => {
-      if(response['clinic']) {
-        this.clinicForm.patchValue(response['clinic']);
-      }
       this.countries = response['countries'].map((country: any) => { return { value : country.id, label : country.name }});
+
+      if(response['states']) {
+        this.states = response['states'].map((state: any) => { return { value : state.id, label : state.name }});
+      }
+
+      if(response['cities']) {
+        this.cities = response['cities'].map((city: any) => { return { value : city.id, label : city.name }});
+      }
+
+      if(response['clinic']) {
+        // Fix this
+        setTimeout(() => {
+          this.clinicForm.patchValue(response['clinic']);
+        }, 100)
+      }
+
     });
   }
 
@@ -89,7 +91,7 @@ export class ClinicModalComponent implements OnInit {
     }
 
     this.apiService.post(this.url, value).subscribe({
-      next: (res) => {
+      next: () => {
         this.isSubmitted = false;
       },
       error: (error) => {

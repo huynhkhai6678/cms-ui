@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   constructor(private themeService: ThemeService, private homeService: HomeService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    let user = this.authService.getUser();
+    const user = this.authService.getUser();
     if (user) {
       this.themeService.changeTheme(user.dark_mode);
     }

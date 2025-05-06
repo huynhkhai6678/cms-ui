@@ -1,2 +1,2 @@
-declare var $: JQueryStatic;
-declare var jQuery: JQueryStatic;
+declare let $: JQueryStatic;
+declare let jQuery: JQueryStatic;

@@ -5,7 +5,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { filter } from 'rxjs';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
-import { ModalModule, BsModalService, ModalOptions, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalModule, BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangeLanguageModalComponent } from './change-language-modal/change-language-modal.component';
 import { ThemeService } from '../../services/theme.service';
@@ -77,7 +77,7 @@ export class HomeHeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let user = this.authService.getUser();
+    const user = this.authService.getUser();
     this.user.set(user);
     this.darkMode.set(user.dark_mode);
     
@@ -115,14 +115,14 @@ export class HomeHeaderComponent implements OnInit {
   }
 
   toggleTheme() {
-    let dark = this.darkMode();
+    const dark = this.darkMode();
     this.profileService.updateTheme(!dark).subscribe({
-      next : (res: any) => {
+      next : () => {
         this.translateService.get('messages.flash.theme_change').subscribe((message: string) => {
           this.toastr.success(message);
           this.darkMode.set(!dark);
 
-          let user = this.authService.getUser();
+          const user = this.authService.getUser();
           user.dark_mode = !dark;
           this.authService.saveUser(user);
 

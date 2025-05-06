@@ -1,4 +1,4 @@
-import { Component, computed, signal, Signal } from '@angular/core';
+import { Component, signal, Signal } from '@angular/core';
 import { HeroSectionComponent } from '../shared/hero-section/hero-section.component';
 import { FrontService } from '../front.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 })
 export class FaqsComponent {
   setting! : Signal<any>;
-  faqs! : Signal<any>;
+  faqs! : Signal<FAQ[] | undefined>;
   
   collapseds: { collapsed: boolean }[] = [];
   collapseItem = signal<number>(0);
@@ -38,7 +38,11 @@ export class FaqsComponent {
   }
 
   setAccordian(id : number) {
-    id !== this.collapseItem() ? this.collapseItem.set(id) : this.collapseItem.set(0);
+    if (id !== this.collapseItem()) {
+      this.collapseItem.set(id);
+    } else {
+      this.collapseItem.set(0);
+    }
   }
 }
 

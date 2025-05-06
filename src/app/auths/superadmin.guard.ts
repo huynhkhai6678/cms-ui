@@ -2,7 +2,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 
-export const superAdminGuard: CanActivateFn = (route, state) => {
+export const superAdminGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 

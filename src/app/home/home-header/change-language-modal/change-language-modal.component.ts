@@ -50,11 +50,11 @@ export class ChangeLanguageModalComponent implements OnInit {
 
   changeLanguage() {
     this.profileService.updateLanguage(this.selectedLanguage).subscribe({
-      next : (res: any) => {
+      next : () => {
         this.translateService.get('messages.flash.language_update').subscribe((message: string) => {
           this.toastr.success(message);
 
-          let user = this.authService.getUser();
+          const user = this.authService.getUser();
           user.language = this.selectedLanguage;
           this.authService.saveUser(user);
           

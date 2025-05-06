@@ -78,12 +78,12 @@ export class HomeSidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let user : any = this.authService.getUser();
+    const user : any = this.authService.getUser();
     if (!user) {
       return;
     }
 
-    let permissions : string[] = this.authService.getPermission();
+    const permissions : string[] = this.authService.getPermission();
     this.routes.set(this.allRoutes.filter((router) => { return permissions.includes(router.permission)}));
     this.collapse = this.homeService.collapseSider;
   }

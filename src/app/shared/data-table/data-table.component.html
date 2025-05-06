@@ -10,7 +10,7 @@
                 @for(column of headers;track column[0]) {
                     <th class="{{column[2]}}" [class.sortable]="column[3]" (click)="setOrder(column[0], column[3])">
                         {{ column[1] }}
-                        @if (column[3] && column[0] != sortColumnName()) {
+                        @if (column[3] && column[0] !== sortColumnName()) {
                             <i class="fa-solid fa-sort"></i>
                         }
                         
@@ -76,25 +76,31 @@
 
     <nav>
         <ul class="pagination justify-content-end"> 
-            <li 
-                class="page-item" 
-                [class.disabled]="page() === 1"
-                (click)="selectPage(page() - 1)">
-                <a class="page-link"><</a>
+            <li class="page-item" [class.disabled]="page() === 1">
+                <button
+                    class="page-link"
+                    [disabled]="page() === 1"
+                    (click)="selectPage(page() - 1)">
+                    &lt;
+                </button>
             </li>
             @for(p of pages(); track p) {
-                <li 
-                    class="page-item"
-                    [class.active]="p === page()"
-                    (click)="selectPage(p)">
-                    <a class="page-link">{{ p }}</a>
+                <li class="page-item" [class.active]="p === page()">
+                    <button class="page-link"
+                        [disabled]="page() === 1"
+                        (click)="selectPage(p)">
+                        {{ p }}
+                    </button>
                 </li>
             }
-            <li 
-                class="page-item" 
-                [class.disabled]="page() === totalPages()"
-                (click)="selectPage(page() + 1)">
+            <li class="page-item" [class.disabled]="page() === totalPages()">
                 <a class="page-link">></a>
+                <button
+                    class="page-link"
+                    [disabled]="page() === totalPages()"
+                    (click)="selectPage(page() - 1)">
+                    &lt;
+                </button>
             </li>
         </ul>
     </nav>

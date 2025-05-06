@@ -20,7 +20,9 @@
             </nav>
             <ul class="nav align-items-center">     
                 <li class="px-sm-3 px-2">
-                    <i role="button" class="fa-solid text-primary fs-2 {{iconClass()}}" (click)="toggleTheme()"></i>
+                    <button (click)="toggleTheme()" class="btn p-0 border-0 bg-transparent" aria-label="Toggle theme">
+                        <i class="fa-solid text-primary fs-2 {{iconClass()}}"></i>
+                    </button>
                 </li>
                             
                 <li class="px-sm-3 px-2">

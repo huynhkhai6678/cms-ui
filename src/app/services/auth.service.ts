@@ -1,7 +1,5 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { map, Observable } from "rxjs";
 import { ApiService } from "./api.service";
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +10,6 @@ export class AuthService {
     readonly SUPER_ADMIN_TYPE = 5;
 
     constructor(
-        private http: HttpClient,
         private apiService: ApiService,
         private router: Router
     ) {}
@@ -22,7 +19,7 @@ export class AuthService {
     }
 
     getUser(): any | null {
-        let user = localStorage.getItem('user');
+        const user = localStorage.getItem('user');
         if (user) {
             return JSON.parse(user);
         }
@@ -30,7 +27,7 @@ export class AuthService {
     }
 
     getPermission(): [] {
-        let permissions = localStorage.getItem('permissions');
+        const permissions = localStorage.getItem('permissions');
         if (permissions) {
             return JSON.parse(permissions);
         }
@@ -38,7 +35,7 @@ export class AuthService {
     }
 
     isSuperAdmin(): boolean {
-        let user = this.getUser();
+        const user = this.getUser();
         if (user) {
             return user.type == this.SUPER_ADMIN_TYPE;
         } 
@@ -46,7 +43,7 @@ export class AuthService {
     }
 
     isAdmin(): boolean {
-        let user = this.getUser();
+        const user = this.getUser();
         if (user) {
             return user.type == this.ADMIN_TYPE;
         } 
@@ -54,7 +51,7 @@ export class AuthService {
     }
 
     isDoctor(): boolean {
-        let user = this.getUser();
+        const user = this.getUser();
         if (user) {
             return user.type == this.DOCTOR_TYPE;
         } 

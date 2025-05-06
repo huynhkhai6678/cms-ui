@@ -35,7 +35,7 @@ export class FrontHeaderComponent implements OnInit {
   constructor(private translateService: TranslateService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    let user = this.authService.getUser();
+    const user = this.authService.getUser();
     if (user) {
       this.isLogin.set(true);
     }
@@ -51,7 +51,7 @@ export class FrontHeaderComponent implements OnInit {
 
   setLanguage(code : string) {
     this.translateService.use(code);
-    let lang = this.languages.filter(language => { return language.code === code});
+    const lang = this.languages.filter(language => { return language.code === code});
     this.currentLanguage.set(lang[0]['name']);
   }
 

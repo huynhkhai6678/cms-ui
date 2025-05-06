@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal, signal, ɵunwrapWritableSignal } from '@angular/core';
+import { Component, OnInit, Signal } from '@angular/core';
 import { FrontService } from '../front.service';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -52,7 +52,7 @@ export class MedicalContactComponent implements OnInit {
     }
 
     value.clinic_id = this.data().clinic_id;
-    this.frontService.sendEnquiry(value).subscribe(res => {
+    this.frontService.sendEnquiry(value).subscribe(() => {
       this.isSubmitted = false;
       this.enquiryForm.reset();
     });

@@ -1,4 +1,4 @@
-import { Component, signal, ɵunwrapWritableSignal } from '@angular/core';
+import { Component, ɵunwrapWritableSignal } from '@angular/core';
 import { FrontService } from '../../front.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { filter, switchMap, map } from 'rxjs';

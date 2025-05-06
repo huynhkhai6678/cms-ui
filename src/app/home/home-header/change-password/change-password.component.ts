@@ -17,10 +17,10 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class ChangePasswordComponent implements OnInit {
   changePasswordForm! : FormGroup
-  isSubmitted : boolean = false;
-  showCurrentPassword : boolean = false;
-  showNewPassword : boolean = false;
-  showComfirmPassword: boolean = false;
+  isSubmitted = false;
+  showCurrentPassword = false;
+  showNewPassword = false;
+  showComfirmPassword = false;
 
   constructor(public bsModalRef: BsModalRef, private fb: FormBuilder) {
 

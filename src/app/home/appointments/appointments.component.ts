@@ -82,11 +82,10 @@ export class AppointmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let calendarOptions = this.calendarOptions();
+    const calendarOptions = this.calendarOptions();
     calendarOptions.locale = this.translate.currentLang;
     if (calendarOptions.buttonText) {
       calendarOptions.buttonText.today =  this.translationValue['js.today'];
-      console.log(calendarOptions.buttonText.today);
     }
     this.calendarOptions.set(calendarOptions);
     this.calendarVisible.update((bool) => !bool);
@@ -100,8 +99,8 @@ export class AppointmentsComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
+    // const title = prompt('Please enter a new title for your event');
+    // const calendarApi = selectInfo.view.calendar;
 
     console.log(selectInfo);
   }

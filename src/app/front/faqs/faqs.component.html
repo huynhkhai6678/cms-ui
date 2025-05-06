@@ -6,8 +6,8 @@
                 @for(faq of faqs(); track faq.id) {
                     <div class="col-lg-6">
                         <div class="accordion-item">
-                            <h2 class="accordion-header" (click)="setAccordian(faq.id)">
-                                <button class="accordion-button"  [ngClass]="collapseItem() !== faq.id ? 'collapsed' : 'custom-class'" type="button" data-id="1" data-bs-toggle="collapse" style="box-shadow: none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button"  [ngClass]="collapseItem() !== faq.id ? 'collapsed' : 'custom-class'" type="button" data-id="1" data-bs-toggle="collapse" style="box-shadow: none;"  (click)="setAccordian(faq.id)">
                                     {{faq.question}}
                                 </button>
                             </h2>

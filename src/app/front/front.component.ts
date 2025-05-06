@@ -1,11 +1,9 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FrontHeaderComponent } from "./front-header/front-header.component";
 import { FrontFooterComponent } from "./front-footer/front-footer.component";
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FrontService } from './front.service';
 import { ThemeService } from '../services/theme.service';
-
-declare var $: any;
 
 @Component({
   selector: 'app-front',
@@ -31,7 +29,7 @@ export class FrontComponent implements OnInit {
     this.data = this.frontService.setting;
 
     this.activatedRoute.queryParams.subscribe(params => {
-      let name = params['name'] ?? 'default';
+      const name = params['name'] ?? 'default';
         this.frontService.getClinicSetting(name).subscribe((response : any) => {
           this.frontService.updateSignal(response.data);
         });

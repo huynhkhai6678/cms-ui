@@ -15,5 +15,5 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class AboutUsComponent {
   @Input() setting : any;
-  @Input() landingPage : boolean = true;
+  @Input() landingPage = true;
 }

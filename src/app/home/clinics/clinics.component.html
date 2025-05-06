@@ -3,12 +3,12 @@
 </app-data-table>
 
 <ng-template #actionTemplate let-id>
-    <div class="btn px-2 text-primary fs-2">
-        <i class="fa-solid fa-pen-to-square" title="Edit" (click)="editClinic(id)"></i>
-    </div>
-    <div class="btn px-1 text-danger fs-3 ps-0">
-        <i class="fa-solid fa-trash" title="Delete" (click)="delete(id)"></i>
-    </div>
+    <button class="btn px-2 border-0 text-primary fs-2" (click)="editClinic(id)">
+        <i class="fa-solid fa-pen-to-square" title="Edit"></i>
+    </button>
+    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(id)">
+        <i class="fa-solid fa-trash" title="Delete"></i>
+    </button>
 </ng-template>  
 
 <ng-template #searchTemplate let-onInputChange="onInputChange">
@@ -22,9 +22,9 @@
             </div>
         </div>
         <div>
-            <a href="javascript:void(0)" type="button" class="btn btn-primary ms-auto" (click)="openCreateClinic()">
+            <button class="btn btn-primary ms-auto" (click)="openCreateClinic()">
                 {{'messages.clinics.add_clinic' | translate}}
-            </a>
+            </button>
         </div>
     </div>
 </ng-template>

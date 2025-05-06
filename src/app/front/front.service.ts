@@ -52,12 +52,12 @@ export class FrontService {
     }
 
     sendSubscribe(data : any) {
-        let url = 'subscribes';
+        const url = 'subscribes';
         return this.apiService.post(url, data);
     }
 
     sendEnquiry(data : any) {
-        let url = 'enquiries';
+        const url = 'enquiries';
         return this.apiService.post(url, data);
     }
 

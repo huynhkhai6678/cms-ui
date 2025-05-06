@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FlatpickrDirective } from 'angularx-flatpickr';
 import moment from 'moment';
@@ -28,14 +28,16 @@ import moment from 'moment';
 })
 export class DateInputComponent implements ControlValueAccessor {
 
-  @Input() placeholder: string = '';
-  @Input() dateFormat: string = 'd/m/Y';
-  @Input() momentDateFormat: string = 'DD/MM/YYYY';
-  @Input() id: string = '';
+  @Input() placeholder = '';
+  @Input() dateFormat = 'd/m/Y';
+  @Input() momentDateFormat = 'DD/MM/YYYY';
+  @Input() id = '';
 
   value: any;
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onChange: (value: string) => void = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched: () => void = () => {};
   
   writeValue(value: any): void {
@@ -50,12 +52,12 @@ export class DateInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
+  validate(): ValidationErrors | null {
     return null;
   }
 
   onValueChange(event: any) {
-    let date = moment(event).format(this.momentDateFormat);
+    const date = moment(event).format(this.momentDateFormat);
     this.value = date;
     this.onChange(date);
     this.onTouched();

@@ -18,16 +18,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class ImageUploadComponent implements ControlValueAccessor {
-  @Input() defaultImage: string = 'https://cms-testing.myclnq.com/web/media/avatars/male.png';
+  @Input() defaultImage = 'https://cms-testing.myclnq.com/web/media/avatars/male.png';
   @Input() currentImage: string | null = null;
-  @Input() imageId: string = 'imageUploadFile';
+  @Input() imageId = 'imageUploadFile';
 
   @Output() imageSelected = new EventEmitter<string>(); // Emits base64 string
 
   file: any= null;
   previewUrl: string | ArrayBuffer | null = this.defaultImage;
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onChange: (value: string) => void = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched: () => void = () => {};
 
   writeValue(obj: File | null): void {

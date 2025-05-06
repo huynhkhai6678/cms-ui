@@ -1,6 +1,6 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams} from  '@angular/common/http';
+import { HttpClient} from  '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -25,11 +25,11 @@ export class ApiService {
     return this.httpClient.delete(`${environment.apiUrl}` + url);
   }
 
-  postFileWithParams(url: string, params: { [key: string]: any }): Observable<any> {
+  postFileWithParams(url: string, params: Record<string, any>): Observable<any> {
     const formData = new FormData();
     // Append additional fields
     for (const key in params) {
-      if (params.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(params, key)) {
         if (key === 'contact') {
           formData.append('region_code', params[key]['dialCode']);
           formData.append('contact', params[key]['e164Number'].split(params[key]['dialCode'])[1]);

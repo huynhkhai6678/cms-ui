@@ -35,7 +35,7 @@ export class ProfileModalComponent implements OnInit {
   cities : { label : string; value: number}[] = [];
 
   profileForm! : FormGroup;
-  isSubmitted : boolean = false;
+  isSubmitted = false;
 
 
   constructor(public bsModalRef: BsModalRef, private apiService: ApiService, private fb: FormBuilder, private shareService: ShareService, private spinnerService: NgxSpinnerService) {}
@@ -79,7 +79,7 @@ export class ProfileModalComponent implements OnInit {
       return;
     }
 
-    this.apiService.postFileWithParams('profile', value).subscribe(res => {
+    this.apiService.postFileWithParams('profile', value).subscribe(() => {
       this.isSubmitted = false;
       this.bsModalRef.hide();
     });

@@ -1,4 +1,4 @@
-import { Component, computed, ContentChild, Input, OnInit, signal, TemplateRef } from '@angular/core';
+import { Component, computed, Input, signal, TemplateRef } from '@angular/core';
 import { DataTableService } from './data-table.service';
 import { CommonModule } from '@angular/common';
 import { toObservable, toSignal } from "@angular/core/rxjs-interop";
@@ -17,7 +17,7 @@ export class DataTableComponent {
   @Input() headers = [];
   @Input() actionTemplate!: TemplateRef<any>;
   @Input() searchTemplate!: TemplateRef<any>;
-  @Input() columnCustomTemplates! : { [key: string]: any; };
+  @Input() columnCustomTemplates! : Record<string, any>;
 
   sortColumnName = signal<string>('');
   sortColumnOrder = signal<string>('');
@@ -63,7 +63,7 @@ export class DataTableComponent {
       this.sortColumnName.set(column);
       this.sortColumnOrder.set('asc');
     } else {
-      let value = this.sortColumnOrder() == 'asc' ? 'desc' : 'asc';
+      const value = this.sortColumnOrder() == 'asc' ? 'desc' : 'asc';
       this.sortColumnOrder.set(value);
     }
   }
@@ -81,7 +81,7 @@ export class DataTableComponent {
   }
 
   changeItemPerPage(event: any) {
-    let value = event.target.value;
+    const value = event.target.value;
     this.itemPerPage.set(value);
   }
 
@@ -93,7 +93,7 @@ export class DataTableComponent {
     if (params.itemPerPage) searchParams.set('limit', params.itemPerPage);
     if (params.page) searchParams.set('page', params.page);
 
-    let url = this.url + '?' + searchParams.toString();
+    const url = this.url + '?' + searchParams.toString();
     return this.dataService.get(url).pipe(
       tap((data : any) => { this.renderPagination(data.pagination)}),
       map((data : any) => { return data.data })

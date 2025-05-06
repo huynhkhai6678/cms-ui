@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors, Validator } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors, Validator } from '@angular/forms';
 import { CountryISO, NgxIntlTelInputModule, SearchCountryField, PhoneNumberFormat } from 'ngx-intl-tel-input';
 
 @Component({
@@ -27,7 +27,7 @@ import { CountryISO, NgxIntlTelInputModule, SearchCountryField, PhoneNumberForma
 export class PhoneInputComponent implements ControlValueAccessor, Validator, OnInit, AfterViewInit  {
 
   @Input() selectedContry: any = CountryISO.Malaysia;
-  @Input() placeholder: string = 'Enter phone number';
+  @Input() placeholder = 'Enter phone number';
 
   @ViewChild('wrapper', { static: false }) wrapper!: ElementRef;
 
@@ -36,7 +36,10 @@ export class PhoneInputComponent implements ControlValueAccessor, Validator, OnI
   PhoneNumberFormat = PhoneNumberFormat;
 
   phoneControl = new FormControl();
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onChange: any = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched: any = () => {};
 
   ngOnInit() {
@@ -79,7 +82,7 @@ export class PhoneInputComponent implements ControlValueAccessor, Validator, OnI
     this.onTouched();
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
+  validate(): ValidationErrors | null {
     return this.phoneControl.errors;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal, ɵunwrapWritableSignal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FrontService } from '../../front.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';

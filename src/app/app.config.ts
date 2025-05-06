@@ -9,6 +9,7 @@ import {provideTranslateService, TranslateLoader} from "@ngx-translate/core";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { provideToastr } from 'ngx-toastr';
 import { provideFlatpickrDefaults } from 'angularx-flatpickr';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) => new TranslateHttpLoader(http, './i18n/', '.json');
 
@@ -32,6 +33,7 @@ export const appConfig: ApplicationConfig = {
       withFetch()
     ),
     importProvidersFrom(NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })),
+    importProvidersFrom(ModalModule.forRoot()),
     provideFlatpickrDefaults()
   ]
 };

@@ -1,0 +1,16 @@
+<div class="modal-content confirm-modal">
+  <div class="modal-body comfirm-modal__body">
+    <div class="comfirm-modal__body__icon text-warning" [innerHTML]="icon">
+    </div>
+    <div class="comfirm-modal__body__title">{{ title | translate }}</div>
+    <div class="comfirm-modal__body__text">{{ message  }}</div>
+  </div>
+  <div class="modal-footer comfirm-modal__footer">
+    <button type="button" class="btn comfirm-modal__footer__btn delete col" (click)="confirm()">
+      {{ confirmBtnText | translate }}
+    </button>
+    <button type="button" class="btn cancel col" (click)="decline()">
+      {{ cancelBtnText | translate }}
+    </button>
+  </div>
+</div>

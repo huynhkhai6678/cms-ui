@@ -1,11 +1,11 @@
-import { Component, computed, signal, Signal } from '@angular/core';
+import { Component, computed, Signal } from '@angular/core';
 import { TestimonialsComponent } from "../shared/testimonials/testimonials.component";
 import { AboutUsComponent } from '../shared/about-us/about-us.component';
 import { FrontService } from '../front.service';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { filter, map, switchMap } from 'rxjs';
+import { filter, switchMap } from 'rxjs';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 @Component({
@@ -40,7 +40,7 @@ export class LandingComponent {
   };
 
   chunkServicesData = computed(() => {
-    let arr : any = [];
+    const arr : any = [];
     if (this.data()) {
       for (let i = 0; i < this.data().services.length; i += 2) {
         arr.push(this.data().services.slice(i, i + 2));

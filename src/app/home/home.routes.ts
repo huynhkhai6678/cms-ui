@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { superAdminGuard } from '../auths/superadmin.guard';
-import { adminGuard } from '../auths/admin.guard';
 import { permissionGuard } from '../auths/permission.guard';
 
 export const homeRoutes: Routes = [

@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './hero-section.component.scss'
 })
 export class HeroSectionComponent {
-    @Input() header : string = '';
+    @Input() header  = '';
 }

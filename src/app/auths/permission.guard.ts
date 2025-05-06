@@ -9,7 +9,7 @@ export function permissionGuard(
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    let permissions : string[] = authService.getPermission();
+    const permissions : string[] = authService.getPermission();
     if(permissions.includes(routerName)) {
       return true;
     }

@@ -1,34 +1,28 @@
-import { AfterViewInit, Component, computed, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { ApiService } from '../../services/api.service';
-import { BsModalRef, BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { ClinicModalComponent } from './clinic-modal/clinic-modal.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-clinics',
   imports: [
     DataTableComponent,
-    ModalModule,
-    TranslatePipe
+    TranslatePipe,
   ],
-  providers: [
-      BsModalService
-  ],
-  standalone: true,
   templateUrl: './clinics.component.html',
   styleUrl: './clinics.component.scss'
 })
 export class ClinicsComponent implements AfterViewInit { 
   url = 'clinics';
   @ViewChild('contactNumberTemplate') contactNumberTemplate!: TemplateRef<any> ;
-  columnCustomTemplates : {[key: string]: any } = {};
-  bsModalRef?: BsModalRef;
+  columnCustomTemplates : Record<string, any> = {};
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
     ['name', 'Name', '', true, 'string'],
-    ['type', 'Type', '', true, 'string'],
+    ['type_text', 'Type', '', true, 'string'],
     ['address.address1', 'address', '', true, 'object'],
     ['address.state.name', 'State', '', true, 'object'],
     ['address.postal_code', 'Postal code', '', false, 'object'],
@@ -38,7 +32,7 @@ export class ClinicsComponent implements AfterViewInit {
 
   constructor(
     public apiService: ApiService,
-    private modalService: BsModalService,
+    private formService: FormService
   ) {
 
   }
@@ -48,16 +42,25 @@ export class ClinicsComponent implements AfterViewInit {
   }
 
   editClinic(id: number) {
-    console.log(id);
+    this.formService.openEditCreateModal(ClinicModalComponent, 'modal-lg', {
+      title: 'messages.clinics.edit_clinic',
+      clinicId: id
+    });
   }
 
   delete(id: number) {
-    console.log(id);
+    this.formService.showDeleteConfirm('Are you sure you want to delete this?', 'Delete Confirmation')
+    .subscribe(confirmed => {
+      if (confirmed) {
+        console.log('User confirmed');
+        console.log(id);
+      }
+    });
   }
 
   openCreateClinic() {
-    this.bsModalRef = this.modalService.show(ClinicModalComponent, { class: 'modal-lg', initialState: { 
+    this.formService.openEditCreateModal(ClinicModalComponent, 'modal-lg', {
       title: 'messages.clinics.add_clinic'
-    }});
+    });
   }
 }

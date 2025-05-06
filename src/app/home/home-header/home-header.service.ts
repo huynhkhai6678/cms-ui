@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "../../services/api.service";
-import { AuthService } from "../../services/auth.service";
 
 @Injectable()
 export class ProfileService {
@@ -11,16 +10,14 @@ export class ProfileService {
     ) { }
 
     updateLanguage(language: string) {
-        let body = {
+        return this.apiService.post(`${this.url}/update-language`, {
             language,
-        }
-        return this.apiService.post(`${this.url}/update-language`, body);
+        });
     }
 
     updateTheme(dark_mode: boolean) {
-        let body = {
+        return this.apiService.post(`${this.url}/update-theme`, {
             dark_mode,
-        }
-        return this.apiService.post(`${this.url}/update-theme`, body);
+        });
     }
 }

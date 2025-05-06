@@ -11,14 +11,14 @@
                 <label for="exampleInputImage" class="form-label">{{ 'messages.patient.profile' | translate }}:</label>
             </div>
             <div class="col-lg-8">
-                <div class="mb-3" io-image-input="true">
-                    <app-image-upload formControlName="avatar"></app-image-upload>
+                <div class="mb-3">
+                    <app-image-upload formControlName="avatar" id="exampleInputImage"></app-image-upload>
                 </div>
             </div>
         </div>
 
         <div class="row mb-5">
-            <label class="col-lg-4 form-label required">{{ 'messages.patient.full_name' | translate }}:</label>
+            <label for="first_name" class="col-lg-4 form-label required">{{ 'messages.patient.full_name' | translate }}:</label>
             <div class="col-lg-8">
                 <div class="row">
                     <div class="col-lg-6 mb-5">
@@ -33,25 +33,25 @@
         </div>
 
         <div class="row mb-5">
-            <label class="col-lg-4 form-label required">{{ 'messages.patient.email' | translate }}:</label>
+            <label for="email" class="col-lg-4 form-label required">{{ 'messages.patient.email' | translate }}:</label>
             <div class="col-lg-8">
                 <input id="email" class="form-control" placeholder="{{ 'messages.patient.email' | translate }}" required="" name="email" type="email" formControlName="email">
             </div>
         </div>
 
         <div class="row mb-5">
-            <label class="col-lg-4 form-label required">{{ 'messages.user.time_zone' | translate }}:</label>
+            <label for="time_zone" class="col-lg-4 form-label required">{{ 'messages.user.time_zone' | translate }}:</label>
             <div class="col-lg-8">
-                <select2 [data]="TIMEZONES" formControlName="time_zone" placeholder="{{ 'messages.user.time_zone' | translate }}"></select2>
+                <select2 id="time_zone" [data]="TIMEZONES" formControlName="time_zone" placeholder="{{ 'messages.user.time_zone' | translate }}"></select2>
             </div>
         </div>
 
         <div class="row mb-5">
             <div class="col-lg-4">
-                <label class="col-lg-4 form-label required">{{ 'messages.user.contact_number' | translate }}:</label>
+                <label for="contact" class="col-lg-4 form-label required">{{ 'messages.user.contact_number' | translate }}:</label>
             </div>
             <div class="col-lg-8">
-                <app-phone-input formControlName="contact"></app-phone-input>
+                <app-phone-input formControlName="contact" id="contact"></app-phone-input>
                     @if (profileForm.controls['contact'].invalid && (profileForm.controls['contact'].touched || isSubmitted)) {
                         <div class="invalid-feedback d-block">
                           @if (profileForm.controls['contact'].errors?.['required']) {
@@ -70,10 +70,10 @@
             <label for="gender" class="col-lg-4 form-label required">{{ 'messages.user.gender' | translate }}:</label>
             <div class="col-lg-8">
                 <span class="is-valid">
-                    <input class="form-check-input" type="radio" name="gender" value="1" formControlName="gender" [checked]="profileForm.controls['gender'].value == 1">
-                    <label class="form-label">{{ 'messages.patient.male' | translate }}</label>&nbsp;&nbsp;
-                    <input class="form-check-input" type="radio" name="gender" value="2" formControlName="gender" [checked]="profileForm.controls['gender'].value == 2">
-                    <label class="form-label">{{ 'messages.patient.female' | translate }}</label>
+                    <input id="gender-male" class="form-check-input" type="radio" name="gender" value="1" formControlName="gender" [checked]="profileForm.controls['gender'].value === 1">
+                    <label for="gender-male" class="form-label">{{ 'messages.patient.male' | translate }}</label>&nbsp;&nbsp;
+                    <input id="gender-female" class="form-check-input" type="radio" name="gender" value="2" formControlName="gender" [checked]="profileForm.controls['gender'].value === 2">
+                    <label for="gender-female" class="form-label">{{ 'messages.patient.female' | translate }}</label>
                 </span>
             </div>
         </div>
@@ -81,11 +81,11 @@
         <div class="row pt-5">
             <div class="col-md-6 mb-5">
                 <label for="dob" class="form-label">{{ 'messages.patient.dob' | translate }}:</label>
-                <app-date-input formControlName="dob" placeholder="Enter your date of birth" id="DOB"></app-date-input>
+                <app-date-input formControlName="dob" placeholder="Enter your date of birth" id="dob"></app-date-input>
             </div>
             <div class="col-md-6 mb-5">
-                <label class="form-label">{{ 'messages.patient.blood_group' | translate }}:</label>
-                <select2 [data]="BLOODS" formControlName="blood_group" placeholder="{{ 'messages.patient.blood_group' | translate }}"></select2>
+                <label for="blood_group" class="form-label">{{ 'messages.patient.blood_group' | translate }}:</label>
+                <select2 id="blood_group" [data]="BLOODS" formControlName="blood_group" placeholder="{{ 'messages.patient.blood_group' | translate }}"></select2>
             </div>
         </div>
 
@@ -111,7 +111,7 @@
                 <select2 [data]="cities" formControlName="city_id" placeholder="{{ 'messages.patient.city' | translate }}"></select2>
             </div>
             <div class="col-md-6 mb-7">
-                <label for="postalCode" class="form-label">{{ 'messages.patient.postal_code' | translate }}:</label>
+                <label for="postal_code" class="form-label">{{ 'messages.patient.postal_code' | translate }}:</label>
                 <input class="form-control" placeholder="{{ 'messages.patient.postal_code' | translate }}" name="postal_code" type="text" id="postal_code" formControlName="postal_code">
             </div>
         </div>
