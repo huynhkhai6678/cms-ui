@@ -17,6 +17,10 @@ export class ApiService {
     return this.httpClient.post(`${environment.apiUrl}` + url, params);
   }
 
+  patch(url: string, params: any){
+    return this.httpClient.patch(`${environment.apiUrl}` + url, params);
+  }
+
   put(url: string, params: any){
     return this.httpClient.put(`${environment.apiUrl}` + url, params);
   }

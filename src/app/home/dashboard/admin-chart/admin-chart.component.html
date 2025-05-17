@@ -1,0 +1,30 @@
+<div class="card card-xl-stretch mb-5 mb-xl-8">
+    <!--begin::Header-->
+    <div class="card-header card-header-dashbord border-0 p-3 ps-5">
+        <h3 class="card-title align-items-start flex-column mb-3">
+            <span class="card-label fw-bolder fs-3 mb-1">Sales
+                (RM <span class="card-label fw-bolder fs-3 mb-1 me-0 totalEarning">5253.45</span>)
+            </span>
+        </h3>
+
+        <div class="ms-0 ms-md-2 mb-3">
+            <div class="dropdown d-flex align-items-center me-4 me-md-5">
+                <button class="btn btn btn-icon btn-primary text-white dropdown-toggle hide-arrow ps-2 pe-0"
+                    type="button" id="dashboardFilterBtn" data-bs-auto-close="outside" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fas fa-filter"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-body appointmentChart">
+        <div id="appointmentChartId" style="height: 350px; min-height: 365px;" class="card-rounded-bottom">
+            <highcharts-chart
+                [Highcharts]="Highcharts"
+                [options]="chartOptions"
+                style="width: 100%; height: 400px; display: block;"
+            ></highcharts-chart>
+        </div>
+    </div>
+</div>

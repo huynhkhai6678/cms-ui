@@ -1,1 +1,33 @@
-<p>dashboard works!</p>
+<div class="container-fluid">
+    <div class="d-flex flex-column">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="row">
+                    @if (data?.user_card) {
+                        <div class="col-xl-12 col-md-6">
+                            <app-dashboard-user-card [data]="data.user_card"></app-dashboard-user-card>
+                        </div>
+                    }
+                    <div class="col-xl-12 col-md-6" >
+                        <app-dashboard-erning-card></app-dashboard-erning-card>
+                    </div>
+                    @if (data?.visit_card) {
+                        <div class="col-xl-12 col-md-6">
+                            <app-dashboard-visit-card [data]="data.visit_card"></app-dashboard-visit-card>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-xxl-8 col-xl-8">
+                @if (data?.appointment_card) {
+                    <app-dashboard-appointment-card [data]="data.appointment_card"></app-dashboard-appointment-card>
+                }
+                <app-dashboard-admin-chart></app-dashboard-admin-chart>
+            </div>
+
+            <div class="col-xxl-12">
+                 <!-- <livewire:admin-dashBoard-table /> -->
+            </div>
+        </div>
+    </div>
+</div>

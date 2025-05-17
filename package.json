@@ -38,6 +38,8 @@
     "bootstrap-icons": "^1.11.3",
     "flatpickr": "^4.6.13",
     "google-libphonenumber": "^3.2.40",
+    "highcharts": "^12.2.0",
+    "highcharts-angular": "^4.0.1",
     "intl-tel-input": "^19.5.7",
     "jquery": "^3.7.1",
     "moment": "^2.30.1",

@@ -1,13 +1,15 @@
 import { Injectable, Type } from '@angular/core';
 import { ApiService } from './api.service';
 import { ComfirmModalComponent } from '../shared/comfirm-modal/comfirm-modal.component';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class FormService {
   constructor(
     private apiService: ApiService,
+    private translateService: TranslateService,
     public modalService: BsModalService,
   ) {}
 
@@ -18,23 +20,47 @@ export class FormService {
   openEditCreateModal<T>(
     component: Type<T>,
     modalClass = 'modal-md',
-    initialState: Partial<T> = {}
+    initialState: Partial<T> = {},
+    onHideCallback? : () => void
   ): BsModalRef {
-    return this.modalService.show(component, {
+    const modalRef = this.modalService.show(component, {
       class: modalClass,
       initialState
     });
+  
+    if (onHideCallback) {
+      modalRef.onHide?.subscribe(() => {
+        onHideCallback();
+      });
+    }
+
+    return modalRef;
   }
 
-  showDeleteConfirm(message: string, icon = '<i class="fa-solid fa-circle-exclamation"></i>' , title = 'js.delete', confirmText = 'js.yes', cancelText = 'js.no') {
+  submitForm(
+    url: string,
+    id: number | null,
+    value: any,
+  ): Observable<any> {
+    if (id) {
+      return this.apiService.patch(`${url}/${id}`, value);
+    } else {
+      return this.apiService.post(url, value);
+    }
+  }
+
+  showDeleteConfirm(name: string, icon = '<i class="fa-solid fa-circle-exclamation"></i>' , title = 'js.delete', confirmText = 'js.yes', cancelText = 'js.no') {
     const result = new Subject<boolean>();
     const bsModalRef: BsModalRef = this.modalService.show(ComfirmModalComponent);
 
-    bsModalRef.content.title = title;
-    bsModalRef.content.message = message;
-    bsModalRef.content.confirmBtnText = confirmText;
-    bsModalRef.content.cancelBtnText = cancelText;
-    bsModalRef.content.icon = icon;
+    this.translateService.get('js.are_you_sure').subscribe((message: string) => {
+      const bodyMessage = `${message} "${name}" ?`;
+      bsModalRef.content.title = title;
+      bsModalRef.content.message = bodyMessage;
+      bsModalRef.content.confirmBtnText = confirmText;
+      bsModalRef.content.cancelBtnText = cancelText;
+      bsModalRef.content.icon = icon;
+    })
 
     const subscription = this.modalService.onHidden.subscribe(() => {
       result.next(bsModalRef.content.result === true);

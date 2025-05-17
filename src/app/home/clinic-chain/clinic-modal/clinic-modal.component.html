@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3 id="clinicModalHeader">{{chainName}} ({{clinics.length}})</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <ul id="clinicModalList" class="list-group list-group-flush">
+        <!-- <li class="list-group-item">CAREPLUS Clinic (Jalan Kuning)</li>
+        <li class="list-group-item">CAREPLUS Clinic (Jalan Bubut)</li> -->
+        @for(clinic of clinics; track clinic['id']) {
+            <li class="list-group-item">{{clinic.name}}</li>
+        }
+    </ul>
+</div>
+<div class="modal-footer pt-0">
+    <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.close' | translate}}</button>
+</div>

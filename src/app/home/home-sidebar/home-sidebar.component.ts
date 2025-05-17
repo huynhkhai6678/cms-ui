@@ -3,12 +3,14 @@ import { AuthService } from '../../services/auth.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HomeService } from '../home.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-sidebar',
   standalone: true,
   imports: [
     RouterModule,
+    TranslatePipe,
     FormsModule
   ],
   templateUrl: './home-sidebar.component.html',
@@ -28,43 +30,55 @@ export class HomeSidebarComponent implements OnInit {
   readonly allRoutes : HomeSidebarLink[] = [
     {
       icon : 'fa-solid fa-calendar',
-      name : 'Clinics',
+      name : 'messages.clinics.clinics',
       link: 'clinics',
       permission : 'manage_clinics'
     },
     {
       icon : 'fa-solid fa-calendar',
-      name : 'Chains',
+      name : 'messages.clinic_chains.clinic_chains',
       link: 'clinic-chains',
       permission : 'manage_clinic_brands'
     },
     {
       icon : 'fa-solid fa-calendar',
-      name : 'Users',
+      name : 'messages.user_manage.users',
       link: 'users',
       permission : 'manage_users'
     },
     {
+      icon : 'fa-solid fa-calendar',
+      name : 'messages.setting.currency',
+      link: 'currencies',
+      permission : 'manage_users'
+    },
+    {
+      icon : 'fa-solid fa-calendar',
+      name : 'messages.role.role',
+      link: 'roles',
+      permission : 'manage_users'
+    },
+    {
       icon : 'fa-solid fa-digital-tachograph',
-      name : 'Dashboard',
+      name : 'messages.dashboard',
       link: 'dashboard',
       permission : 'manage_admin_dashboard'
     },
     {
       icon : 'fa-solid fa-calendar-alt',
-      name : 'Appointments',
+      name : 'messages.appointments',
       link: 'appointments',
       permission: 'manage_appointments'
     },
     {
       icon : 'fa-solid fa-calendar',
-      name : 'Queues',
+      name : 'messages.queue',
       link: 'queues',
       permission: 'manage_patient_visits'
     },
     {
       icon : 'fa-solid fa-hospital-user',
-      name : 'Patients',
+      name : 'messages.patients',
       link: 'patients',
       permission: 'manage_patients'
     }

@@ -1,0 +1,56 @@
+<div class="card-body p-9">
+    <form id="createCurrencyForm" [formGroup]="roleForm" (ngSubmit)="submit(roleForm.value, roleForm.valid)">
+        <div class="row gx-10 mb-5">
+            <div class="col-md-6 mb-5">
+                <label for="display_name" class="required fs-5 fw-bolder form-label mb-2">{{'messages.common.name' | translate}}:</label>
+                <input class="form-control form-control-solid" placeholder="{{'messages.role.role' | translate}}" id="display_name" formControlName="display_name">
+            </div>
+        </div>
+        <div class="row">
+            <div class="row">
+                <div class="col-md-6 mb-5">
+                    <span class="fs-5 fw-bolder form-label mb-2">{{'messages.role.select_all_permissions' | translate}}</span>
+                    <label class="form-check form-check-custom form-check-sm form-check-solid float-end">
+                        <input class="form-check-input allPermissionCheck" type="checkbox" value="" id="checkAllPermission" (change)="checkAll($event)">
+                    </label>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="row">
+                        @for (permission of leftList; track permission['id']) {
+                            <div class="col-xs-12 mb-5">
+                                <span>{{permission['display_name']}}</span>
+                                <label class="form-check form-check-sm form-check-custom form-check-solid float-end">
+                                    <input class="form-check-input permission" type="checkbox" 
+                                    [value]="permission['id']"
+                                    [checked]="roleForm.value.permission_ids.includes(permission['id'])"
+                                    (change)="onPermissionChange($event)"
+                                    >
+                                </label>
+                            </div>
+                        } 
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-xs-12">
+                    <div class="row">
+                        @for (permission of rightList; track permission['id']) {
+                            <div class="col-xs-12 mb-5">
+                                <span>{{permission['display_name']}}</span>
+                                <label class="form-check form-check-sm form-check-custom form-check-solid float-end">
+                                    <input class="form-check-input permission" type="checkbox" 
+                                    [value]="permission['id']"
+                                    [checked]="roleForm.value.permission_ids.includes(permission['id'])"
+                                    (change)="onPermissionChange($event)">
+                                </label>
+                            </div>
+                        } 
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

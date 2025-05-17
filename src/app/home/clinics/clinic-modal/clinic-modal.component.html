@@ -62,37 +62,37 @@
             </div>
         
             <div class="col-md-6 mb-5">
-                <label for="address1" class="form-label">Address 1:</label>
-                <input class="form-control" placeholder="Address 1" name="address1" type="text" id="address1" formControlName="address1">
+                <label for="address1" class="form-label">{{'messages.patient.address1' | translate}}:</label>
+                <input class="form-control" placeholder="{{'messages.patient.address1' | translate}}" type="text" id="address1" formControlName="address1">
             </div>
         
             <div class="col-md-6 mb-5">
-                <label for="country_id" class="form-label">Country:</label>
+                <label for="country_id" class="form-label">{{'messages.common.select_country' | translate}}:</label>
                 <select2 [data]="countries" placeholder="{{'messages.common.select_country' | translate}}" formControlName="country_id" id="country_id" (update)="onCountryChange($event)"></select2>
             </div>
 
             <div class="col-md-6 mb-5">
-                <label for="address2" class="form-label">Address 2:</label>
-                <input class="form-control" placeholder="Address 2" name="address2" type="text" id="address2" formControlName="address2">
+                <label for="address2" class="form-label">{{'messages.patient.address2' | translate}}:</label>
+                <input class="form-control" placeholder="{{'messages.patient.address2' | translate}}" type="text" id="address2" formControlName="address2">
             </div>
             
             <div class="col-md-6 mb-5">
-                <label for="state_id" class="form-label">State:</label>
-                <select2 [data]="states" placeholder="{{'messages.common.select_state' | translate}}" formControlName="state_id" id="state_id" (update)="onStateChange($event)"></select2>
+                <label for="state_id" class="form-label">{{'messages.patient.state' | translate}}:</label>
+                <select2 [data]="states" placeholder="{{'messages.patient.select_state' | translate}}" formControlName="state_id" id="state_id" (update)="onStateChange($event)"></select2>
             </div>
             
             <div class="col-md-6 mb-5">
-                <label for="city_id" class="form-label">City:</label>
-                <select2 [data]="cities" placeholder="{{'messages.common.select_city' | translate}}" formControlName="city_id" id="city_id"></select2>
+                <label for="city_id" class="form-label">{{'messages.patient.city' | translate}}:</label>
+                <select2 [data]="cities" placeholder="{{'messages.patients.select_city' | translate}}" formControlName="city_id" id="city_id"></select2>
             </div>
         
             <div class="col-md-6 mb-5">
-                <label for="postalCode" class="form-label">Postal Code:</label>
-                <input class="form-control" placeholder="Postal Code" name="postal_code" type="text" id="postal_code" formControlName="postal_code">
+                <label for="postalCode" class="form-label">{{'messages.patient.postal_code' | translate}}:</label>
+                <input class="form-control" placeholder="{{'messages.patient.postal_code' | translate}}" name="postal_code" type="text" id="postal_code" formControlName="postal_code">
             </div>
             <div class="col-md-6 mb-5">
-                <label for="email" class="form-label required">Email:</label>
-                <input class="form-control" placeholder="Email" name="email" type="email" id="email" formControlName="email">
+                <label for="email" class="form-label required">{{'messages.staff.email' | translate}}:</label>
+                <input class="form-control" placeholder="{{'messages.staff.email' | translate}}" name="email" type="email" id="email" formControlName="email">
                 @if (!clinicForm.controls['email'].valid && (!clinicForm.controls['email'].pristine || isSubmitted)) {
                     <div id="emailValidation" class="invalid-feedback d-block">
                         {{'messages.common.email_regex' | translate}}
@@ -100,8 +100,8 @@
                 }
             </div>
             <div class="col-md-6 mb-5">
-                <label for="social_link" class="form-label">Social Link:</label>
-                <input class="form-control" placeholder="Social Link" name="social_link" type="text" id="social_link" formControlName="social_link">
+                <label for="social_link" class="form-label">{{'messages.clinics.social_link' | translate}}:</label>
+                <input class="form-control" placeholder="{{'messages.clinics.social_link' | translate}}" name="social_link" type="text" id="social_link" formControlName="social_link">
             </div>
         </div>
         <div class="modal-footer p-0">

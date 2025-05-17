@@ -16,7 +16,10 @@ import { FormService } from '../../services/form.service';
 })
 export class ClinicsComponent implements AfterViewInit { 
   url = 'clinics';
-  @ViewChild('contactNumberTemplate') contactNumberTemplate!: TemplateRef<any> ;
+
+  @ViewChild('contactNumberTemplate') contactNumberTemplate!: TemplateRef<any>;
+  @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
+
   columnCustomTemplates : Record<string, any> = {};
 
   // field, header name, css, sortable, type
@@ -31,7 +34,7 @@ export class ClinicsComponent implements AfterViewInit {
   ];
 
   constructor(
-    public apiService: ApiService,
+    private apiService: ApiService,
     private formService: FormService
   ) {
 
@@ -45,15 +48,18 @@ export class ClinicsComponent implements AfterViewInit {
     this.formService.openEditCreateModal(ClinicModalComponent, 'modal-lg', {
       title: 'messages.clinics.edit_clinic',
       clinicId: id
+    }, () => {
+      this.dataTableComponent.reloadData();
     });
   }
 
   delete(id: number) {
-    this.formService.showDeleteConfirm('Are you sure you want to delete this?', 'Delete Confirmation')
+    this.formService.showDeleteConfirm('Are you sure you want to delete this?')
     .subscribe(confirmed => {
       if (confirmed) {
-        console.log('User confirmed');
-        console.log(id);
+        this.apiService.delete(`${this.url}/${id}`).subscribe(() => {
+          this.dataTableComponent.reloadData();
+        })
       }
     });
   }
@@ -61,6 +67,8 @@ export class ClinicsComponent implements AfterViewInit {
   openCreateClinic() {
     this.formService.openEditCreateModal(ClinicModalComponent, 'modal-lg', {
       title: 'messages.clinics.add_clinic'
+    }, () => {
+      this.dataTableComponent.reloadData();
     });
   }
 }

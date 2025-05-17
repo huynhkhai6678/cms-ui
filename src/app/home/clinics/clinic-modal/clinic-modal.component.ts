@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { ApiService } from '../../../services/api.service';
-import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
 import { Select2 } from 'ng-select2-component';
 import { FormService } from '../../../services/form.service';
@@ -15,7 +13,6 @@ import { City, LocationService, State } from '../../../services/location.service
     TranslatePipe,
     ReactiveFormsModule,
     PhoneInputComponent,
-    NgxIntlTelInputModule,
     Select2
   ],
   templateUrl: './clinic-modal.component.html',
@@ -41,7 +38,6 @@ export class ClinicModalComponent implements OnInit {
 
   constructor(public bsModalRef: BsModalRef, 
     private fb: FormBuilder, 
-    private apiService: ApiService,
     private locationService: LocationService,
     private formService : FormService,
   ) {}
@@ -53,14 +49,13 @@ export class ClinicModalComponent implements OnInit {
       type: ['', [Validators.required]],
       phone: [null, [Validators.required]],
       address1: [''],
-      country_id: [''],
+      country_id: [null],
       address2: [''],
-      state_id: [''],
-      city_id: [''],
+      state_id: [null],
+      city_id: [null],
       postal_code: [''],
       email: ['', [Validators.required, Validators.email]],
       social_link: [''],
-      avatar : ['']
     });
 
     this.formService.getInitData(`${this.url}/${this.clinicId}`).subscribe((response : any) => {
@@ -90,9 +85,10 @@ export class ClinicModalComponent implements OnInit {
       return;
     }
 
-    this.apiService.post(this.url, value).subscribe({
+    this.formService.submitForm(this.url, this.clinicId, value).subscribe({
       next: () => {
         this.isSubmitted = false;
+        this.bsModalRef.hide();
       },
       error: (error) => {
         console.log(error);

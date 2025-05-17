@@ -20,7 +20,7 @@ export function JwtInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): 
     return next(req).pipe(
         catchError((error: HttpErrorResponse) => {
             if (error.status === 401) {
-                authService.logout();
+              authService.logout();
             }
             return throwError(() => error);
         })

@@ -3,11 +3,13 @@ import { DataTableService } from './data-table.service';
 import { CommonModule } from '@angular/common';
 import { toObservable, toSignal } from "@angular/core/rxjs-interop";
 import { debounceTime, map, switchMap, tap } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-data-table',
   imports: [
-    CommonModule
+    CommonModule,
+    TranslatePipe
   ],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss'
@@ -19,6 +21,7 @@ export class DataTableComponent {
   @Input() searchTemplate!: TemplateRef<any>;
   @Input() columnCustomTemplates! : Record<string, any>;
 
+  refreshKey = signal<number>(0);
   sortColumnName = signal<string>('');
   sortColumnOrder = signal<string>('');
   itemPerPage = signal<number>(10);
@@ -27,11 +30,12 @@ export class DataTableComponent {
   searchString = signal<string>('');
 
   sortData = computed(() => ({
-      column : this.sortColumnName(),
-      order : this.sortColumnOrder(),
-      page: this.page(),
-      itemPerPage : this.itemPerPage(),
-      searchString: this.searchString()
+    column : this.sortColumnName(),
+    order : this.sortColumnOrder(),
+    page: this.page(),
+    itemPerPage : this.itemPerPage(),
+    searchString: this.searchString(),
+    refreshKey : this.refreshKey()
   }));
 
   totalItemInPage = computed(() => { return this.data()?.length ?? 0});
@@ -105,6 +109,10 @@ export class DataTableComponent {
     this.searchString.set(element.value);
   }
 
+  reloadData() {
+    // Trigger reload data
+    this.refreshKey.update(key => key + 1);
+  }
   
   getNestedValue(obj: any, path: string): any {
     return path.split('.').reduce((o, key) => (o && o[key] !== undefined) ? o[key] : null, obj);

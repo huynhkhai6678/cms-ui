@@ -1,0 +1,48 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h3>{{title | translate }}</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form id="createCurrencyForm" [formGroup]="currencyForm" (ngSubmit)="submit(currencyForm.value, currencyForm.valid)">
+        <div class="modal-body">
+            <div class="alert alert-danger d-none" id="createCurrencyValidationErrorsBox" style="display: none;"></div>
+            <div class="mb-5">
+                <label for="currency_name" class="required form-label">{{'messages.currency.currency_name' | translate}}:</label>
+                <input class="form-control" placeholder="{{'messages.currency.currency_name' | translate}}" type="text" id="currency_name" formControlName="currency_name">
+                @if (!currencyForm.controls['currency_name'].valid && (!currencyForm.controls['currency_name'].pristine || isSubmitted)) {
+                    <div id="currencyNameValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="mb-5">
+                <label for="currency_icon" class="required form-label">{{'messages.currency.currency_icon' | translate}}:</label>
+                <input class="form-control" placeholder="{{'messages.currency.currency_icon' | translate}}" type="text" id="currency_icon" formControlName="currency_icon">
+                @if (!currencyForm.controls['currency_icon'].valid && (!currencyForm.controls['currency_icon'].pristine || isSubmitted)) {
+                    <div id="currencyIconValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="mb-5">
+                <label for="currency_code" class="required form-label">{{'messages.currency.currency_code' | translate}}:</label>
+                <input class="form-control" placeholder="{{'messages.currency.currency_code' | translate}}" type="text" id="currency_code" formControlName="currency_code">
+                @if (!currencyForm.controls['currency_code'].valid && (!currencyForm.controls['currency_code'].pristine || isSubmitted)) {
+                    <div id="currencyCodeValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="text-muted">
+                {{ 'messages.visit.notes' | translate }}
+                : {{ 'messages.currency.add_currency_code_as_per_three_letter_iso_code' | translate }}.<a
+                    href="//stripe.com/docs/currencies"
+                    target="_blank">{{ 'messages.currency.you_can_find_out_here' | translate }}.</a>
+            </div>
+        </div>
+        <div class="modal-footer pt-0">
+            <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+            <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.cancel' | translate}}</button>
+        </div>
+    </form>
+</div>

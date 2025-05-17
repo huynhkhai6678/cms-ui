@@ -1,0 +1,84 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="userForm" (ngSubmit)="submit(userForm.value, userForm.valid)">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <label for="first_name" class="form-label required">{{ 'messages.user_manage.first_name' | translate }}:</label>
+                    <input id="first_name" class="form-control" placeholder="{{ 'messages.user_manage.first_name' | translate }}" name="name" type="text" formControlName="first_name">
+                    @if (!userForm.controls['first_name'].valid && (!userForm.controls['first_name'].pristine || isSubmitted)) {
+                        <div id="userFirstNameValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <label for="last_name" class="form-label required">{{ 'messages.user_manage.last_name' | translate }}:</label>
+                    <input id="last_name" class="form-control" placeholder="{{ 'messages.user_manage.last_name' | translate }}" name="name" type="text" formControlName="last_name">
+                    @if (!userForm.controls['last_name'].valid && (!userForm.controls['last_name'].pristine || isSubmitted)) {
+                        <div id="userFirstNameValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <label for="phone" class="form-label required">{{ 'messages.clinics.phone' | translate }}:</label>
+                    <app-phone-input formControlName="phone"></app-phone-input>
+                    @if (userForm.controls['phone'].invalid && (userForm.controls['phone'].touched || isSubmitted)) {
+                        <div class="invalid-feedback d-block">
+                          @if (userForm.controls['phone'].errors?.['required']) {
+                            {{ 'messages.this_field' | translate }}
+                          }
+                      
+                          @if (userForm.controls['phone'].errors?.['validatePhoneNumber']) {
+                            {{ 'Invalid phone' | translate }}
+                          }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="email" class="form-label required">{{ 'messages.user_manage.email' | translate }}:</label>
+                <input class="form-control" placeholder="{{ 'messages.user_manage.email' | translate }}" type="email" id="email" formControlName="email" autocomplete="off">
+                @if (!userForm.controls['email'].valid && (!userForm.controls['email'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.common.email_regex' | translate}}
+                    </div>
+                }
+            </div>
+            
+            @if (!userId) {
+                <div class="col-md-6 mb-5">
+                    <label for="password" class="form-label required">{{'messages.patient.password' | translate}}:</label>
+                    <input class="form-control" placeholder="{{'messages.patient.password' | translate}}" type="password" id="password" formControlName="password" autocomplete="off">
+                </div>
+                <div class="col-md-6 mb-5">
+                    <label for="confirm_password" class="form-label required">{{'messages.patient.confirm_password' | translate}}:</label>
+                    <input class="form-control" placeholder="{{'messages.patient.confirm_password' | translate}}" type="password" id="confirm_password" formControlName="confirm_password" autocomplete="off">
+                </div>
+            }
+            <div class="col-md-6 mb-5">
+                <label for="clinic_chain_id" class="form-label required">{{'messages.user_manage.chain' | translate}}:</label>
+                <select2 [data]="clinicChains" placeholder="{{'messages.user_manage.chain' | translate}}" formControlName="clinic_chain_id" id="clinic_chain_id" (update)="onCliniChainChange($event)"></select2>
+            </div>
+            
+            <div class="col-md-6 mb-5">
+                <label for="clinic_ids" class="form-label required">{{'messages.user_manage.clinic' | translate}}:</label>
+                <select2 [data]="clinics" multiple placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_ids" id="clinic_ids"></select2>
+            </div>
+        </div>
+        <div class="modal-footer p-0">
+            <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+            <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+        </div>
+    </form>
+</div>

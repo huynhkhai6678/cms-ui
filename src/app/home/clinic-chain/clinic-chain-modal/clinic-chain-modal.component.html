@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="clinicChainForm" (ngSubmit)="submit(clinicChainForm.value, clinicChainForm.valid)">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <label for="Clinic Name" class="form-label required">{{'messages.clinics.name' | translate }}:</label>
+                    <input class="form-control" placeholder="Clinic Name" name="name" type="text" formControlName="name">
+                    @if (!clinicChainForm.controls['name'].valid && (!clinicChainForm.controls['name'].pristine || isSubmitted)) {
+                        <div id="clinicNameValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
+                </div>
+            </div>
+        
+            <div class="col-md-6 mb-5">
+                <label for="clinic_ids" class="form-label">{{'messages.clinic_chains.select_clinic' | translate }}:</label>
+                <select2 [data]="clinics" multiple placeholder="{{'messages.clinic_chains.select_clinic_helper' | translate }}" formControlName="clinic_ids" id="clinic_ids"></select2>
+            </div>
+        </div>
+        <div class="modal-footer p-0">
+            <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+            <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+        </div>
+    </form>
+</div>

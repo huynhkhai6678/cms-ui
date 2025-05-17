@@ -1,5 +1,5 @@
 <div class="datatable-header">
-    <ng-container *ngTemplateOutlet="searchTemplate; context: { $implicit: 'John Doe', onInputChange: handleInputChange }">
+    <ng-container *ngTemplateOutlet="searchTemplate; context: { onInputChange: handleInputChange }">
     </ng-container>
 </div>
 
@@ -9,7 +9,7 @@
             <tr>
                 @for(column of headers;track column[0]) {
                     <th class="{{column[2]}}" [class.sortable]="column[3]" (click)="setOrder(column[0], column[3])">
-                        {{ column[1] }}
+                        {{ column[1] | translate }}
                         @if (column[3] && column[0] !== sortColumnName()) {
                             <i class="fa-solid fa-sort"></i>
                         }
@@ -43,7 +43,7 @@
 
                     @if (column[4] === 'action' && actionTemplate) {
                         <td>
-                            <ng-container *ngTemplateOutlet="actionTemplate; context: { $implicit: item.id }">
+                            <ng-container *ngTemplateOutlet="actionTemplate; context: { $implicit: item }">
                             </ng-container>
                         </td>
                     }
@@ -87,19 +87,17 @@
             @for(p of pages(); track p) {
                 <li class="page-item" [class.active]="p === page()">
                     <button class="page-link"
-                        [disabled]="page() === 1"
                         (click)="selectPage(p)">
                         {{ p }}
                     </button>
                 </li>
             }
             <li class="page-item" [class.disabled]="page() === totalPages()">
-                <a class="page-link">></a>
                 <button
                     class="page-link"
                     [disabled]="page() === totalPages()"
                     (click)="selectPage(page() - 1)">
-                    &lt;
+                    &gt;
                 </button>
             </li>
         </ul>

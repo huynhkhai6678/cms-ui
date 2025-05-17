@@ -1,0 +1,34 @@
+<app-data-table 
+    [url]="url" 
+    [headers]="tableColumns" 
+    [actionTemplate]="actionTemplate" 
+    [searchTemplate]="searchTemplate" 
+    [columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #actionTemplate let-row>
+    <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.id)">
+        <i class="fa-solid fa-pen-to-square" title="Edit"></i>
+    </button>
+    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row.id, row.currency_name)">
+        <i class="fa-solid fa-trash" title="Delete"></i>
+    </button>
+</ng-template>  
+
+<ng-template #searchTemplate let-onInputChange="onInputChange">
+    <div class="d-flex justify-content-between mb-5">
+        <div class="mb-3 mb-sm-0">
+            <div class="position-relative d-flex width-320">
+                <span class="position-absolute d-flex align-items-center top-0 bottom-0 left-0 text-gray-600 ms-3">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input class="form-control search-box ps-8" type="search" placeholder="Search" aria-label="Search" (input)="onInputChange($event.target)">
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-primary ms-auto" (click)="create()">
+                {{'messages.currency.add_currency' | translate}}
+            </button>
+        </div>
+    </div>
+</ng-template>
