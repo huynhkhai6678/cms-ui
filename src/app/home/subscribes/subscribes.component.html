@@ -1,0 +1,12 @@
+<app-data-table 
+    [url]="url" 
+    [headers]="tableColumns" 
+    [actionTemplate]="actionTemplate" 
+    [columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #actionTemplate let-row>
+    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
+        <i class="fa-solid fa-trash" title="Delete"></i>
+    </button>
+</ng-template>

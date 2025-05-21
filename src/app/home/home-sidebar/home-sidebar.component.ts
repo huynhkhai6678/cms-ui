@@ -81,7 +81,31 @@ export class HomeSidebarComponent implements OnInit {
       name : 'messages.patients',
       link: 'patients',
       permission: 'manage_patients'
-    }
+    },
+    {
+      icon : 'fa-solid fa-question-circle',
+      name : 'messages.enquiries',
+      link: 'enquiries',
+      permission: 'manage_front_cms'
+    },
+    {
+      icon : 'fa-solid fa-building',
+      name : 'messages.clinic_service',
+      link: 'clinic-services',
+      permission: 'manage_clinic_service'
+    },
+    {
+      icon : 'fa-solid fa-list',
+      name : 'messages.master_list',
+      link: 'subscribers',
+      permission: 'manage_settings'
+    },
+    {
+      icon : 'fa-solid fa-cogs',
+      name : 'messages.settings',
+      link: 'specializations',
+      permission: 'manage_settings'
+    },
   ];
 
   constructor(

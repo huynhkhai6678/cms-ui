@@ -1,0 +1,56 @@
+<div class="content d-flex flex-column flex-column-fluid pt-7 clinic-schedules">
+    <div class="d-md-flex align-items-center justify-content-between mb-5 me-xl-10">
+        <div>
+            <h1 class="mb-0">Clinic Schedules</h1>
+        </div>
+        <div>
+            <select id="clinicFilterSettingSchedule" class="form-select" [(ngModel)]="clinicId" (change)="loadData()">
+                @for(clinic of homeService.clinics; track clinic.id) {
+                    <option value="{{clinic.id}}">{{clinic.name}}</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="d-flex flex-column flex-lg-row">
+        <div class="flex-lg-row-fluid mb-10 mb-lg-0 me-lg-7 me-xl-10">
+            <div class="card">
+                <div class="card-body p-sm-12 p-5 p-0">
+                    <form [formGroup]="scheduleForm" (ngSubmit)="submit(scheduleForm.value)">
+                        <div id="clinicSchedulebody" class="card-body p-0">
+                            <div class="row gx-10 mb-9" formArrayName="schedule">
+                                <div class="col-12" *ngFor="let day of schedule; let i = index" [formGroupName]="i">
+                                    <div class="d-flex w-100 align-items-center position-relative">
+                                        <div class="d-flex flex-wrap w-100">
+                                            <div class="form-check mb-0 checkbox-content d-flex align-items-center">
+                                                <input id="chkShortWeekDay_{{daysOfWeek[i]['name']}}"
+                                                    class="form-check-input min-w-input" 
+                                                    type="checkbox"
+                                                    formControlName="checked"
+                                                    checked="day['checked'].value"
+                                                >
+                                                <label class="form-check-label ms-2 me-5"
+                                                    for="chkShortWeekDay_{{daysOfWeek[i]['name']}}">
+                                                    <span class="fs-5 fw-bold d-md-block">{{daysOfWeek[i]['name']}}</span>
+                                                </label>
+                                            </div>
+                                            <div class="session-times">
+                                                <div class="d-flex flex-xs-column align-items-center my-4 add-slot">
+                                                    <select2 class="clinic-schedules__select" [data]="timeSlots" id="clinicId" formControlName="start_time"></select2>
+                                                    <span class="px-3">To</span>
+                                                    <select2 class="clinic-schedules__select" [data]="timeSlots" id="clinicId" formControlName="end_time"></select2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <input #submitButton class="btn btn-primary me-2" type="submit" value="Save">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

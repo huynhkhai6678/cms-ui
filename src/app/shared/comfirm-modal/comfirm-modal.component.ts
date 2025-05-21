@@ -16,6 +16,7 @@ export class ComfirmModalComponent {
   confirmBtnText = 'OK';
   cancelBtnText = 'Cancel';
   icon = '<i class="fa-solid fa-circle-exclamation"></i>';
+  showCancelText = true;
 
   public result: boolean | undefined;
 

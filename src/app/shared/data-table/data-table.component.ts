@@ -4,12 +4,16 @@ import { CommonModule } from '@angular/common';
 import { toObservable, toSignal } from "@angular/core/rxjs-interop";
 import { debounceTime, map, switchMap, tap } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HomeService } from '../../home/home.service';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-data-table',
   imports: [
     CommonModule,
-    TranslatePipe
+    FormsModule,
+    TranslatePipe,
   ],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss'
@@ -19,7 +23,11 @@ export class DataTableComponent {
   @Input() headers = [];
   @Input() actionTemplate!: TemplateRef<any>;
   @Input() searchTemplate!: TemplateRef<any>;
+  @Input() filterTemplate!: TemplateRef<any>;
+  @Input() addTemplate!: TemplateRef<any>;
   @Input() columnCustomTemplates! : Record<string, any>;
+  @Input() showClinicFilterTemplate = true;
+  @Input() showSearchTemplate = true;
 
   refreshKey = signal<number>(0);
   sortColumnName = signal<string>('');
@@ -28,6 +36,8 @@ export class DataTableComponent {
   totalPages = signal<number>(0);
   page = signal<number>(1);
   searchString = signal<string>('');
+  clinicId = signal<number>(0);
+  filterOptions = signal<any>({});
 
   sortData = computed(() => ({
     column : this.sortColumnName(),
@@ -35,7 +45,9 @@ export class DataTableComponent {
     page: this.page(),
     itemPerPage : this.itemPerPage(),
     searchString: this.searchString(),
-    refreshKey : this.refreshKey()
+    refreshKey : this.refreshKey(),
+    clinicId : this.clinicId(),
+    filterOptions : this.filterOptions()
   }));
 
   totalItemInPage = computed(() => { return this.data()?.length ?? 0});
@@ -54,8 +66,10 @@ export class DataTableComponent {
 
   constructor(
     public dataService: DataTableService,
+    private authService: AuthService,
+    public homeService: HomeService
   ) {
-    
+    this.clinicId.set(this.authService.getUser().clinic_id);
   }
 
   setOrder(column: 'string', sortable = false) {
@@ -96,6 +110,15 @@ export class DataTableComponent {
     if (params.searchString) searchParams.set('search', params.searchString);
     if (params.itemPerPage) searchParams.set('limit', params.itemPerPage);
     if (params.page) searchParams.set('page', params.page);
+    if (params.clinicId) searchParams.set('clinic_id', params.clinicId);
+
+    // Extend filter option from UI
+    Object.keys(this.filterOptions()).forEach(key => {
+      const value = this.filterOptions()[key];
+      if (value) {
+        searchParams.set(key, value);
+      }
+    });
 
     const url = this.url + '?' + searchParams.toString();
     return this.dataService.get(url).pipe(
@@ -105,9 +128,14 @@ export class DataTableComponent {
   }
 
   // Arrow functions (=>) preserve the outer context of this
-  handleInputChange = (element: HTMLInputElement) => {
+  handleSearchChange (element: HTMLInputElement) {
     this.searchString.set(element.value);
   }
+
+  handleFilterChange(value : any) {
+    this.filterOptions.set(value);
+    this.reloadData();
+  } 
 
   reloadData() {
     // Trigger reload data

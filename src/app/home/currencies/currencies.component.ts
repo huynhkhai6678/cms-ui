@@ -19,8 +19,6 @@ export class CurrenciesComponent {
 
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
 
-  columnCustomTemplates : Record<string, any> = {};
-
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
     ['currency_name', 'messages.currency.currency_name', '', true, 'string'],

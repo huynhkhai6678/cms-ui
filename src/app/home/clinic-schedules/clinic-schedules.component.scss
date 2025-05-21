@@ -1,0 +1,9 @@
+.select2-selection__rendered {
+    text-align: center;
+}
+
+.clinic-schedules {
+    &__select {
+        min-width: 120px;
+    }
+}

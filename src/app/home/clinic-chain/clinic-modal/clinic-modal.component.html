@@ -4,8 +4,6 @@
 </div>
 <div class="modal-body">
     <ul id="clinicModalList" class="list-group list-group-flush">
-        <!-- <li class="list-group-item">CAREPLUS Clinic (Jalan Kuning)</li>
-        <li class="list-group-item">CAREPLUS Clinic (Jalan Bubut)</li> -->
         @for(clinic of clinics; track clinic['id']) {
             <li class="list-group-item">{{clinic.name}}</li>
         }

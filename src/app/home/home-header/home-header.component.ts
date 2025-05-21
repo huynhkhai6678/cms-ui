@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, OnInit, signal } from '@angular/core';
-import { NavigationStart, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router, RouterModule } from '@angular/router';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { filter } from 'rxjs';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -31,7 +31,7 @@ import { ProfileModalComponent } from './profile-modal/profile-modal.component';
   styleUrl: './home-header.component.scss'
 })
 export class HomeHeaderComponent implements OnInit {
-  headerRoutes = signal<any[]>([]);
+  headerRoutes = signal<RouteData[]>([]);
   darkMode = signal<boolean>(false);
   user = signal<any>({});
   bsModalRef?: BsModalRef;
@@ -43,7 +43,7 @@ export class HomeHeaderComponent implements OnInit {
     return 'fa-moon';
   });
 
-  readonly allHeaderRoutes = {
+  readonly allHeaderRoutes : Record<string, RouteData[]> = {
     'clinics': [
       {
         name : 'Clinics',
@@ -61,12 +61,48 @@ export class HomeHeaderComponent implements OnInit {
         name : 'Users',
         link: 'users'
       }
-    ]
+    ],
+    'clinic-services': [
+      {
+        name : 'messages.clinic_service',
+        link: 'clinic-services'
+      }
+    ],
+    'master_list': [
+      {
+        name : 'messages.subscribers',
+        link: 'subscribers'
+      },
+      {
+        name : 'messages.clinic_document_setting',
+        link: 'clinic-document-setting'
+      }
+    ],
+    'settings': [
+      {
+        name : 'messages.settings',
+        link: 'settings'
+      },
+      {
+        name : 'messages.specializations',
+        link: 'specializations'
+      },
+      {
+        name : 'messages.clinic_schedules',
+        link: 'clinic-schedules'
+      }
+    ],
   }
+
+  readonly sharedRoutesGroups = {
+    'master_list': ['subscribers', 'clinic-document-setting'],
+    'settings': ['settings', 'specializations', 'clinic-schedules'],
+  };
 
   constructor(
     private router: Router,
     private authService: AuthService,
+    private route: ActivatedRoute,
     private modalService: BsModalService,
     private profileService: ProfileService,
     private themeService: ThemeService,
@@ -84,7 +120,7 @@ export class HomeHeaderComponent implements OnInit {
     this.setRouter(this.router.url);
     this.router.events.pipe(
       filter(event => event instanceof NavigationStart)
-    ).subscribe((event:NavigationStart) => {      
+    ).subscribe((event:NavigationStart) => {
       this.setRouter(event.url);
     });
   }
@@ -93,6 +129,13 @@ export class HomeHeaderComponent implements OnInit {
     for (const [key, value] of Object.entries(this.allHeaderRoutes)) {
       if (url.indexOf(key) >= 0) {
         this.headerRoutes.set(value);
+        return;
+      }
+    }
+
+    for (const [groupKey, routes] of Object.entries(this.sharedRoutesGroups)) {
+      if (routes.some(route => url.indexOf(route) >= 0)) {
+        this.headerRoutes.set(this.allHeaderRoutes[groupKey]);
         return;
       }
     }
@@ -134,4 +177,9 @@ export class HomeHeaderComponent implements OnInit {
       }
     })
   }
+}
+
+interface RouteData {
+  name: string;
+  link: string;
 }

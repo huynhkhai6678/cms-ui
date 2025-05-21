@@ -23,7 +23,15 @@ import { AuthService } from '../../../services/auth.service';
 export class ChangeLanguageModalComponent implements OnInit {
 
   selectedLanguage! : string;
-  readonly languages = [
+
+  readonly LANGUAGES = [
+    { label: 'English', value: 'en'},
+    { label: '中文', value: 'zh'},
+    { label: 'Bahasa', value: 'id'},
+    { label: 'ភាសាខ្មែរ', value: 'km'},
+  ]
+
+  readonly OLD = [
     { label: 'English', value: 'en'},
     { label: 'Spanish', value: 'es'},
     { label: 'French', value: 'fr'},

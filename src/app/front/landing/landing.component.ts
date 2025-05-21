@@ -58,6 +58,8 @@ export class LandingComponent {
         switchMap((params) => this.getData(params))
       ),
     );
+
+    console.log(this.data());
   }
 
   getData(params : any) {

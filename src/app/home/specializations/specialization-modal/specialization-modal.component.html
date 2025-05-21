@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="specializationForm" (ngSubmit)="submit(specializationForm.value, specializationForm.valid)">
+        <div class="row">
+             @if (homeService.clinics.length > 1) {
+                <div class="col-md-12 mb-5">
+                    <label for="clinicId" class="form-label required">{{'messages.common.name' | translate}}:</label>
+                    <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.name' | translate}}" formControlName="clinic_id" id="clinicId"></select2>
+                </div>
+            }
+            <div class="col-md-12 mb-5">
+                <label for="name" class="form-label required">{{'messages.common.name' | translate }}:</label>
+                <input id="name" class="form-control" placeholder="{{'messages.common.name' | translate }}" name="name" type="text" formControlName="name">
+                @if (!specializationForm.controls['name'].valid && (!specializationForm.controls['name'].pristine || isSubmitted)) {
+                    <div id="clinicNameValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="modal-footer p-0">
+            <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+            <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+        </div>
+    </form>
+</div>

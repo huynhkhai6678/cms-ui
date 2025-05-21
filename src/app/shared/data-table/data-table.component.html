@@ -1,6 +1,33 @@
 <div class="datatable-header">
-    <ng-container *ngTemplateOutlet="searchTemplate; context: { onInputChange: handleInputChange }">
-    </ng-container>
+    <div class="d-flex justify-content-between mb-5">
+        @if (showSearchTemplate) {
+            <div class="mb-3 mb-sm-0">
+                <div class="position-relative d-flex width-320">
+                    <span class="position-absolute d-flex align-items-center top-0 bottom-0 left-0 text-gray-600 ms-3">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input class="form-control search-box ps-8" type="search" placeholder="Search" aria-label="Search" [ngModel]="searchString()" (ngModelChange)="searchString.set($event)">
+                </div>
+            </div>
+        }
+        <div class="ms-auto d-flex">
+            <ng-container *ngTemplateOutlet="filterTemplate">
+            </ng-container>
+            @if (showClinicFilterTemplate) {
+                <div class="ms-auto d-flex">
+                    <div class="mb-5 mx-5">
+                        <select id="filterClinic" class="form-select" [ngModel]="clinicId()" (ngModelChange)="clinicId.set($event)">
+                            @for(clinic of homeService.clinics; track clinic.id) {
+                                <option value="{{clinic.id}}">{{clinic.name}}</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            }
+            <ng-container *ngTemplateOutlet="addTemplate">
+            </ng-container>
+        </div>
+    </div>
 </div>
 
 <div class="datatable-body table-responsive">

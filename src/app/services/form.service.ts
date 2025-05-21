@@ -70,4 +70,27 @@ export class FormService {
 
     return result.asObservable();
   }
+
+  showConfirmModal(name: string, icon = '<i class="fa-solid fa-circle-exclamation"></i>' , title = 'js.delete', confirmText = 'js.yes', cancelText = 'js.no') {
+    const result = new Subject<boolean>();
+    const bsModalRef: BsModalRef = this.modalService.show(ComfirmModalComponent);
+
+    this.translateService.get(name).subscribe((message: string) => {
+      const bodyMessage = `${message} "${name}" ?`;
+      bsModalRef.content.title = title;
+      bsModalRef.content.message = bodyMessage;
+      bsModalRef.content.confirmBtnText = confirmText;
+      bsModalRef.content.cancelBtnText = cancelText;
+      bsModalRef.content.showCancelText = false;
+      bsModalRef.content.icon = icon;
+    })
+
+    const subscription = this.modalService.onHidden.subscribe(() => {
+      result.next(bsModalRef.content.result === true);
+      result.complete();
+      subscription.unsubscribe();
+    });
+
+    return result.asObservable();
+  }
 }

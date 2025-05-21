@@ -29,5 +29,7 @@ export class HomeComponent implements OnInit {
       this.themeService.changeTheme(user.dark_mode);
     }
     this.collapse = this.homeService.collapseSider;
+
+    this.homeService.getClinics();
   }
 }

@@ -9,8 +9,10 @@
     <button type="button" class="btn comfirm-modal__footer__btn delete col" (click)="confirm()">
       {{ confirmBtnText | translate }}
     </button>
-    <button type="button" class="btn cancel col" (click)="decline()">
-      {{ cancelBtnText | translate }}
-    </button>
+    @if (showCancelText) {
+      <button type="button" class="btn cancel col" (click)="decline()" >
+        {{ cancelBtnText | translate }}
+      </button>
+    }
   </div>
 </div>

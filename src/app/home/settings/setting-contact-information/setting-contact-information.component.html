@@ -1,0 +1,58 @@
+@if (homeService.clinics.length > 1) {
+<div class="d-md-flex align-items-center justify-content-end mb-5">
+    <div class="col-md-6 mb-5">
+        <select id="clinicFilterSettingSchedule" class="form-select" [(ngModel)]="clinicId" (change)="loadData()">
+            @for(clinic of homeService.clinics; track clinic.id) {
+            <option value="{{clinic.id}}">{{clinic.name}}</option>
+            }
+        </select>
+    </div>
+</div>
+}
+<form [formGroup]="informationForm" (ngSubmit)="submit(informationForm.value, informationForm.valid)">
+    <div class="card">
+        <div class="card-body">
+            <div class="row mb-6">
+                <label for="address_one" class="col-lg-4 required form-label">{{'messages.patient.address1' | translate }}:</label>
+                <div class="col-lg-8">
+                    <input id="address_one" class="form-control" placeholder="{{'messages.patient.address1' | translate }}" type="text" formControlName="address_one">
+                </div>
+            </div>
+            <div class="row mb-6">
+                <label for="address_two" class="col-lg-4 required form-label">{{'messages.patient.address2' | translate }}:</label>
+                <div class="col-lg-8">
+                    <input id="address_two" class="form-control" placeholder="{{'messages.patient.address2' | translate }}" type="text" formControlName="address_two">
+                </div>
+            </div>
+            <div class="row mb-6">
+                <label for="address_two" class="col-lg-4 required form-label">{{'messages.patient.country' | translate }}:</label>
+                <div class="col-lg-8">
+                    <select2 [data]="countries" formControlName="country_id" placeholder="{{ 'messages.patient.country' | translate }}" (update)="onCountryChange($event)"></select2>
+                </div>
+            </div>
+            <div class="row mb-6">
+                <label for="address_two" class="col-lg-4 required form-label">{{'messages.patient.state' | translate }}:</label>
+                <div class="col-lg-8">
+                    <select2 [data]="states" formControlName="state_id" placeholder="{{ 'messages.patient.state' | translate }}" (update)="onStateChange($event)"></select2>
+                </div>
+            </div>
+            <div class="row mb-6">
+                <label for="address_two" class="col-lg-4 required form-label">{{'messages.patient.city' | translate }}:</label>
+                <div class="col-lg-8">
+                   <select2 [data]="cities" formControlName="city_id" placeholder="{{'messages.patient.city' | translate }}"></select2>
+                </div>
+            </div>
+            <div class="row mb-6">
+                <label for="postal_code" class="col-lg-4 required form-label">{{'messages.setting.postal_code' | translate }}:</label>
+                <div class="col-lg-8">
+                    <input id="postal_code" class="form-control" placeholder="{{'messages.setting.postal_code' | translate }}" type="text" formControlName="postal_code">
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+           <div class="form-group col-sm-12">
+                <input class="btn btn-primary" id="settingSubmitBtn" type="submit" value="Save Changes">
+            </div>
+        </div>
+    </div>
+</form>

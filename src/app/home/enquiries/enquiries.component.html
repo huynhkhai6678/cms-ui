@@ -1,0 +1,36 @@
+<app-data-table 
+    [url]="url" 
+    [headers]="tableColumns" 
+    [actionTemplate]="actionTemplate" 
+    [filterTemplate]="filterTemplate"
+    [columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #actionTemplate let-row>
+    <button class="btn px-2 border-0 text-primary fs-2" (click)="view(row.id)">
+        <i class="fa-solid fa-eye" title="View"></i>
+    </button>
+    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
+        <i class="fa-solid fa-trash" title="Delete"></i>
+    </button>
+</ng-template>
+
+<ng-template #filterTemplate>
+    <div class="ms-auto d-flex">
+        <div class="mb-5 mx-5">
+            <select class="form-select" id="enquiriesStatus" name="status" [(ngModel)]="filterParams.view" (change)="filterChange()">
+                @for(status of STATUTES; track status.name) {
+                    <option value="{{status.value}}">{{status.name}}</option>
+                }
+            </select>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #statusTemplate let-item>
+    <div class="badge {{item.view ? 'bg-success' : 'bg-danger'}}">{{item.view ? 'Read' : 'Unread'}}</div>
+</ng-template>
+
+<ng-template #dateTemplate let-item>
+    <div class="badge bg-primary">{{item.created_at | date:'dd MMM yyyy hh:mm a' }}</div>
+</ng-template>

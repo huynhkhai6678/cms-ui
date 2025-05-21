@@ -1,0 +1,33 @@
+<div class="card" *ngIf="( Editor && config )">
+    <div class="card-body">
+        <form [formGroup]="documentForm" (ngSubmit)="submit(documentForm.value, documentForm.valid)">
+            <div class="row">
+                <div class="col-md-12 mb-5">
+                    <label for="header" class="form-label required">{{'messages.clinic-service.document_header' | translate}}:</label>
+                    <ckeditor [editor]="Editor" [config]="config" formControlName="header"></ckeditor>
+                </div>
+
+                <div class="col-md-12 mb-5">
+                    <label for="header" class="form-label required">{{'messages.clinic-service.transaction_invoice_template' | translate}}:</label>
+                    <ckeditor [editor]="Editor" [config]="config" formControlName="transaction_receipt_template"></ckeditor>
+                </div>
+
+                <div class="col-md-12 mb-5">
+                    <label for="header" class="form-label required">{{'messages.clinic-service.transaction_receipt_template' | translate}}:</label>
+                    <ckeditor [editor]="Editor" [config]="config" formControlName="medical_certificate_template"></ckeditor>
+                </div>
+
+                <div class="col-md-12 mb-5">
+                    <label for="header" class="form-label required">{{'messages.clinic-service.medical_certificate_template' | translate}}:</label>
+                    <ckeditor [editor]="Editor" [config]="config" formControlName="transaction_invoice_template"></ckeditor>
+                </div>
+                <div class="col-md-12 mb-5">
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary me-2" type="submit">{{'messages.common.save' | translate}}</button>
+                        <button class="btn btn-secondary" type="cancel" (click)="cancel()">{{'messages.common.cancel' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

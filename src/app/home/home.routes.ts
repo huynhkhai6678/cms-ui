@@ -43,6 +43,44 @@ export const homeRoutes: Routes = [
             canActivate: [permissionGuard('manage_users')]
         },
         {
+            path: 'enquiries',
+            loadComponent: () => import('./enquiries/enquiries.component').then(mod => mod.EnquiriesComponent),
+            canActivate: [permissionGuard('manage_front_cms')]
+        },
+        {
+          path: 'subscribers',
+          loadComponent: () => import('./subscribes/subscribes.component').then(mod => mod.SubscribesComponent),
+          canActivate: [permissionGuard('manage_settings')],
+        },
+        {
+          path: 'clinic-services',
+          loadComponent: () => import('./clinic-services/clinic-services.component').then(mod => mod.ClinicServicesComponent),
+          canActivate: [permissionGuard('manage_clinic_service')]
+        },
+        {
+          path: 'clinic-document-setting',
+          loadComponent: () => import('./clinic-document-setting/clinic-document-setting.component').then(mod => mod.ClinicDocumentSettingComponent),
+          canActivate: [permissionGuard('manage_settings')],
+          data: {
+            group: 'master_list',
+          }
+        },
+        {
+          path: 'specializations',
+          loadComponent: () => import('./specializations/specializations.component').then(mod => mod.SpecializationsComponent),
+          canActivate: [permissionGuard('manage_settings')]
+        },
+        {
+          path: 'clinic-schedules',
+          loadComponent: () => import('./clinic-schedules/clinic-schedules.component').then(mod => mod.ClinicSchedulesComponent),
+          canActivate: [permissionGuard('manage_settings')]
+        },
+        {
+          path: 'settings',
+          loadComponent: () => import('./settings/settings.component').then(mod => mod.SettingsComponent),
+          canActivate: [permissionGuard('manage_settings')]
+        },
+        {
           path: '',
           redirectTo: 'dashboard',
           pathMatch: 'full'

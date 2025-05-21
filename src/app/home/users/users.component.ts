@@ -15,10 +15,9 @@ import { UserModalComponent } from './user-modal/user-modal.component';
   styleUrl: './users.component.scss'
 })
 export class UsersComponent {
+  
   url = 'users';
-
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
   columnCustomTemplates : Record<string, any> = {};
 
   constructor(
@@ -30,12 +29,12 @@ export class UsersComponent {
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
-    ['first_name', 'messages.patient.first_name', '', true, 'string'],
-    ['last_name', 'messages.patient.last_name', '', true, 'string'],
-    ['email', 'messages.patient.email', '', true, 'string'],
-    ['contact', 'messages.patient.contact', '', true, 'string'],
+    ['user_first_name', 'messages.patient.first_name', '', true, 'string'],
+    ['user_last_name', 'messages.patient.last_name', '', true, 'string'],
+    ['user_email', 'messages.patient.email', '', true, 'string'],
+    ['user_contact', 'messages.patient.contact', '', true, 'string'],
     ['total_clinic', 'messages.user_manage.clinic_qty', '', true, 'string'],
-    ['clinic_chain.name', 'messages.user_manage.chain', '', true, 'object'],
+    ['clinic_chain_name', 'messages.user_manage.chain', '', true, 'string'],
     ['action', 'Action', '', false, 'action'],
   ];
 
@@ -49,7 +48,7 @@ export class UsersComponent {
   }
   
   delete(id: number) {
-    this.formService.showDeleteConfirm('Are you sure you want to delete this?')
+    this.formService.showDeleteConfirm('message.common.are_you_sure')
     .subscribe(confirmed => {
       if (confirmed) {
         this.apiService.delete(`${this.url}/${id}`).subscribe(() => {
@@ -66,5 +65,4 @@ export class UsersComponent {
       this.dataTableComponent.reloadData();
     });
   }
-
 }
