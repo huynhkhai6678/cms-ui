@@ -1,19 +1,18 @@
 <div class="image-picker">
-    <div
-      class="image previewImage"
-      [id]="imageId"
-      [ngStyle]="{ 'background-image': 'url(' + previewUrl + ')' }">
-    </div>
-  
-    <span
-      class="picker-edit rounded-circle text-gray-500 fs-small">
-      <label>
-        <i class="fa-solid fa-pen" id="profileImageIcon"></i>
-        <input
-          type="file"
-          (change)="handleFileChange($event)"
-          accept="image/*"
-          class="image-upload d-none profile-validation" />
-      </label>
-    </span>
+  <div
+    class="image previewImage"
+    [id]="imageId"
+    [ngStyle]="{ 'background-image': previewUrl ? 'url(' + previewUrl + ')' : 'none' }">
   </div>
+
+  <span class="picker-edit rounded-circle text-gray-500 fs-small">
+    <label>
+      <i class="fa-solid fa-pen" id="profileImageIcon"></i>
+      <input
+        type="file"
+        (change)="handleFileChange($event)"
+        accept="image/*"
+        class="image-upload d-none profile-validation" />
+    </label>
+  </span>
+</div>

@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="testimonialForm" (ngSubmit)="submit(testimonialForm.value, testimonialForm.valid)">
+        <div class="row">
+            @if (homeService.clinics.length > 1) {
+                <div class="col-md-6 mb-5">
+                    <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
+                    <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId"></select2>
+                </div>
+                @if (!testimonialForm.controls['clinic_id'].valid && (!testimonialForm.controls['clinic_id'].pristine || isSubmitted)) {
+                    <div id="shortDescription" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            }
+            <div class="col-lg-6 mb-5">
+                <label for="name" class="form-label required">{{'messages.common.name' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.common.name' | translate }}" formControlName="name" type="text" id="name">
+                @if (!testimonialForm.controls['name'].valid && (!testimonialForm.controls['name'].pristine || isSubmitted)) {
+                    <div id="shortDescription" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+                <div class="col-lg-6 mb-5">
+                <label for="designation" class="form-label required">{{'messages.front_patient_testimonial.designation' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.front_patient_testimonial.designation' | translate }}" formControlName="designation" type="text" id="designation">
+                @if (!testimonialForm.controls['designation'].valid && (!testimonialForm.controls['designation'].pristine || isSubmitted)) {
+                    <div id="designationValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6 mb-5">
+                <label for="short_description" class="form-label required">{{'messages.front_patient_testimonial.short_description' | translate }}:</label>
+                <textarea class="form-control" placeholder="{{'messages.front_patient_testimonial.short_description' | translate }}" formControlName="short_description" type="text" id="short_description" maxlength="111"></textarea>
+                @if (!testimonialForm.controls['short_description'].valid && (!testimonialForm.controls['short_description'].pristine || isSubmitted)) {
+                    <div id="shortDescriptionValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6 mb-5">
+                <label for="testimonialImage" class="form-label required">{{'messages.slider.image' | translate }}:</label>
+                <div>
+                    <app-image-upload id="testimonialImage" formControlName="image" [currentImage]="imageUrl"></app-image-upload>
+                </div>
+                @if (!testimonialForm.controls['image'].valid && (!testimonialForm.controls['image'].pristine || isSubmitted)) {
+                    <div id="imageValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div>
+                <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

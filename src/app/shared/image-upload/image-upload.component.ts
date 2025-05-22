@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-image-upload',
@@ -17,20 +18,33 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class ImageUploadComponent implements ControlValueAccessor {
+export class ImageUploadComponent implements ControlValueAccessor, OnChanges {
   @Input() defaultImage = 'https://cms-testing.myclnq.com/web/media/avatars/male.png';
   @Input() currentImage: string | null = null;
   @Input() imageId = 'imageUploadFile';
 
   @Output() imageSelected = new EventEmitter<string>(); // Emits base64 string
 
+  apiUrl = environment.apiUrl;
+
   file: any= null;
+
   previewUrl: string | ArrayBuffer | null = this.defaultImage;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onChange: (value: string) => void = () => {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched: () => void = () => {};
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['currentImage']) {
+      if (this.currentImage) {
+        this.previewUrl = `${this.apiUrl}${this.currentImage}`;
+      } else {
+        this.previewUrl = this.defaultImage;
+      }
+    }
+  }
 
   writeValue(obj: File | null): void {
     this.file = obj;

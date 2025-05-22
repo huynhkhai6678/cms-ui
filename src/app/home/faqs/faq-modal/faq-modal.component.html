@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="faqForm" (ngSubmit)="submit(faqForm.value, faqForm.valid)">
+        <div class="row">
+            @if (homeService.clinics.length > 1) {
+                <div class="col-md-12 mb-5">
+                    <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
+                    <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId"></select2>
+                </div>
+            }
+            <div class="col-lg-12 mb-5">
+                <label for="question" class="form-label required">{{'messages.faq.question' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.faq.question' | translate }}" formControlName="question" type="text" id="question">
+            </div>
+             <div class="col-lg-12 mb-5">
+                <label for="answer" class="form-label required">{{'messages.faq.answer' | translate }}:</label>
+                <textarea class="form-control" placeholder="{{'messages.faq.answer' | translate }}" formControlName="answer" type="text" id="answer"></textarea>
+            </div>
+            <div>
+                <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

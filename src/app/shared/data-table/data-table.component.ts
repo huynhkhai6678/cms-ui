@@ -135,11 +135,15 @@ export class DataTableComponent {
   handleFilterChange(value : any) {
     this.filterOptions.set(value);
     this.reloadData();
-  } 
+  }
 
   reloadData() {
     // Trigger reload data
     this.refreshKey.update(key => key + 1);
+  }
+
+  getClinicId() {
+    return this.clinicId();
   }
   
   getNestedValue(obj: any, path: string): any {

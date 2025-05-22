@@ -1,0 +1,69 @@
+<div class="card">
+    <div class="card-body p-12">
+        <form [formGroup]="cmsForm" (ngSubmit)="submit(cmsForm.value, cmsForm.valid)">
+            <div class="row">
+                <div class="col-lg-4 mb-5">
+                    <div class="mb-3" io-image-input="true">
+                        <label for="exampleInputImage" class="form-label">{{'messages.cms.about_image' | translate }} 1:</label>
+                        <div class="d-block">
+                            <app-image-upload formControlName="about_image_1" [currentImage]="aboutImage1"></app-image-upload>
+                        </div>
+                        <div class="form-text">{{'messages.doctor.allowed_img' | translate }}</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mb-5">
+                    <div class="mb-3" io-image-input="true">
+                        <label for="exampleInputImage" class="form-label">>{{'messages.cms.about_image' | translate }} 2:</label>
+                        <div class="d-block">
+                            <app-image-upload formControlName="about_image_2" [currentImage]="aboutImage2"></app-image-upload>
+                        </div>
+                        <div class="form-text">{{'messages.doctor.allowed_img' | translate }}</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mb-7">
+                    <div class="mb-3" io-image-input="true">
+                        <label for="exampleInputImage" class="form-label">>{{'messages.cms.about_image' | translate }} 3:</label>
+                        <div class="d-block">
+                            <app-image-upload formControlName="about_image_3" [currentImage]="aboutImage3"></app-image-upload>
+                        </div>
+                        <div class="form-text">{{'messages.doctor.allowed_img' | translate }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="mb-5">
+                        <label for="about_title" class="form-label required">{{'messages.web.about_title' | translate }}:</label>
+                        <input class="form-control" placeholder="{{'messages.web.about_title' | translate }}" required="" id="about_title" formControlName="about_title" type="text">
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="mb-5">
+                        <label for="about_experience" class="form-label required">{{'messages.web.about_experience' | translate }}:</label>
+                        <input class="form-control" id="about_experience" placeholder="{{'messages.web.about_experience' | translate }}" formControlName="about_experience" type="text">
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="mb-5">
+                        <label for="about_short_description" class="form-label required">{{'messages.web.about_short_description' | translate }}:</label>
+                        <textarea class="form-control" placeholder="{{'messages.web.about_short_description' | translate }}"
+                            id="about_short_description" required="" rows="5" formControlName="about_short_description" cols="50"
+                            maxlength="800">
+                        </textarea>
+                    </div>
+                </div>
+                <div class="col-lg-12 mb-5" *ngIf="( Editor && config )">
+                    <label for="term_condition" class="form-label required">{{'messages.cms.terms_conditions' | translate }}</label>
+                    <ckeditor [editor]="Editor" [config]="config" formControlName="terms_conditions"></ckeditor>
+                </div>
+                <div class="col-lg-12 mb-5" *ngIf="( Editor && config )">
+                    <label for="privacy_policy" class="form-label required">{{'messages.cms.privacy_policy' | translate }}:</label>
+                    <ckeditor [editor]="Editor" [config]="config" formControlName="privacy_policy"></ckeditor>
+                </div>
+                <div class="d-flex">
+                    <input class="btn btn-primary" type="submit" value="Save">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

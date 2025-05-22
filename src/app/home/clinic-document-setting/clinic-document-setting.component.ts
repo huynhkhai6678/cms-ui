@@ -30,15 +30,15 @@ export class ClinicDocumentSettingComponent implements OnInit {
 
   Editor: typeof ClassicEditor | null = null;
   config: EditorConfig | null = null;
-  editorData = '<p>Initial content</p>';
+
   data! : ClinicDocumentSetting;
   documentForm! : FormGroup;
 
   ngOnInit(): void {
-     loadCKEditorCloud( {
-            version: '45.1.0',
-            premium: true
-        } ).then( this._setupEditor.bind( this ) );
+    loadCKEditorCloud( {
+      version: '45.1.0',
+      premium: false
+    }).then( this._setupEditor.bind( this ) );
 
     this.getData();
 
@@ -98,7 +98,7 @@ export class ClinicDocumentSettingComponent implements OnInit {
 
     this.Editor = ClassicEditor;
     this.config = {
-        licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDg5OTUxOTksImp0aSI6IjI4MWE5ODhhLTIwMzQtNDVkNy1hZmFkLWE4M2EzMGE5YzM3NyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjRmY2RiMThlIn0.2hHgCDdbYkhCYNzY1F1uIrGm_tfGDRXNAr3ZW_MCBAHlHTye4dlPBaUxFipa48n2CfARfxH5OT9zbqiRC4oZyA',
+        licenseKey: environment.ckeditorKey,
         plugins: [ 
           AccessibilityHelp,
           Autoformat,
@@ -218,25 +218,6 @@ export class ClinicDocumentSettingComponent implements OnInit {
               }
           ]
         },
-        image: {
-            toolbar: [
-                'toggleImageCaption',
-                'imageTextAlternative',
-                '|',
-                'imageStyle:inline',
-                'imageStyle:wrapText',
-                'imageStyle:breakText',
-                '|',
-                'resizeImage'
-            ]
-        },
-        list: {
-            properties: {
-                styles: true,
-                startIndex: true,
-                reversed: true
-            }
-        },
         table: {
             contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
         },
@@ -268,7 +249,6 @@ export class ClinicDocumentSettingComponent implements OnInit {
   }
 
   cancel() {
-    console.log(this.data);
     this.documentForm.patchValue(this.data);
     this.scrollToTop()
   }

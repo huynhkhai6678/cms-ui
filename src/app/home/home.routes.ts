@@ -81,6 +81,36 @@ export const homeRoutes: Routes = [
           canActivate: [permissionGuard('manage_settings')]
         },
         {
+          path: 'cms',
+          loadComponent: () => import('./cms/cms.component').then(mod => mod.CmsComponent),
+          canActivate: [permissionGuard('manage_front_cms')]
+        },
+        {
+          path: 'services',
+          loadComponent: () => import('./services/services.component').then(mod => mod.ServicesComponent),
+          canActivate: [permissionGuard('manage_front_cms')]
+        },
+        {
+          path: 'service-categories',
+          loadComponent: () => import('./service-categories/service-categories.component').then(mod => mod.ServiceCategoriesComponent),
+          canActivate: [permissionGuard('manage_front_cms')]
+        },
+        {
+          path: 'sliders',
+          loadComponent: () => import('./sliders/sliders.component').then(mod => mod.SlidersComponent),
+          canActivate: [permissionGuard('manage_front_cms')]
+        },
+        {
+          path: 'faqs',
+          loadComponent: () => import('./faqs/faqs.component').then(mod => mod.FaqsComponent),
+          canActivate: [permissionGuard('manage_front_cms')]
+        },
+        {
+          path: 'testimonials',
+          loadComponent: () => import('./testimonials/testimonials.component').then(mod => mod.TestimonialsComponent),
+          canActivate: [permissionGuard('manage_front_cms')]
+        },
+        {
           path: '',
           redirectTo: 'dashboard',
           pathMatch: 'full'

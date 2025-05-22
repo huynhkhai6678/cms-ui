@@ -1,0 +1,32 @@
+<app-data-table 
+    [url]="url" 
+    [headers]="tableColumns" 
+    [actionTemplate]="actionTemplate"
+    [addTemplate]="addTemplate"
+    [columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #addTemplate>
+    <div>
+        <button class="btn btn-primary ms-auto" (click)="create()">
+            {{'messages.service_category.add_category' | translate}}
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #actionTemplate let-row>
+    <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.id)">
+        <i class="fa-solid fa-pen-to-square" title="Edit"></i>
+    </button>
+    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
+        <i class="fa-solid fa-trash" title="Delete"></i>
+    </button>
+</ng-template>
+
+<ng-template #totalServiceTemplate let-item>
+    <div class="d-flex justify-content-center">
+        <div class="badge badge-circle bg-danger me-2">
+            {{item.services.length}}
+        </div>
+    </div>
+</ng-template>

@@ -49,6 +49,18 @@ export class FormService {
     }
   }
 
+  submitFormWithImage(
+    url: string,
+    id: number | null,
+    value: any,
+  ): Observable<any> {
+    if (id) {
+      return this.apiService.postFileWithParams(`${url}/${id}`, value);
+    } else {
+      return this.apiService.postFileWithParams(url, value);
+    }
+  }
+
   showDeleteConfirm(name: string, icon = '<i class="fa-solid fa-circle-exclamation"></i>' , title = 'js.delete', confirmText = 'js.yes', cancelText = 'js.no') {
     const result = new Subject<boolean>();
     const bsModalRef: BsModalRef = this.modalService.show(ComfirmModalComponent);

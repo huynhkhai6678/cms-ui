@@ -78,6 +78,32 @@ export class HomeHeaderComponent implements OnInit {
         link: 'clinic-document-setting'
       }
     ],
+    'website': [
+      {
+        name : 'messages.cms.cms',
+        link: 'cms'
+      },
+      {
+        name : 'messages.services',
+        link: 'services'
+      },
+      {
+        name : 'messages.service_categories',
+        link: 'service-categories'
+      },
+      {
+        name : 'messages.sliders',
+        link: 'sliders'
+      },
+      {
+        name : 'messages.faqs',
+        link: 'faqs'
+      },
+      {
+        name : 'messages.front_patient_testimonials',
+        link: 'testimonials'
+      }
+    ],
     'settings': [
       {
         name : 'messages.settings',
@@ -97,6 +123,7 @@ export class HomeHeaderComponent implements OnInit {
   readonly sharedRoutesGroups = {
     'master_list': ['subscribers', 'clinic-document-setting'],
     'settings': ['settings', 'specializations', 'clinic-schedules'],
+    'website' : ['cms', 'services', 'service-categories', 'sliders', 'faqs', 'testimonials']
   };
 
   constructor(

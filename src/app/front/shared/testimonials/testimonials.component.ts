@@ -3,6 +3,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FrontService } from '../../front.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, switchMap } from 'rxjs';
+import { Testimonial } from '../../../home/testimonials/testimonial.model';
 
 @Component({
   selector: 'app-testimonials',
@@ -44,13 +45,4 @@ export class TestimonialsComponent {
       map((data : any) => { return data.data })
     );
   }
-}
-
-export interface Testimonial {
-  id: number;
-  name: string;
-  designation: string;
-  short_description: string;
-  is_default: boolean;
-  clinic_id: number;
 }

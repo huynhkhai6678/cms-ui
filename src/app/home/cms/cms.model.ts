@@ -1,5 +1,4 @@
- 
-export interface ClinicDocumentSetting {
+export interface Cms {
   name: string;
   header: string;
   transaction_receipt_template: string;

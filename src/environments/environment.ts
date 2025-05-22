@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:4000/',
+  ckeditorKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzkzMjE1OTksImp0aSI6ImM0OWJhMGMxLWFhYjAtNDZkMS04ZDgyLTc1ODdkYjRmY2MxNiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkUyUCIsIkUyVyJdLCJ2YyI6ImQzODRhNmM3In0.gOIivA3581lQf78Z3at5ZykGaEie3I6kZd1U5oNWsbfycrzsQwIt3H0wTmFeYyP3TW-EXijkujWMNBbSYX9flQ',
   defaultLanguage : 'en',
 };
