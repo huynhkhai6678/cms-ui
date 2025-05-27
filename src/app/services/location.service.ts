@@ -6,15 +6,15 @@ export class LocationService {
   constructor(private apiService: ApiService) {}
 
   getCountries() {
-    return this.apiService.get('countries');
+    return this.apiService.get('helper/countries');
   }
 
   getStatesByCountry(countryId: number) {
-    return this.apiService.get(`states/states-by-country/${countryId}`);
+    return this.apiService.get(`helper/states-by-country/${countryId}`);
   }
 
   getCitiesByState(stateId: number) {
-    return this.apiService.get(`cities/cities-by-state/${stateId}`);
+    return this.apiService.get(`helper/cities-by-state/${stateId}`);
   }
 }
 

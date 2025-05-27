@@ -31,6 +31,8 @@ export class DateInputComponent implements ControlValueAccessor {
   @Input() placeholder = '';
   @Input() dateFormat = 'd/m/Y';
   @Input() momentDateFormat = 'DD/MM/YYYY';
+  @Input() maxDate = '';
+  @Input() minDate = '';
   @Input() id = '';
 
   value: any;
@@ -58,6 +60,8 @@ export class DateInputComponent implements ControlValueAccessor {
 
   onValueChange(event: any) {
     const date = moment(event).format(this.momentDateFormat);
+    console.log(event);
+    console.log(date);
     this.value = date;
     this.onChange(date);
     this.onTouched();

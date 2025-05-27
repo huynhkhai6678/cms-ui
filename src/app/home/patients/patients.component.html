@@ -1,0 +1,62 @@
+<app-data-table 
+    [url]="url" 
+    [headers]="tableColumns" 
+    [actionTemplate]="actionTemplate"
+    [addTemplate]="addTemplate"
+    [defaultTrackingColumn]="'patient_id'"
+    [columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #actionTemplate let-row>
+    <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.patient_id)">
+        <i class="fa-solid fa-pen-to-square" title="Edit"></i>
+    </button>
+    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
+        <i class="fa-solid fa-trash" title="Delete"></i>
+    </button>
+</ng-template>
+
+<ng-template #addTemplate>
+    <div>
+        <button class="btn btn-primary ms-auto" (click)="create()">
+            {{'messages.patient.add' | translate}}
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #fullNameTemplate let-item>
+    <div class="d-flex align-items-center">
+        <a [routerLink]="item.patient_id">
+            <div class="image image-circle image-mini me-3">
+                @if (item.image_url) {
+                    <img [src]="`${apiUrl}${item.image_url}`" alt="" class="user-img" loading="lazy">
+                } @else {
+                    <img [src]="`${apiUrl}public/media/male.png`" alt="user" class="user-img" loading="lazy">
+                }
+            </div>
+        </a>
+        <div class="d-flex flex-column">
+            <div class="d-inline-block align-top">
+                <div class="d-inline-block align-self-center d-flex">
+                    <a [routerLink]="item.patient_id" class="mb-1 text-decoration-none fs-6">
+                        {{item.full_name}}
+                    </a>
+                </div>
+            </div>
+            <span class="fs-6">{{item.user_email}}</span>
+        </div>
+        @if (!item.user_email) {
+            <i class="text-danger fa-solid fa-triangle-exclamation"></i>
+        }
+    </div>
+</ng-template>
+
+<ng-template #emailVerifyTemplate let-item>
+    <div class="form-check form-switch">
+        <input class="form-check-input doctorVerifyActive" type="checkbox" role="switch" [checked]="item.user_email_verified_at" (change)="verifyPatient(item.user_id)" [disabled]="item.user_email_verified_at">
+    </div>
+</ng-template>
+
+<ng-template #createdAtTemplate let-item>
+    <div class="badge bg-primary">{{item.user_created_at | date:'dd MMM yyyy hh:mm a' }}</div>
+</ng-template>

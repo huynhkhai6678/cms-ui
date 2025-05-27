@@ -1,0 +1,231 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="patientForm" (ngSubmit)="submit(patientForm.valid, patientForm.value)">
+        <div class="row">
+           @if (homeService.clinics.length > 1) {
+                <div class="col-md-6 mb-5">
+                    <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
+                    <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId" (update)="onClinicChange($event)"></select2>
+                </div>
+                <div class="col-md-3 mb-5">
+                    <label for="patient_unique_id" class="form-label">{{'messages.patient.patient_unique_id' | translate}}:</label>
+                    <input formControlName="patient_unique_id" class="form-control" maxlength="8" readonly />
+                </div>
+
+                <div class="col-md-3 mb-5">
+                    <label for="patient_mrn" class="form-label">{{'messages.patient.patient_mrn' | translate}}:</label>
+                    <input formControlName="patient_mrn" class="form-control" maxlength="8" readonly />
+                </div>
+            } @else {
+                <div class="col-md-6 mb-5">
+                    <label for="patient_unique_id" class="form-label">{{'messages.patient.patient_unique_id' | translate}}:</label>
+                    <input formControlName="patient_unique_id" class="form-control" maxlength="8" readonly />
+                </div>
+
+                <div class="col-md-6 mb-5">
+                    <label for="patient_mrn" class="form-label">{{'messages.patient.patient_mrn' | translate}}:</label>
+                    <input formControlName="patient_mrn" class="form-control" maxlength="8" readonly />
+                </div>
+            }
+
+            <div class="col-md-6 mb-5">
+                <label for="first_name" class="form-label required">{{'messages.patient.first_name' | translate}}:</label>
+                <input formControlName="first_name" class="form-control" placeholder="{{'messages.patient.first_name' | translate}}" />
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="last_name" class="form-label required">{{'messages.patient.last_name' | translate}}:</label>
+                <input class="form-control" formControlName="last_name" placeholder="{{'messages.patient.last_name' | translate}}" />
+            </div>
+
+             <div class="col-md-6 mb-5">
+                <label for="last_name" class="form-label">{{'messages.patient.display_name' | translate}}:</label>
+                <input id="display_name" formControlName="full_name" class="form-control" readonly />
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="gender" class="form-label">{{ 'messages.user.gender' | translate }}:</label>
+                <div>
+                    <input id="gender-1" class="form-check-input" type="radio" formControlName="gender" [value]="1" [checked]="patientForm.controls['gender'].value === 1">
+                    <label for="gender-2" class="form-label mr-3">{{'messages.doctor.male' | translate }}</label>
+                    <input id="gender-2" class="form-check-input ms-2" type="radio" formControlName="gender" [value]="2" [checked]="patientForm.controls['gender'].value === 2">
+                    <label for="gender-2" class="form-label mr-3">{{'messages.doctor.female' | translate }}</label>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="DOB" class="form-label required">{{'messages.doctor.dob' | translate }}:</label>
+                <app-date-input formControlName="dob" placeholder="Enter your date of birth" id="dob" [maxDate]="maxDate"></app-date-input>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="clinicId" class="form-label">{{'messages.patient.marital_status' | translate}}:</label>
+                <select2 [data]="maritalStatus" placeholder="{{'messages.patient.marital_status' | translate}}" formControlName="clinic_id" id="clinicId"></select2>
+            </div>
+
+             <div class="col-md-3 mb-5">
+                <label for="id_type" class="form-label required">{{'messages.patient.id_type' | translate}}:</label>
+                <select2 [data]="idTypes" placeholder="{{'messages.patient.id_type' | translate}}" formControlName="id_type" id="id_type"></select2>
+            </div>
+
+             <div class="col-md-3 mb-5">
+                <label for="id_number" class="form-label required">{{'messages.patient.id_number' | translate}}:</label>
+                <input id="id_number" class="form-control" formControlName="id_number" placeholder="{{'messages.patient.id_number' | translate}}" required />
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="contact" class="form-label required">{{'messages.patient.contact_no' | translate}}:</label>
+                <app-phone-input formControlName="contact" id="contact"></app-phone-input>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="nationality" class="form-label required">{{'messages.patient.nationality' | translate}}:</label>
+                <select2 [data]="countries" placeholder="{{'messages.patient.nationality' | translate}}" formControlName="nationality" id="nationality"></select2>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="race" class="form-label">{{'messages.patient.race' | translate}}:</label>
+                <select2 [data]="races" placeholder="{{'messages.patient.race' | translate}}" formControlName="race" id="race"></select2>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="religion" class="form-label">{{'messages.patient.religion' | translate}}:</label>
+                <select2 [data]="religions" placeholder="{{'messages.patient.religion' | translate}}" formControlName="religion" id="religion"></select2>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="ethnicity" class="form-label">{{'messages.patient.ethnicity' | translate}}:</label>
+                <select2 [data]="ethnicity" placeholder="{{'messages.patient.ethnicity' | translate}}" formControlName="ethnicity" id="ethnicity" ></select2>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="email" class="form-label required">{{'messages.patient.email' | translate}}:</label>
+                <input formControlName="email" type="email" class="form-control" placeholder="{{'messages.patient.email' | translate}}" required />
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="exampleInputImage" class="form-label">{{'messages.patient.profile' | translate }}:</label>
+                <div>
+                    <app-image-upload formControlName="avatar" [currentImage]="avatarUrl"></app-image-upload>
+                </div>
+            </div>
+
+            @if (!id) {
+                <div class="col-md-6 mb-5">
+                    <label for="password" class="form-label required">{{'messages.patient.password' | translate}}:</label>
+                    <input class="form-control" placeholder="{{'messages.patient.password' | translate}}" type="password" id="password" formControlName="password" autocomplete="off">
+                </div>
+                @if (!patientForm.controls['password'].valid && (!patientForm.controls['password'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+                <div class="col-md-6 mb-5">
+                    <label for="confirm_password" class="form-label required">{{'messages.patient.confirm_password' | translate}}:</label>
+                    <input class="form-control" placeholder="{{'messages.patient.confirm_password' | translate}}" type="password" id="confirm_password" formControlName="confirm_password" autocomplete="off">
+                </div>
+                @if (!patientForm.controls['confirm_password'].valid && (!patientForm.controls['confirm_password'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            }
+            
+            <!-- Address -->
+            <div class="fw-bolder fs-3 mb-7 mt-5">{{ 'messages.patient.address_information' | translate }}</div>
+            <div class="col-md-6 mb-7">
+                <label for="address1" class="form-label">{{ 'messages.patient.address1' | translate }}:</label>
+                <input type="text" id="address1" class="form-control" placeholder="{{ 'messages.patient.address1' | translate }}" formControlName="address1">
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="address2" class="form-label">{{'messages.patient.address2' | translate }}:</label>
+                <input type="text" id="address2" class="form-control" placeholder="{{ 'messages.patient.address2' | translate }}" formControlName="address2">
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="country_id" class="form-label">{{'messages.patient.country' | translate }}:</label>
+                <select2 [data]="countries" placeholder="{{'messages.common.select_country' | translate}}" formControlName="country_id" id="country_id" (update)="onCountryChange($event)"></select2>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="state_id" class="form-label">{{'messages.patient.state' | translate }}:</label>
+                <select2 [data]="states" placeholder="{{'messages.common.select_state' | translate}}" formControlName="state_id" id="state_id" (update)="onStateChange($event)"></select2>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="city_id" class="form-label">{{'messages.patient.city' | translate }}:</label>
+                <select2 [data]="cities" placeholder="{{'messages.common.select_city' | translate}}" formControlName="city_id" id="city_id"></select2>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="postal_code" class="form-label">{{'messages.patient.postal_code' | translate }}:</label>
+                <input type="text" id="postal_code" class="form-control" placeholder="{{'messages.patient.postal_code' | translate }}" formControlName="postal_code">
+            </div>
+
+            <!-- Other address -->
+            <div class="fw-bolder fs-3 mb-7 mt-5">{{ 'messages.patient.other_address_information' | translate }}</div>
+            <div class="col-md-6 mb-5">
+                <label for="other_contact" class="form-label required">{{'messages.patient.contact_no' | translate}}:</label>
+                <app-phone-input formControlName="other_contact" id="other_contact"></app-phone-input>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="other_address1" class="form-label">{{ 'messages.patient.address1' | translate }}:</label>
+                <input type="text" id="other_address1" class="form-control" placeholder="{{ 'messages.patient.address1' | translate }}" formControlName="other_address1">
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="other_address2" class="form-label">{{'messages.patient.address2' | translate }}:</label>
+                <input type="text" id="other_address2" class="form-control" placeholder="{{ 'messages.patient.address2' | translate }}" formControlName="other_address2">
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="other_country_id" class="form-label">{{'messages.patient.country' | translate }}:</label>
+                <select2 [data]="countries" placeholder="{{'messages.common.select_country' | translate}}" formControlName="other_country_id" id="other_country_id"></select2>
+            </div>
+            
+            <!-- Medical info -->
+            <div class="fw-bolder fs-3 mb-7 mt-5">{{ 'messages.patient.medical_information' | translate }}</div>
+            <div class="col-md-6 mb-7">
+                <label for="blood_group" class="form-label">{{'messages.patient.blood_group' | translate }}:</label>
+                <select2 [data]="bloodGroupList" placeholder="{{'messages.patient.blood_group' | translate}}" formControlName="blood_group" id="blood_group"></select2>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="G6PD" class="form-label">{{'messages.patient.G6PD' | translate }}:</label>
+                <select2 [data]="G6PDList" placeholder="{{'messages.patient.G6PD' | translate}}" formControlName="G6PD" id="G6PD"></select2>
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="allergy" class="form-label">{{'messages.patient.allergy' | translate}}:</label>
+                <input type="text" id="allergy" class="form-control" formControlName="allergy" placeholder="Enter allergy details">
+            </div>
+
+            <div class="col-md-6 mb-7">
+                <label for="food_allergy" class="form-label">{{'messages.patient.food_allergy' | translate}}:</label>
+                <input type="text" id="food_allergy" class="form-control" formControlName="food_allergy" placeholder="Enter food allergy details">
+            </div>
+
+            <div class="col-lg-6 mb-7">
+                <label for="doctor_id" class="form-label">{{'messages.doctor.doctor' | translate}}:</label>
+                <select2 [data]="doctorList" placeholder="{{'messages.doctor.doctor' | translate}}" formControlName="doctor_id" id="doctor_id"></select2>
+            </div>
+
+            <div class="col-lg-6 mb-7">
+                <label for="important_notes" class="form-label">{{'messages.visit.important_notes' | translate}}:</label>
+                <textarea id="important_notes" class="form-control" formControlName="important_notes" rows="5" placeholder="{{'messages.visit.important_notes' | translate}}"></textarea>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <button class="btn btn-primary m-0" type="submit">{{ 'messages.common.save' | translate }}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{ 'messages.common.cancel' | translate }}</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -14,7 +14,7 @@ import { AuthService } from '../services/auth.service';
     HomeSidebarComponent,
     HomeFooterComponent,
     RouterModule
-],
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

@@ -53,7 +53,7 @@
             </tr>
         </thead>
         <tbody class="">
-            @for(item of data();track item['id']; let i = $index;) {
+            @for(item of data();track item[defaultTrackingColumn]; let i = $index;) {
             <tr>
                 @for(column of headers;track column[0]) {
                     @if (column[4] === 'string') {

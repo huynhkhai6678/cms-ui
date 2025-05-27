@@ -118,12 +118,27 @@ export class HomeHeaderComponent implements OnInit {
         link: 'clinic-schedules'
       }
     ],
+    'user': [
+      {
+        name : 'messages.doctors',
+        link: 'doctors'
+      },
+      {
+        name : 'messages.staffs',
+        link: 'staffs'
+      },
+      {
+        name : 'messages.holiday.doctor_holiday',
+        link: 'doctor-holidays'
+      }
+    ],
   }
 
   readonly sharedRoutesGroups = {
     'master_list': ['subscribers', 'clinic-document-setting'],
     'settings': ['settings', 'specializations', 'clinic-schedules'],
-    'website' : ['cms', 'services', 'service-categories', 'sliders', 'faqs', 'testimonials']
+    'website' : ['cms', 'services', 'service-categories', 'sliders', 'faqs', 'testimonials'],
+    'user' : ['doctors', 'staffs', 'doctor-holidays'],
   };
 
   constructor(

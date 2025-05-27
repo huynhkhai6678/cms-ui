@@ -28,6 +28,7 @@ export class DataTableComponent {
   @Input() columnCustomTemplates! : Record<string, any>;
   @Input() showClinicFilterTemplate = true;
   @Input() showSearchTemplate = true;
+  @Input() defaultTrackingColumn = 'id';
 
   refreshKey = signal<number>(0);
   sortColumnName = signal<string>('');

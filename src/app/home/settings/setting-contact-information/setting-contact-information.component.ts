@@ -78,13 +78,13 @@ export class SettingContactInformationComponent implements OnInit {
 
   onCountryChange(event : any) {
     this.locationService.getStatesByCountry(event.value).subscribe((res : any) => {
-      this.states = res['data'].map((state: State) => { return { value : state.id, label : state.name }});
+      this.states = res['data'];
     });
   }
   
   onStateChange(event : any) {
     this.locationService.getCitiesByState(event.value).subscribe((res : any) => {
-      this.cities = res['data'].map((city: City) => { return { value : city.id, label : city.name }});
+      this.cities = res['data'];
     });
   }
 }

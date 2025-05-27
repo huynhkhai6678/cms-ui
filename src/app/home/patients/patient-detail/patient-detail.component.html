@@ -1,0 +1,120 @@
+<div class="content d-flex flex-column flex-column-fluid">
+    <div class="container-fluid">
+        <div class="d-flex flex-wrap align-items-center justify-content-between mb-7">
+            <h1 class="mb-0 me-1">Patient Details</h1>
+            <div class="text-end mt-4 mt-md-0">
+                <a >
+                    <button type="button" class="btn btn-primary me-4">{{'messages.common.edit' | translate}}</button>
+                </a>
+                <a routerLink="'home/patients">
+                    <button type="button" class="btn btn-outline-primary float-end">{{'messages.common.back' | translate}}</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="container-fluid">
+            <div class="d-flex flex-column">
+                @if(data) {
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xxl-5 col-12">
+                                <div class="d-sm-flex align-items-center mb-5 mb-xxl-0 text-center text-sm-start">
+                                    <div class="image image-circle image-lg-small">
+                                        <img src="https://test.myclnqhealth.com/web/media/avatars/male.png" alt="user">
+                                    </div>
+                                    <div class="ms-0 ms-md-10 mt-5 mt-sm-0  ">
+                                        <span class="text-success mb-2 d-block">Patient</span>
+                                        <h2>
+                                            <span class="text-danger">{{data.patient_mrn}}</span>
+                                            {{data.name}}
+                                        </h2>
+                                        @if (data.email) {
+                                            <a href="mailto:{{data.email}}" class="text-gray-600 text-decoration-none fs-4">
+                                                {{data.email}}
+                                            </a>
+                                        }
+                                        <a href="mailto:" class="text-gray-600 text-decoration-none fs-4">
+                                        </a>
+
+                                        @if (data.contact) {
+                                            <a href="tel:{{data.contact}}" class="text-gray-600 text-decoration-none fs-4">
+                                                {{data.contact}}
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-7 col-12">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
+                                        <div class="border rounded-10 p-5 h-100">
+                                            <h2 class="text-primary mb-3">{{todayAppointment.length}}</h2>
+                                            <h3 class="fs-5 fw-light text-gray-600 mb-0">{{'messages.patient_dashboard.today_appointments' | translate}}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
+                                        <div class="border rounded-10 p-5 h-100">
+                                            <h2 class="text-primary mb-3">{{upcommingComponent.length}}</h2>
+                                            <h3 class="fs-5 fw-light text-gray-600 mb-0">{{'messages.patient_dashboard.upcoming_appointments' | translate}}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-12">
+                                        <div class="border rounded-10 p-5 h-100">
+                                            <h2 class="text-primary mb-3">{{completedAppointment.length}}</h2>
+                                            <h3 class="fs-5 fw-light text-gray-600 mb-0">{{'messages.patient_dashboard.completed_appointments' | translate}}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-7">
+                    <tabset>
+                        <tab heading="{{'messages.common.overview' | translate }}">
+                            <div class="card mt-7">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <input id="patientRolePatientDetail" name="patient_role" type="hidden" value="">
+                                        <div class="col-md-6 d-flex flex-column mb-md-10 mb-5">
+                                            <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.blood_group' | translate}}</span>
+                                            <span class="fs-4 text-gray-800">{{data.blood_group ? BLOOD_GROUP[data.blood_group] : 'N/A' }}</span>
+                                        </div>
+                                        <div class="col-md-6 d-flex flex-column mb-md-10 mb-5">
+                                            <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.gender' | translate}}</span>
+                                            <span class="fs-4 text-gray-800">{{data.gender ? GENDER[data.gender] : 'Unknown' }}</span>
+                                        </div>
+                                        <div class="col-md-6 d-flex flex-column mb-md-10 mb-5">
+                                            <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.dob' | translate}}</span>
+                                            <span class="fs-4 text-gray-800">{{data.dob ? data.dob : 'N/A' }}</span>
+                                        </div>
+                                        <div class="col-md-6 d-flex flex-column mb-md-10 mb-5">
+                                            <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.address' | translate}}</span>
+                                            <span class="fs-4 text-gray-800">{{data.address ? data.address : 'N/A' }}</span>
+                                        </div>
+                                        <div class="col-md-6 d-flex flex-column mb-md-10 mb-5">
+                                            <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.registered_on' | translate}}</span>
+                                            <span class="fs-4 text-gray-800">{{registeredOn}}</span>
+                                        </div>
+                                        <div class="col-md-6 d-flex flex-column mb-md-10 mb-5">
+                                            <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.last_updated' | translate}}</span>
+                                            <span class="fs-4 text-gray-800">{{lastUpdated}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="{{'messages.appointment.appointments' | translate }}" >
+                            <div class="mt-7">
+                                <app-patient-detail-appointment [patientId]="id"></app-patient-detail-appointment>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            }
+        </div>
+    </div>
+</div>

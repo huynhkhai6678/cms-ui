@@ -4,6 +4,7 @@ import { ComfirmModalComponent } from '../shared/comfirm-modal/comfirm-modal.com
 import { Observable, Subject } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TranslateService } from '@ngx-translate/core';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class FormService {
@@ -35,6 +36,17 @@ export class FormService {
     }
 
     return modalRef;
+  }
+
+  checkInvalidFields(form : FormGroup) {
+    const invalidFields : any = [];
+    Object.keys(form.controls).forEach(field => {
+      const control = form.get(field);
+      if (control?.invalid) {
+        invalidFields.push(field);
+      }
+    });
+    console.log(invalidFields);
   }
 
   submitForm(

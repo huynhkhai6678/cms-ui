@@ -356,12 +356,12 @@ export class ShareService {
   ];
 
 
-  TIME_ZONES_ARRAY = this.TIMEZONES.map((zone, index) => ({
+  TIME_ZONES_ARRAY : SingleSelect2Option[] = this.TIMEZONES.map((zone, index) => ({
     label: zone,
     value: index + 1
   }));
 
-  readonly BLOOD_GROUP_ARRAY = [
+  readonly BLOOD_GROUP_ARRAY : SingleSelect2Option[] = [
     {
       label: 'O+',
       value: 1
@@ -396,4 +396,191 @@ export class ShareService {
     }
   ];
 
+  readonly BLOOD_GROUP = {
+    1: 'O+',
+    2: 'A+',
+    3: 'B+',
+    4: 'AB+',
+    5: 'O-',
+    6: 'A-',
+    7: 'B-',
+    8: 'AB-',
+  }
+
+  readonly APPOINTMENT_STATUS_ARRAY : SingleSelect2Option[] = [
+    { 
+      label: 'Booked',
+      value: 1
+    },
+    {
+      label: 'Checked In',
+      value: 2
+    },
+    {
+      label: 'Checked Out',
+      value: 3
+    },
+    {
+      label: 'Cancelled',
+      value: 4
+    }
+  ];
+
+  readonly APPOINTMENT_STATUS = {
+    1 : 'Booked',
+    2 : 'Checked In',
+    3 : 'Checked Out',
+    4 : 'Cancelled',
+  }
+
+  readonly GENDER = {
+    1: 'Male',
+    2: 'Female',
+  }
+
+  readonly MARIUS_STATUS : SingleSelect2Option[] = [
+    { 
+      label: 'Single',
+      value: 1
+    },
+    {
+      label: 'Married',
+      value: 2
+    },
+    {
+      label: 'Widowed',
+      value: 3
+    },
+    {
+      label: 'Divorced',
+      value: 4
+    }
+  ];
+
+  readonly ETHNICITY : SingleSelect2Option[] = [
+    {
+      label: 'Malay',
+      value: 1
+    },
+    {
+      label: 'Chinese',
+      value: 2
+    },
+    {
+      label: 'Indian',
+      value: 3
+    },
+    {
+      label: 'Kadazan-Dusun',
+      value: 4
+    },
+    {
+      label: 'Bajau',
+      value: 5
+    },
+    {
+      label: 'Murut',
+      value: 6
+    }
+  ];
+
+  readonly RACES : SingleSelect2Option[] = [
+    {
+      label: 'Malay',
+      value: 1
+    },
+    {
+      label: 'Chinese',
+      value: 2
+    },
+    {
+      label: 'Indian',
+      value: 3
+    },
+    {
+      label: 'Other',
+      value: 4
+    }
+  ];
+
+  readonly RELIGION : SingleSelect2Option[] = [
+    {
+      label: 'Muslim',
+      value: 1
+    },
+    {
+      label: 'Buddhist',
+      value: 2
+    },
+    {
+      label: 'Christian',
+      value: 3
+    },
+    {
+      label: 'Confucianism',
+      value: 4
+    },
+    {
+      label: 'Taoism',
+      value: 5
+    },
+    {
+      label: 'Other',
+      value: 6
+    },
+    {
+      label: 'Unspecified / None',
+      value: 7
+    }
+  ];
+
+  readonly ALLERGY : SingleSelect2Option[] = [
+    {
+      label: 'No',
+      value: 0
+    },
+    {
+      label: 'Yes',
+      value: 1
+    },
+    {
+      label: 'Unknown',
+      value: 2
+    },
+  ];
+
+  readonly G6PD : SingleSelect2Option[] = [
+    {
+      label: 'No',
+      value: 0
+    },
+    {
+      label: 'Yes',
+      value: 1
+    },
+    {
+      label: 'Unknown',
+      value: 2
+    },
+  ];
+
+  readonly ID_TYPES : SingleSelect2Option[] = [
+    {
+      label: 'NRIC',
+      value: 1
+    },
+    {
+      label: 'Passport',
+      value: 2
+    },
+    {
+      label: 'Other',
+      value: 3
+    },
+  ]
+}
+
+export interface SingleSelect2Option {
+  label: string;
+  value: any;
 }

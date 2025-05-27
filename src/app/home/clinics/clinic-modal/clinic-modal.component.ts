@@ -5,7 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
 import { Select2 } from 'ng-select2-component';
 import { FormService } from '../../../services/form.service';
-import { City, LocationService, State } from '../../../services/location.service';
+import { LocationService } from '../../../services/location.service';
 
 @Component({
   selector: 'app-clinic-modal',
@@ -98,13 +98,13 @@ export class ClinicModalComponent implements OnInit {
 
   onCountryChange(event : any) {
     this.locationService.getStatesByCountry(event.value).subscribe((res : any) => {
-      this.states = res['data'].map((state: State) => { return { value : state.id, label : state.name }});
+      this.states = res['data'];
     });
   }
 
   onStateChange(event : any) {
     this.locationService.getCitiesByState(event.value).subscribe((res : any) => {
-      this.cities = res['data'].map((city: City) => { return { value : city.id, label : city.name }});
+      this.cities = res['data'];
     });
   }
   

@@ -34,9 +34,16 @@ export class ApiService {
     // Append additional fields
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {
+        if (params[key] === null || params[key] === undefined) {
+          continue;
+        }
+
         if (key === 'contact') {
           formData.append('region_code', params[key]['dialCode']);
           formData.append('contact', params[key]['e164Number'].split(params[key]['dialCode'])[1]);
+        } else if (key === 'other_contact') {
+          formData.append('other_region_code', params[key]['dialCode']);
+          formData.append('other_contact', params[key]['e164Number'].split(params[key]['dialCode'])[1]);
         } else {
           formData.append(key, params[key]);
         }

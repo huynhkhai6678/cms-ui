@@ -28,4 +28,12 @@ export class HomeService {
       }
     });
   }
+
+  getDoctorByClinic(clinicId : number) {
+    return this.apiService.get(`helper/clinic-doctors/${clinicId}`);
+  }
+
+  getPatientByClinic(clinicId : number) {
+    return this.apiService.get(`helper/clinic-patients/${clinicId}`);
+  }
 }

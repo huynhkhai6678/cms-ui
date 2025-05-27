@@ -1,7 +1,9 @@
 <input class="form-control" 
     mwlFlatpickr 
     [convertModelValue]="true" 
-    [dateFormat]="'d/m/Y'" 
+    [dateFormat]="'d/m/Y'"
+    [maxDate]="maxDate"
+    [minDate]="minDate"
     [id]="id" 
     [placeholder]="placeholder | translate"
     [ngModel]="value"

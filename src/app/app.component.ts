@@ -4,14 +4,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { ThemeService } from './services/theme.service';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { AuthService } from './services/auth.service';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   providers: [
-    ThemeService
+    ThemeService,
   ],
   imports: [
+    TabsModule,
     NgxSpinnerModule,
     RouterOutlet,
   ],

@@ -106,11 +106,17 @@ export class HomeSidebarComponent implements OnInit {
       link: 'specializations',
       permission: 'manage_settings'
     },
-     {
+    {
       icon : 'fa-solid fa-tasks',
       name : 'messages.website',
       link: 'cms',
       permission: 'manage_front_cms'
+    },
+    {
+      icon : 'fa-solid fa-users',
+      name : 'messages.users',
+      link: 'staffs',
+      permission: 'manage_staff'
     },
   ];
 

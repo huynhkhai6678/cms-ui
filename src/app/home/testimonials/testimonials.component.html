@@ -24,7 +24,7 @@
 </ng-template>
 
 <ng-template #nameTemplate let-item>
-   <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center">
         <div class="image image-circle image-mini me-3">
             @if (item.image_url) {
                 <img [src]="`${apiUrl}${item.image_url}`" alt="" class="user-img" loading="lazy">

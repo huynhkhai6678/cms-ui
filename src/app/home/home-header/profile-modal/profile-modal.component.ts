@@ -5,7 +5,7 @@ import { Select2 } from 'ng-select2-component';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ImageUploadComponent } from '../../../shared/image-upload/image-upload.component';
-import { ShareService } from '../../../services/share.service';
+import { ShareService, SingleSelect2Option } from '../../../services/share.service';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DateInputComponent } from '../../../shared/date-input/date-input.component';
@@ -28,11 +28,11 @@ import { DateInputComponent } from '../../../shared/date-input/date-input.compon
   styleUrl: './profile-modal.component.scss'
 })
 export class ProfileModalComponent implements OnInit {
-  TIMEZONES : { label : string; value: number}[] = [];
-  BLOODS : { label : string; value: number}[] = [];
-  countries : { label : string; value: number}[] = [];
-  states : { label : string; value: number}[] = [];
-  cities : { label : string; value: number}[] = [];
+  TIMEZONES : SingleSelect2Option[] = [];
+  BLOODS : SingleSelect2Option[] = [];
+  countries : SingleSelect2Option[] = [];
+  states : SingleSelect2Option[] = [];
+  cities : SingleSelect2Option[] = [];
 
   profileForm! : FormGroup;
   isSubmitted = false;

@@ -1,0 +1,105 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="staffForm" (ngSubmit)="submit(staffForm.value, staffForm.valid)">
+        <div class="row">
+                @if (homeService.clinics.length > 1) {
+                <div class="col-md-12 mb-5">
+                    <label for="clinicId" class="form-label required">{{'messages.common.name' | translate}}:</label>
+                    <select2 multiple [data]="homeService.selectClinics" placeholder="{{'messages.common.name' | translate}}" formControlName="clinic_ids" id="clinicId"></select2>
+                </div>
+            }
+            <div class="col-md-6 mb-5">
+                <label for="first_name" class="form-label required">{{'messages.doctor.first_name' | translate }}</label>
+                <input class="form-control" placeholder="{{'messages.doctor.first_name' | translate }}" required="" formControlName="first_name" type="text" id="first_name">
+                @if (!staffForm.controls['first_name'].valid && (!staffForm.controls['first_name'].pristine || isSubmitted)) {
+                    <div id="firtNameValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="last_name" class="form-label required">{{'messages.doctor.last_name' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.doctor.last_name' | translate }}" required="" formControlName="last_name" type="text" id="last_name">
+                @if (!staffForm.controls['last_name'].valid && (!staffForm.controls['last_name'].pristine || isSubmitted)) {
+                    <div id="lastNameValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="email" class="form-label required">{{'messages.staff.email' | translate }}:</label>
+                <input id="email" class="form-control" placeholder="{{'messages.staff.email' | translate }}" name="email" type="email" formControlName="email">
+                @if (!staffForm.controls['email'].valid && (!staffForm.controls['email'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="Contact" class="form-label">{{'messages.user.contact_number' | translate }}:</label>
+                <app-phone-input formControlName="contact" id="contact"></app-phone-input>
+                @if (staffForm.controls['contact'].invalid && (staffForm.controls['contact'].touched || isSubmitted)) {
+                    <div class="invalid-feedback d-block">
+                    @if (staffForm.controls['contact'].errors?.['required']) {
+                        {{ 'messages.this_field' | translate }}
+                    }
+                
+                    @if (staffForm.controls['contact'].errors?.['validatePhoneNumber']) {
+                        {{ 'Invalid phone' | translate }}
+                    }
+                    </div>
+                }
+            </div>
+            @if (!id) {
+                <div class="col-md-6 mb-5">
+                    <label for="password" class="form-label required">{{'messages.patient.password' | translate}}:</label>
+                    <input class="form-control" placeholder="{{'messages.patient.password' | translate}}" type="password" id="password" formControlName="password" autocomplete="off">
+                </div>
+                @if (!staffForm.controls['password'].valid && (!staffForm.controls['password'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+                <div class="col-md-6 mb-5">
+                    <label for="confirm_password" class="form-label required">{{'messages.patient.confirm_password' | translate}}:</label>
+                    <input class="form-control" placeholder="{{'messages.patient.confirm_password' | translate}}" type="password" id="confirm_password" formControlName="confirm_password" autocomplete="off">
+                </div>
+                @if (!staffForm.controls['confirm_password'].valid && (!staffForm.controls['confirm_password'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            }
+            <div class="col-md-6 mb-5" data-select2-id="select2-data-850-cp2g">
+                <label for="role" class="form-label required"> {{'messages.role.role' | translate }}:</label>
+                <select2 id="role" [data]="roles" formControlName="type" placeholder="{{'messages.role.role' | translate }}"></select2>
+            </div>
+            <div class="col-md-6 mb-5">
+                <span class="form-label required">{{'messages.doctor.select_gender' | translate }}:</span>
+                <span class="is-valid">
+                    <div class="mt-2">
+                        <input id="gender-1" class="form-check-input" type="radio" formControlName="gender" [value]="1" [checked]="staffForm.controls['gender'].value === 1">
+                        <label for="gender-1" class="form-label mr-3">{{'messages.doctor.male' | translate }}</label>
+                        <input id="gender-2" class="form-check-input ms-2" type="radio" formControlName="gender" [value]="2" [checked]="staffForm.controls['gender'].value === 2">
+                        <label for="gender-2" class="form-label mr-3">{{'messages.doctor.female' | translate }}</label>
+                    </div>
+                </span>
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="exampleInputImage" class="form-label">{{'messages.doctor.profile' | translate }}:</label>
+                <div>
+                    <app-image-upload formControlName="avatar" [currentImage]="avatarUrl"></app-image-upload>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+            <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+        </div>
+    </form>
+</div>

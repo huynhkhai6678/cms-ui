@@ -70,9 +70,9 @@
             <label for="gender" class="col-lg-4 form-label required">{{ 'messages.user.gender' | translate }}:</label>
             <div class="col-lg-8">
                 <span class="is-valid">
-                    <input id="gender-male" class="form-check-input" type="radio" name="gender" value="1" formControlName="gender" [checked]="profileForm.controls['gender'].value === 1">
+                    <input id="gender-male" class="form-check-input" type="radio" name="gender" [value]="1" formControlName="gender" [checked]="profileForm.controls['gender'].value === 1">
                     <label for="gender-male" class="form-label">{{ 'messages.patient.male' | translate }}</label>&nbsp;&nbsp;
-                    <input id="gender-female" class="form-check-input" type="radio" name="gender" value="2" formControlName="gender" [checked]="profileForm.controls['gender'].value === 2">
+                    <input id="gender-female" class="form-check-input" type="radio" name="gender" [value]="2" formControlName="gender" [checked]="profileForm.controls['gender'].value === 2">
                     <label for="gender-female" class="form-label">{{ 'messages.patient.female' | translate }}</label>
                 </span>
             </div>

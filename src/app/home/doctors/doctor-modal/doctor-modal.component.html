@@ -1,0 +1,125 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="doctorForm" (ngSubmit)="submit(doctorForm.value, doctorForm.valid)">
+        <div class="row">
+            @if (homeService.clinics.length > 1) {
+                <div class="col-md-12 mb-5">
+                    <label for="clinicId" class="form-label required">{{'messages.common.name' | translate}}:</label>
+                    <select2 multiple [data]="homeService.selectClinics" placeholder="{{'messages.common.name' | translate}}" formControlName="clinic_ids" id="clinicId"></select2>
+                </div>
+            }
+            <div class="col-md-6 mb-5">
+                <label for="first_name" class="form-label required">{{'messages.doctor.first_name' | translate }}</label>
+                <input class="form-control" placeholder="{{'messages.doctor.first_name' | translate }}" required="" formControlName="first_name" type="text" id="first_name">
+                @if (!doctorForm.controls['first_name'].valid && (!doctorForm.controls['first_name'].pristine || isSubmitted)) {
+                    <div id="firtNameValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="last_name" class="form-label required">{{'messages.doctor.last_name' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.doctor.last_name' | translate }}" required="" formControlName="last_name" type="text" id="last_name">
+                @if (!doctorForm.controls['last_name'].valid && (!doctorForm.controls['last_name'].pristine || isSubmitted)) {
+                    <div id="lastNameValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="email" class="form-label required">{{'messages.staff.email' | translate }}:</label>
+                <input id="email" class="form-control" placeholder="{{'messages.staff.email' | translate }}" name="email" type="email" formControlName="email">
+                @if (!doctorForm.controls['email'].valid && (!doctorForm.controls['email'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="Contact" class="form-label">{{'messages.user.contact_number' | translate }}:</label>
+                <app-phone-input formControlName="contact" id="contact"></app-phone-input>
+                @if (doctorForm.controls['contact'].invalid && (doctorForm.controls['contact'].touched || isSubmitted)) {
+                    <div class="invalid-feedback d-block">
+                    @if (doctorForm.controls['contact'].errors?.['required']) {
+                        {{ 'messages.this_field' | translate }}
+                    }
+                
+                    @if (doctorForm.controls['contact'].errors?.['validatePhoneNumber']) {
+                        {{ 'Invalid phone' | translate }}
+                    }
+                    </div>
+                }
+            </div>
+            @if (!id) {
+                <div class="col-md-6 mb-5">
+                    <label for="password" class="form-label required">{{'messages.patient.password' | translate}}:</label>
+                    <input class="form-control" placeholder="{{'messages.patient.password' | translate}}" type="password" id="password" formControlName="password" autocomplete="off">
+                </div>
+                @if (!doctorForm.controls['password'].valid && (!doctorForm.controls['password'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+                <div class="col-md-6 mb-5">
+                    <label for="confirm_password" class="form-label required">{{'messages.patient.confirm_password' | translate}}:</label>
+                    <input class="form-control" placeholder="{{'messages.patient.confirm_password' | translate}}" type="password" id="confirm_password" formControlName="confirm_password" autocomplete="off">
+                </div>
+                @if (!doctorForm.controls['confirm_password'].valid && (!doctorForm.controls['confirm_password'].pristine || isSubmitted)) {
+                    <div id="emailValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            }
+            <div class="col-md-6 mb-5">
+                <label for="DOB" class="form-label">{{'messages.doctor.dob' | translate }}:</label>
+                <app-date-input formControlName="dob" placeholder="Enter your date of birth" id="dob"></app-date-input>
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="Specialization" class="form-label required"> {{'messages.doctor.specialization' | translate }}:</label>
+                <select2 multiple [data]="specializations" formControlName="specialization_ids" placeholder="{{'messages.doctor.specialization' | translate }}"></select2>
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="experience" class="form-label">{{'messages.doctor.experience' | translate }}:</label>
+                <input id="experience" class="form-control" placeholder="{{'messages.doctor.experience' | translate }}"  formControlName="experience" type="number">
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="gender" class="form-label required">{{'messages.doctor.select_gender' | translate }}:</label>
+                <span class="is-valid">
+                    <div class="mt-2">
+                        <input id="gender-1" class="form-check-input" type="radio" formControlName="gender" value="1" [checked]="doctorForm.controls['gender'].value === 1">
+                        <label for="gender-1" class="form-label mr-3">{{'messages.doctor.male' | translate }}</label>
+                        <input id="gender-2" class="form-check-input ms-2" type="radio" formControlName="gender" value="2" [checked]="doctorForm.controls['gender'].value === 2">
+                        <label for="gender-2" class="form-label mr-3">{{'messages.doctor.female' | translate }}</label>
+                    </div>
+                </span>
+            </div>
+            <div class="col-md-6 mb-5">
+                <label for="exampleInputImage" class="form-label">{{'messages.doctor.profile' | translate }}:</label>
+                <div>
+                    <app-image-upload formControlName="avatar" [currentImage]="avatarUrl"></app-image-upload>
+                </div>
+            </div>
+            <div class="col-md-6 mb-5">
+                <div class="col-md-6 mb-5">
+                    <span class="form-label">{{'messages.doctor.status' | translate }}:</span>
+                    <div class="col-lg-8">
+                        <div class="form-check form-check-solid form-switch">
+                            <input tabindex="12" formControlName="status" value="0" class="form-check-input" type="checkbox" id="allowmarketing" [checked]="doctorForm.controls['status'].value">
+                            <label class="form-check-label" for="allowmarketing"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+            <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+        </div>
+    </form>
+
+</div>
