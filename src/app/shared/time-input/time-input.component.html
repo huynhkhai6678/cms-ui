@@ -1,0 +1,12 @@
+<input class="form-control" 
+    mwlFlatpickr 
+    [convertModelValue]="true" 
+    [dateFormat]="dateFormat"
+    [enableTime]="true"
+    [noCalendar]="true"
+    [minuteIncrement]="minuteIncrement"
+    [id]="id" 
+    [placeholder]="placeholder | translate"
+    [ngModel]="value"
+    (ngModelChange)="onValueChange($event)"
+>

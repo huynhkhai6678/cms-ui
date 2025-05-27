@@ -6,13 +6,16 @@ import { DoctorModalComponent } from './doctor-modal/doctor-modal.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { Doctor } from './doctor.model';
+import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-doctors',
   imports: [
     DataTableComponent,
     TranslatePipe,
-    DatePipe
+    DatePipe,
+    RouterLink
   ],
   templateUrl: './doctors.component.html',
   styleUrl: './doctors.component.scss'
@@ -20,6 +23,7 @@ import { Doctor } from './doctor.model';
 export class DoctorsComponent implements AfterViewInit {
   url = 'doctors';
   columnCustomTemplates : Record<string, any> = {};
+  apiUrl = environment.apiUrl;
 
   @ViewChild('fullNameTemplate') fullNameTemplate!: TemplateRef<any>;
   @ViewChild('statusTemplate') statusTemplate!: TemplateRef<any>;

@@ -4,12 +4,15 @@ import { StaffModalComponent } from './staff-modal/staff-modal.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
+import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-staffs',
   imports: [
     DataTableComponent,
     TranslatePipe,
+    RouterLink
   ],
   templateUrl: './staffs.component.html',
   styleUrl: './staffs.component.scss'
@@ -17,6 +20,7 @@ import { FormService } from '../../services/form.service';
 export class StaffsComponent implements AfterViewInit {
   url = 'staffs';
   columnCustomTemplates : Record<string, any> = {};
+  apiUrl = environment.apiUrl;
 
   @ViewChild('fullNameTemplate') fullNameTemplate!: TemplateRef<any>;
   @ViewChild('emailVerifyTemplate') emailVerifyTemplate!: TemplateRef<any>;

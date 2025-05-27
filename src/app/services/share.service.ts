@@ -578,6 +578,53 @@ export class ShareService {
       value: 3
     },
   ]
+
+  readonly PAYMENT_STATUS_ARRAY : SingleSelect2Option[] = [
+    {
+      label: 'Pending',
+      value: 1
+    },
+    {
+      label: 'Paid',
+      value: 2
+    },
+  ]
+
+  getBadgeColor(index : number)
+  {
+    const colors = [
+      'primary',
+      'danger',
+      'success',
+      'info',
+      'warning',
+      'dark',
+    ];
+
+    index = index % 6;
+    return colors[index];
+  }
+
+  calculateAge(birthdate : string) {
+    const today = new Date();
+    const birhtDaySplit = birthdate.split('/');
+    const birthMonth = parseInt(birhtDaySplit[1]);
+    const birthYear = parseInt(birhtDaySplit[2]);
+
+    const month = parseInt(String(today.getMonth() + 1).padStart(2, '0'));
+    const year = today.getFullYear();
+
+    let age = year - birthYear;
+    const monthDifference = month - birthMonth;
+    const dayDifference = year - birthYear;
+    
+    // Adjust the age if the birthdate hasn't occurred yet this year
+    if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+      age--;
+    }
+
+    return age;
+  }
 }
 
 export interface SingleSelect2Option {

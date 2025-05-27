@@ -26,15 +26,19 @@
 
 <ng-template #fullNameTemplate let-item>
     <div class="d-flex align-items-center">
-        <a href="https://cms-testing.myclnq.com/admin/doctors/14">
+        <a [routerLink]="item.patient_id">
             <div class="image image-circle image-mini me-3">
-                <img src="https://cms-testing.myclnq.com/web/media/avatars/male.png" alt="" class="user-img">
+                 @if (item.image_url) {
+                    <img [src]="`${apiUrl}${item.image_url}`" alt="" class="user-img" loading="lazy">
+                } @else {
+                    <img [src]="`${apiUrl}public/media/male.png`" alt="user" class="user-img" loading="lazy">
+                }
             </div>
         </a>
         <div class="d-flex flex-column">
             <div class="d-inline-block align-top">
                 <div class="d-inline-block align-self-center d-flex">
-                    <a href="https://cms-testing.myclnq.com/admin/doctors/14" class="mb-1 text-decoration-none fs-6">
+                    <a [routerLink]="item.doctor_id" class="mb-1 text-decoration-none fs-6">
                         {{item.full_name}}
                     </a>
                     <div class="star-ratings d-flex align-self-center ms-2">

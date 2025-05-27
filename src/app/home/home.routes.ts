@@ -116,8 +116,18 @@ export const homeRoutes: Routes = [
         canActivate: [permissionGuard('manage_doctors')]
       },
       {
+        path: 'doctors/:id',
+        loadComponent: () => import('./doctors/doctor-detail/doctor-detail.component').then(mod => mod.DoctorDetailComponent),
+        canActivate: [permissionGuard('manage_doctors')],
+      },
+      {
         path: 'staffs',
         loadComponent: () => import('./staffs/staffs.component').then(mod => mod.StaffsComponent),
+        canActivate: [permissionGuard('manage_staff')]
+      },
+      {
+        path: 'staffs/:id',
+        loadComponent: () => import('./staffs/staff-detail/staff-detail.component').then(mod => mod.StaffDetailComponent),
         canActivate: [permissionGuard('manage_staff')]
       },
       {

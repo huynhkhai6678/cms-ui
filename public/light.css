@@ -5280,6 +5280,7 @@ textarea.form-control-lg {
     color: var(--bs-orange-500);
     background-color: #FFFFFF;
     border-color: #DEE2E6 #DEE2E6 #FFFFFF;
+    border-bottom: 1px solid !important;
 }
 
 .nav-tabs .dropdown-menu {

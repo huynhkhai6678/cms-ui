@@ -77,7 +77,6 @@ export class ServiceModalComponent implements OnInit {
 
     this.formService.submitFormWithImage(this.url, this.id, value).subscribe({
       next: () => {
-        console.log('llllll');
         this.isSubmitted = false;
         this.bsModalRef.hide();
       },

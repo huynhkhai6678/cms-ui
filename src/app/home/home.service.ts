@@ -36,4 +36,8 @@ export class HomeService {
   getPatientByClinic(clinicId : number) {
     return this.apiService.get(`helper/clinic-patients/${clinicId}`);
   }
+
+  getServiceByDoctor(doctorId : number, clinicId = 0) {
+    return this.apiService.get(`helper/doctor-services/${doctorId}/${clinicId}`);
+  }
 }

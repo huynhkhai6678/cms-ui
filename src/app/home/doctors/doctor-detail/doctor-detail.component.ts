@@ -1,35 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
-import moment from 'moment';
-import { PatientDetailAppointmentComponent } from './patient-detail-appointment/patient-detail-appointment.component';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ApiService } from '../../../services/api.service';
 import { ShareService } from '../../../services/share.service';
+import moment from 'moment';
+import { DoctorDetailAppointmentComponent } from './doctor-detail-appointment/doctor-detail-appointment.component';
+import { FormService } from '../../../services/form.service';
+import { DoctorModalComponent } from '../doctor-modal/doctor-modal.component';
 
 @Component({
-  selector: 'app-patient-detail',
+  selector: 'app-doctor-detail',
   imports: [
     TabsModule,
     TranslatePipe,
-    PatientDetailAppointmentComponent,
-    RouterLink
+    RouterLink,
+    DoctorDetailAppointmentComponent
   ],
-  templateUrl: './patient-detail.component.html',
-  styleUrl: './patient-detail.component.scss'
+  templateUrl: './doctor-detail.component.html',
+  styleUrl: './doctor-detail.component.scss'
 })
-export class PatientDetailComponent implements OnInit {
+export class DoctorDetailComponent implements OnInit {
   id = 0;
   data : any = null;
   registeredOn = '';
   lastUpdated = '';
-  completedAppointment = [];
+
+  totalAppointment = [];
   todayAppointment = [];
   upcommingComponent = [];
   BLOOD_GROUP : Record<string, any> = {};
   GENDER : Record<string, any> = {}
 
-  constructor(private activeRoute : ActivatedRoute, private apiService : ApiService, private shareService : ShareService) {}
+  constructor(private activeRoute : ActivatedRoute, private apiService : ApiService, public shareService : ShareService, private formService : FormService) {}
   
   ngOnInit(): void {
     this.BLOOD_GROUP = this.shareService.BLOOD_GROUP;
@@ -42,7 +45,7 @@ export class PatientDetailComponent implements OnInit {
   }
 
   loadData() {
-    this.apiService.get(`patients/detail/${this.id}`).subscribe((res : any) => {
+    this.apiService.get(`doctors/detail/${this.id}`).subscribe((res : any) => {
       this.data = res['data'];
       this.registeredOn = moment(this.data.register_on).fromNow();
       this.lastUpdated = moment(this.data.last_update).fromNow();
@@ -56,9 +59,16 @@ export class PatientDetailComponent implements OnInit {
         (appt : any) => moment(appt.date).isAfter(today, 'day')
       );
 
-      this.completedAppointment = this.data.appointments.filter(
-        (appt : any) => moment(appt.date).isBefore(today, 'day')
-      );
+      this.totalAppointment = this.data.appointments;
+    });
+  }
+
+  edit(id: number) {
+    this.formService.openEditCreateModal(DoctorModalComponent, 'modal-lg', {
+      title: 'messages.doctor.edit',
+      id,
+    }, () => {
+      this.loadData();
     });
   }
 }

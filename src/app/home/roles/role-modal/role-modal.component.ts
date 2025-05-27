@@ -25,8 +25,6 @@ export class RoleModalComponent implements OnInit {
   roleForm! : FormGroup;
   isSubmitted = false;
 
-
-
   constructor(
     public bsModalRef: BsModalRef,
     private fb: FormBuilder,

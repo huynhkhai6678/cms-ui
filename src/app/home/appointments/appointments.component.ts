@@ -1,19 +1,27 @@
-import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import momentPlugin from '@fullcalendar/moment';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
-import { CalendarOptions, DateSelectArg, EventApi, EventClickArg } from '@fullcalendar/core/index.js';
+import { CalendarOptions, DateSelectArg, EventClickArg, EventInput } from '@fullcalendar/core/index.js';
 import { CommonModule } from '@angular/common';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { HomeService } from '../home.service';
+import { ApiService } from '../../services/api.service';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { FormService } from '../../services/form.service';
+import { AppointmentModalComponent } from './appointment-modal/appointment-modal.component';
 
 @Component({
   selector: 'app-appointments',
   imports: [
     CommonModule,
-    FullCalendarModule
+    FormsModule,
+    FullCalendarModule,
+    TranslatePipe
   ],
   templateUrl: './appointments.component.html',
   styleUrl: './appointments.component.scss'
@@ -21,6 +29,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppointmentsComponent implements OnInit {
   calendarVisible = signal(false);
   translationValue : any = [];
+
   calendarOptions = signal<CalendarOptions>({
     plugins: [
       momentPlugin,
@@ -48,13 +57,12 @@ export class AppointmentsComponent implements OnInit {
     allDaySlot: false,
     slotDuration: '00:15:00',
     selectable:true,
-    // scrollTime: moment().format("HH:mm:ss"),
     views: {
       timeGridWeek: {
-          titleFormat: 'DD MMM YYYY',
-          dayHeaderFormat: 'dddd, DD/MM',
-          eventMaxStack: 2,
-          dayPopoverFormat: 'DD MMM YYYY'
+        titleFormat: 'DD MMM YYYY',
+        dayHeaderFormat: 'dddd, DD/MM',
+        eventMaxStack: 2,
+        dayPopoverFormat: 'DD MMM YYYY'
       },
       timeGridDay: {
           titleFormat: 'DD MMM YYYY',
@@ -65,17 +73,17 @@ export class AppointmentsComponent implements OnInit {
     },
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
-    /* you can update a remote database when these fire:
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
+    events: () => this.currentEvents(),
+    eventContent: (arg) => {
+      return { html: arg.event.title };
+    },
+    timeZone: 'local'
   });
 
-  currentEvents = signal<EventApi[]>([]);
+  currentEvents = signal<EventInput[]>([]);
+  clinicId = 0;
 
-  constructor(private changeDetector: ChangeDetectorRef, private translate : TranslateService) {
+  constructor(private formService: FormService, private translate : TranslateService, public homeService: HomeService, private apiService: ApiService, private authService : AuthService) {
     translate.get(['js.today', 'js.day', 'js.week', 'js.month']).subscribe(res => {
       this.translationValue = res;
     });
@@ -89,6 +97,11 @@ export class AppointmentsComponent implements OnInit {
     }
     this.calendarOptions.set(calendarOptions);
     this.calendarVisible.update((bool) => !bool);
+    const user = this.authService.getUser();
+    if (user) {
+      this.clinicId = user.clinic_id;
+    }
+    this.loadData();
   }
 
   handleWeekendsToggle() {
@@ -99,20 +112,36 @@ export class AppointmentsComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    // const title = prompt('Please enter a new title for your event');
-    // const calendarApi = selectInfo.view.calendar;
-
-    console.log(selectInfo);
+    this.formService.openEditCreateModal(AppointmentModalComponent, 'modal-lg', {
+      title: 'messages.appointment.add_new_appointment',
+      clinicId: this.clinicId,
+      startTime: selectInfo.startStr,
+      endTime: selectInfo.endStr,
+    }, () => {
+        this.loadData();
+    });
+    
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
+    this.formService.openEditCreateModal(AppointmentModalComponent, 'modal-lg', {
+      title: 'messages.appointment.edit_appointment',
+      id : parseInt(clickInfo.event._def.publicId),
+      clinicId: this.clinicId,
+    }, () => {
+        this.loadData();
+    });
   }
 
-  handleEvents(events: EventApi[]) {
-    this.currentEvents.set(events);
-    this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
+  loadData() {
+    this.apiService.get(`appointments/calendar/${this.clinicId}`).subscribe((res : any) => {
+      const data = res['data'];
+      this.currentEvents.set(data);
+
+      this.calendarOptions.update((options) => ({
+        ...options,
+        events: [...data]
+      }));
+    });
   }
 }

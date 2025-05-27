@@ -5,7 +5,7 @@ import { FlatpickrDirective } from 'angularx-flatpickr';
 import moment from 'moment';
 
 @Component({
-  selector: 'app-date-input',
+  selector: 'app-time-input',
   imports: [
     FlatpickrDirective,
     TranslatePipe,
@@ -14,25 +14,23 @@ import moment from 'moment';
   providers : [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DateInputComponent),
+      useExisting: forwardRef(() => TimeInputComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => DateInputComponent),
+      useExisting: forwardRef(() => TimeInputComponent),
       multi: true
     }
   ],
-  templateUrl: './date-input.component.html',
-  styleUrl: './date-input.component.scss'
+  templateUrl: './time-input.component.html',
+  styleUrl: './time-input.component.scss'
 })
-export class DateInputComponent implements ControlValueAccessor {
-
+export class TimeInputComponent implements ControlValueAccessor {
   @Input() placeholder = '';
-  @Input() dateFormat = 'd/m/Y';
-  @Input() momentDateFormat = 'DD/MM/YYYY';
-  @Input() maxDate = '';
-  @Input() minDate = '';
+  @Input() dateFormat = 'h:i K';
+  @Input() momentDateFormat = 'hh:mm A';
+  @Input() minuteIncrement = 15;
   @Input() id = '';
 
   value: any;
@@ -41,9 +39,9 @@ export class DateInputComponent implements ControlValueAccessor {
   private onChange: (value: string) => void = () => {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched: () => void = () => {};
-  
+
   writeValue(value: any): void {
-   this.value = value;
+    this.value = value;
   }
 
   registerOnChange(fn: any): void {
@@ -58,10 +56,11 @@ export class DateInputComponent implements ControlValueAccessor {
     return null;
   }
 
-  onValueChange(event: any) {
-    const date = moment(event).format(this.momentDateFormat);
-    this.value = date;
-    this.onChange(date);
+  onValueChange(event: any): void {
+    // flatpickr gives a Date
+    const formatted = moment(event).format(this.momentDateFormat);
+    this.value = formatted;
+    this.onChange(formatted);
     this.onTouched();
   }
 }
