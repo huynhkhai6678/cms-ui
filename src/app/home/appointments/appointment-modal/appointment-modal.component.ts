@@ -144,7 +144,6 @@ export class AppointmentModalComponent implements OnInit {
 
   onPatientChange(event: any) {
     const option = event.options[0];
-
     if (option.id_number) {
       this.appointmentForm.patchValue(option);
       this.appointmentForm.controls['id_type'].setValue(parseInt(option.id_type));

@@ -146,6 +146,11 @@ export const homeRoutes: Routes = [
         canActivate: [permissionGuard('manage_patients')]
       },
       {
+        path: 'visits',
+         loadComponent: () => import('./visits/visits.component').then(mod => mod.VisitsComponent),
+        canActivate: [permissionGuard('manage_patients')]
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'

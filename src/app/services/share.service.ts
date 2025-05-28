@@ -590,6 +590,33 @@ export class ShareService {
     },
   ]
 
+  readonly VISIT_STATUS_ARRAY : SingleSelect2Option[] = [
+    {
+      label: 'New',
+      value: 1
+    },
+    {
+      label: 'Pending Consultation',
+      value: 2
+    },
+    {
+      label: 'Consultation Done',
+      value: 3
+    },
+    {
+      label: 'In Progress',
+      value: 4
+    },
+    {
+      label: 'Dispensing',
+      value: 5
+    },
+    {
+      label: 'Completed',
+      value: 6
+    }
+  ];
+
   getBadgeColor(index : number)
   {
     const colors = [

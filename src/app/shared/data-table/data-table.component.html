@@ -13,17 +13,27 @@
         <div class="ms-auto d-flex">
             <ng-container *ngTemplateOutlet="filterTemplate">
             </ng-container>
-            @if (showClinicFilterTemplate) {
-                <div class="ms-auto d-flex">
-                    <div class="mb-5 mx-5">
+            <div class="ms-auto d-flex">
+                @if (showFilterDateRange) {
+                    <div class="mb-5 me-5">
+                        <input type="text"
+                            class="form-control daterangepicker"
+                            bsDaterangepicker
+                            [ngModel]="dateRange()"
+                            (ngModelChange)="dateRange.set($event)"
+                            [bsConfig]="{ ranges: ranges, dateInputFormat: 'DD/MM/YYYY', rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default'}">
+                    </div>
+                }
+                @if (showClinicFilterTemplate) {
+                    <div class="mb-5 me-5">
                         <select id="filterClinic" class="form-select" [ngModel]="clinicId()" (ngModelChange)="clinicId.set($event)">
                             @for(clinic of homeService.clinics; track clinic.id) {
                                 <option value="{{clinic.id}}">{{clinic.name}}</option>
                             }
                         </select>
                     </div>
-                </div>
-            }
+                }
+            </div>
             <ng-container *ngTemplateOutlet="addTemplate">
             </ng-container>
         </div>

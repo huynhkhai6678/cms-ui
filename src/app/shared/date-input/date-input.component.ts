@@ -34,6 +34,7 @@ export class DateInputComponent implements ControlValueAccessor {
   @Input() maxDate = '';
   @Input() minDate = '';
   @Input() id = '';
+  @Input() enableTime = false;
 
   value: any;
 

@@ -52,6 +52,7 @@ export class PatientsComponent implements AfterViewInit {
     this.columnCustomTemplates['status'] = this.statusTemplate;
     this.columnCustomTemplates['email_verified_at'] = this.emailVerifyTemplate;
     this.columnCustomTemplates['user_created_at'] = this.createdAtTemplate;
+    this.dataTableComponent.setDateFilter('today');
   }
 
   delete(data : any) {

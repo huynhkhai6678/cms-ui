@@ -4,19 +4,44 @@
 @use "bootstrap-icons/font/bootstrap-icons.css" as *;
 @use "@fortawesome/fontawesome-free/css/all.min.css" as *;
 
+$primary-color: #fe8065;
+
+.form-control {
+    &.daterangepicker {
+        min-width: 210px;
+    }
+}
 
 :root {
     --select2-single-height: 46px;
     --select2-multiple-height : 46px;
     --select2-selection-line-height: 46px;
     --select2-option-selected-text-color: #fff;
-    --select2-option-selected-background: #fe8065;
+    --select2-option-selected-background: $primary-color;
     --select2-option-highlighted-text-color: #000;
     --select2-option-highlighted-background: #feac9a;
     --select2-selection-border-color : #CED4DA;
     --select2-selection-text-color: #6C757D;
 }
 
+.bs-datepicker {
+    &.theme-default {
+        .bs-datepicker-head {
+            background-color: $primary-color;
+        }
+
+        .bs-datepicker-body table td span.selected, 
+        .theme-default .bs-datepicker-body table td.selected span, 
+        .theme-default .bs-datepicker-body table td span[class*=select-]:after, 
+        .theme-default .bs-datepicker-body table td[class*=select-] span:after {
+            background-color: $primary-color;
+        }
+
+        .bs-datepicker-predefined-btns button.selected {
+            background-color: $primary-color;
+        }
+    }
+}
 
 ngx-intl-tel-input {
     .iti--allow-dropdown {

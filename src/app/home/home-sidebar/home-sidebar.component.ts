@@ -73,7 +73,7 @@ export class HomeSidebarComponent implements OnInit {
     {
       icon : 'fa-solid fa-calendar',
       name : 'messages.queue',
-      link: 'queues',
+      link: 'visits',
       permission: 'manage_patient_visits'
     },
     {
