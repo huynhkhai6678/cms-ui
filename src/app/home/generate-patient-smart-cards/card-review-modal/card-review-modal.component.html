@@ -1,0 +1,89 @@
+<div class="card patient-smart-card-card" id="card">
+    <div class="card-header patient-card-header smart-card-header d-flex align-items-center"
+        [style.background-color]="data.smart_patient_card.header_color">
+        <div class="flex-1 d-flex align-items-center me-3">
+            <div class="logo me-4">
+                <img [src]="logo" alt="logo" class="h-100 img-fluid">
+            </div>
+            <h4 class="mb-0 fw-bold clinic_name color-white">{{this.clinicName}}</h4>
+        </div>
+        <div class="flex-1 text-end">
+            <address class="fs-12 mb-0 clinic_address color-white">{{this.addressOne}}</address>
+        </div>
+    </div>
+    <div class="card-body patient-smart-card-body header_color">
+        <div class="d-flex justify-content-between">
+            <div class="">
+                <div class="d-flex mb-3">
+                    <div class="card-img me-3">
+                        @if (data.user.image_url) {
+                            <img [src]="data.user.image_url" alt="logo" class="object-fit-cover" width="110px"/>
+                        } @else {
+                            <img [src]="`${apiUrl}public/media/male.png`" alt="logo" class="object-fit-cover" width="110px" />
+                        }
+                    </div>
+
+                    <div class="patient-smart-card-user-detail">
+                        <table class="table table-borderless patient-desc mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="">{{'messages.web.patient_name' | translate }} :</td>
+                                    <td class="card_name" style="word-break: break-word;">{{data.user.first_name}} {{data.user.last_name}}</td>
+                                </tr>
+                                @if (data.smart_patient_card.show_email) {
+                                    <tr id="card_show_email" style="word-break: break-word;">
+                                        <td class="pe-3">{{ 'messages.web.email' | translate }}:</td>
+                                        <td class="patient_email">{{data.user.email}}</td>
+                                    </tr>
+                                }
+                                @if (data.smart_patient_card.show_phone) {
+                                    <tr id="patient_card_show_phone">
+                                        <td class="pe-3">{{'messages.web.contact' | translate }}:</td>
+                                        <td class="patient_contact">+{{data.user.region_code}} {{data.user.contact}}</td>
+                                    </tr>
+                                }
+                                @if (data.smart_patient_card.show_dob) {
+                                    <tr id="patient_card_show_dob">
+                                        <td class="pe-3">{{'messages.patient.dob' | translate }}:</td>
+                                        <td class="patient_dob">{{data.user.dob}}</td>
+                                    </tr>
+                                }
+                                @if (data.smart_patient_card.show_blood_group) {
+                                    <tr id="patient_card_show_blood_group" class="d-none" style="display: none;">
+                                        <td class="blood_group">{{ 'messages.patient.blood_group' | translate }}:</td>
+                                        <td class="patient_blood_group"></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @if (data.smart_patient_card.show_address) {
+                    <div id="patient_card_show_address">
+                        <div class="d-flex address-text me-5">
+                            <div class="mb-0 me-3">{{ 'messages.setting.address' | translate }}:</div>
+                            <div>
+                                <address class="mb-0 card_address">
+                                    {{this.patientAddress}}
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="w-25 float-end">
+                <div class="text-end mb-5 ms-3">
+                    <div class="svgContainer bg-white p-1 ms-5" style="width: 98px" id="svgContainer">
+                        QR-code here
+                    </div>
+                </div>
+                @if (data.smart_patient_card.show_patient_unique_id) {
+                    <div class="text-end pe-2">
+                        <h6 class="text-end mb-3 patient_unique_id d-inline">{{ 'messages.id' | translate }}: {{data.patient_unique_id}}</h6>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -156,7 +156,6 @@ export class PatientModalComponent implements OnInit {
   }
   
   submit(valid : any, value : boolean) {
-    this.formService.checkInvalidFields(this.patientForm);
     this.isSubmitted = true;
     if (!valid) {
       return;

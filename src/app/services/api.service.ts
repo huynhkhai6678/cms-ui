@@ -29,6 +29,10 @@ export class ApiService {
     return this.httpClient.delete(`${environment.apiUrl}` + url);
   }
 
+  downloadFile(url: string) {
+    return this.httpClient.get(`${environment.apiUrl}` + url, { responseType: 'blob' });
+  }
+
   postFileWithParams(url: string, params: Record<string, any>): Observable<any> {
     const formData = new FormData();
     // Append additional fields

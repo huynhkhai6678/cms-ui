@@ -25,42 +25,42 @@
 
 <ng-template #headerColorTemplate let-item>
     <div class="form-check form-switch">
-        <input id="show-header-{{item.id}}" class="card_header_color_change" type="color" [value]="item.header_color" (change)="changeColor($event.target)">
+        <input id="show-header-{{item.id}}" class="card_header_color_change" type="color" [value]="item.header_color" (change)="activeSmartCard('header_color', $event.target, item.id)">
       </div>
 </ng-template>
 
 <ng-template #emailTemplate let-item>
     <div class="form-check form-switch">
-        <input id="show-mail-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.show_email" (change)="activeSmartCard('show_email', $event.target)">
+        <input id="show-mail-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.show_email" (change)="activeSmartCard('show_email', $event.target, item.id)">
     </div>
 </ng-template>
 
 <ng-template #phoneTemplate let-item>
     <div class="form-check form-switch">
-        <input id="show-phone-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.active" (change)="activeSmartCard('show_phone', $event.target)">
+        <input id="show-phone-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.show_phone" (change)="activeSmartCard('show_phone', $event.target, item.id)">
     </div>
 </ng-template>
 
 <ng-template #dobTemplate let-item>
     <div class="form-check form-switch">
-        <input id="show-dob-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.active" (change)="activeSmartCard('show_dob', $event.target)">
+        <input id="show-dob-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.show_dob" (change)="activeSmartCard('show_dob', $event.target, item.id)">
     </div>
 </ng-template>
 
 <ng-template #bloodTemplate let-item>
     <div class="form-check form-switch">
-        <input id="show-blood-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.active" (change)="activeSmartCard('show_blood_group', $event.target)">
+        <input id="show-blood-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.show_blood_group" (change)="activeSmartCard('show_blood_group', $event.target, item.id)">
     </div>
 </ng-template>
 
 <ng-template #addressTemplate let-item>
     <div class="form-check form-switch">
-        <input id="show-address-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.active" (change)="activeSmartCard('show_address', $event.target)">
+        <input id="show-address-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.show_address" (change)="activeSmartCard('show_address', $event.target, item.id)">
     </div>
 </ng-template>
 
 <ng-template #uniqueTemplate let-item>
     <div class="form-check form-switch">
-        <input id="show-unique-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.active" (change)="activeSmartCard('show_patient_unique_id', $event.target)">
+        <input id="show-unique-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.show_patient_unique_id" (change)="activeSmartCard('show_patient_unique_id', $event.target, item.id)">
     </div>
 </ng-template>

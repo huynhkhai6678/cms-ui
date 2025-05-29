@@ -1,1 +1,146 @@
-<p>smart-patient-card-modal works!</p>
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="card main-div d-flex flex-xxl-row flex-column-reverse">
+        <div class="col-xxl-5 col-12 p-5">
+            <form [formGroup]="smartPatientForm" (ngSubmit)="submitForm(smartPatientForm.valid, smartPatientForm.value)">
+                <div class="row"> 
+                    @if (homeService.clinics.length > 1) {
+                        <div class="mb-5">
+                            <label for="clinic_id" class="form-label required">{{ 'messages.common.clinic' | translate }}:</label>
+                            <select id="clinic_id" class="form-select" formControlName="clinic_id" (change)="loadData($event.target)">
+                                @for(clinic of homeService.clinics; track clinic.id) {
+                                <option value="{{clinic.id}}">{{clinic.name}}</option>
+                                }
+                            </select>
+                        </div>
+                    }
+
+                    <div class="mb-5">
+                        <label for="template_name" class="form-label required">{{ 'messages.smart_patient_card.templat_name' | translate }}:</label>
+                        <input formControlName="template_name" type="text" class="form-control" placeholder="{{ 'messages.smart_patient_card.templat_name'  | translate }}" required />
+                        @if (!smartPatientForm.controls['template_name'].valid && (!smartPatientForm.controls['template_name'].pristine || isSubmitted)) {
+                            <div id="nameValidation" class="invalid-feedback d-block">
+                                {{'messages.this_field' | translate}}
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Header Color -->
+                    <div class="mb-5">
+                        <label for="header_color" class="form-label required">{{ 'messages.smart_patient_card.header_color' | translate }}:</label>
+                        <div>
+                            <input id="header_color" formControlName="header_color" type="color" />
+                        </div>
+                    </div>
+
+                    @for(column of columns; track column['name']) {
+                        <div class="mb-5" >
+                            <label for="column-{{column.name}}" class="form-label">{{ 'messages.smart_patient_card.' + column.label | translate }}:</label>
+                            <div class="col-lg-8">
+                                <div class="form-check form-check-solid form-switch">
+                                    <input id="column-{{column.name}}" formControlName="show_{{ column.name }}" type="checkbox" class="form-check-input" [checked]="smartPatientForm.get('show_' + column.name)?.value" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="d-flex">
+                        <button type="submit" class="btn btn-primary me-2">{{ 'messages.common.save' | translate }}</button>
+                        <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">{{ 'messages.common.discard' | translate }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-xxl-7 col-12 bg-secondary p-5">
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="card smart-card-tem-body" id="card">
+                    <div class="card-header smart-card-header d-flex flex-xxl-row flex-column align-items-center" [style.background-color]="smartPatientForm.get('header_color')?.value">
+                        <div class="flex-1 d-flex align-items-center me-3">
+                            <div class="logo me-4">
+                                @if (logo) {
+                                    <img [src]="logo" alt="logo" class="h-100 img-fluid" alt="Clinic logo"/>
+                                }
+                            </div>
+                            <h4 class="text-white mb-0 fw-bold">{{ clinicName }}</h4>
+                        </div>
+                        <div class="flex-1 text-end">
+                            <address class="text-white fs-12 mb-0">
+                                <p class="mb-0">{{ addressOne }}</p>
+                            </address>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="d-flex flex-md-row flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex flex-md-row flex-column mb-3">
+                                    <div class="card-img me-3">
+                                        <img [src]="`${apiUrl}public/media/male.png`" alt="profile-img" class="object-fit-cover" id="card_profilePicture" width="110px" />
+                                    </div>
+                                    <div>
+                                        <table class="table table-borderless patient-desc mb-0">
+                                            <tr>
+                                                <td class="pe-3">{{ 'messages.web.patient_name' | translate }}:</td>
+                                                <td>James Bond</td>
+                                            </tr>
+                                            @if (smartPatientForm.get('show_email')?.value) {
+                                                <tr>
+                                                    <td class="pe-3">{{ 'messages.web.email' | translate }}:</td>
+                                                    <td>{{ 'example@gmail.com' }}</td>
+                                                </tr>
+                                            }
+                                            @if (smartPatientForm.get('show_phone')?.value) {
+                                                <tr>
+                                                    <td class="pe-3">{{ 'messages.web.contact' | translate }}:</td>
+                                                    <td>1234567890</td>
+                                                </tr>
+                                            }
+                                            @if (smartPatientForm.get('show_dob')?.value) {
+                                                <tr>
+                                                    <td class="pe-3">{{ 'messages.patient.dob' | translate }}:</td>
+                                                    <td>25/02/2006</td>
+                                                </tr>
+                                            }
+                                            @if (smartPatientForm.get('show_blood_group')?.value) {
+                                                <tr>
+                                                    <td class="pe-3">{{ 'messages.patient.blood_group' | translate }}:</td>
+                                                    <td>A+</td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                                @if (smartPatientForm.get('show_address')?.value) {
+                                    <div id="card_show_address">
+                                        <div class="d-flex address-text me-5">
+                                            <div class="mb-0 me-3">{{ 'messages.setting.address' | translate }}:</div>
+                                            <div>
+                                                <address class="mb-0" id="card-address">D.No.1 Street name Address line 2 line 3</address>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="qr-main-div w-25 mt-5">
+                                <div class="text-end mb-5">
+                                    <div class="qr-code ms-auto">
+                                        <img [src]="`${apiUrl}public/media/qr-code.svg`"  class="w-100 h-100 object-fit-cover" alt="qr-code"/>
+                                    </div>
+                                </div>
+                                @if (smartPatientForm.get('show_patient_unique_id')?.value) {
+                                    <h6 class="text-end mb-3">{{ 'messages.id' | translate }}: 1001</h6>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

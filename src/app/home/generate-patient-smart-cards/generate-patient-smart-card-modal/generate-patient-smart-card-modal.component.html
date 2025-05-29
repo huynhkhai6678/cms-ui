@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="addTemplateForm" (ngSubmit)="submitForm(addTemplateForm.valid, addTemplateForm.value)">
+        <div class="row">
+           <div class="mb-5 col-sm-12">
+                <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}</label>
+                <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId" (update)="onClinicChange($event)"></select2>
+                @if (!addTemplateForm.controls['clinic_id'].valid && (!addTemplateForm.controls['clinic_id'].pristine || isSubmitted)) {
+                    <div id="clinicValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="mb-5 col-sm-12">
+                <label for="template_id" class="form-label required">{{'messages.smart_patient_card.template' | translate}}</label>
+                <select2 [data]="templates" placeholder="{{'messages.smart_patient_card.template' | translate}}" formControlName="template_id" id="template_id"></select2>
+                @if (!addTemplateForm.controls['template_id'].valid && (!addTemplateForm.controls['template_id'].pristine || isSubmitted)) {
+                    <div id="templateValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+
+            <div class="col-sm-12 mb-5">
+                <span>{{ 'messages.smart_patient_card.type' | translate }}:</span>
+                <div class="mt-5">
+                    <span class="is-valid">
+                        <input id="gender-all" class="form-check-input" type="radio" [value]="1" formControlName="type" [checked]="addTemplateForm.get('type')?.value === 1">
+                        <label for="gender-all" class="form-label mx-3">{{ 'messages.smart_patient_card.for_all_patient' | translate }}</label>
+                        <input id="gender-remain" class="form-check-input" type="radio" [value]="3" formControlName="type" [checked]="addTemplateForm.get('type')?.value === 3">
+                        <label for="gender-remain" class="form-label mx-3">{{ 'messages.smart_patient_card.remaning_patients' | translate }}</label>
+                        <input id="gender-one" class="form-check-input" type="radio" [value]="2" formControlName="type" [checked]="addTemplateForm.get('type')?.value === 2">
+                        <label for="gender-one" class="form-label mx-3">{{ 'messages.smart_patient_card.only_one_patient' | translate }}</label>
+                    </span>
+                </div>
+            </div>
+
+            @if (addTemplateForm.get('type')?.value === 2) {
+                <div class="mb-5 col-sm-12">
+                    <label for="patient_id" class="form-label required">{{'messages.smart_patient_card.select_patient' | translate}}</label>
+                    <select2 [data]="patients" placeholder="{{'messages.smart_patient_card.please_select_patient' | translate}}" formControlName="patient_id" id="patient_id"></select2>
+                    @if (!addTemplateForm.controls['patient_id'].valid && (!addTemplateForm.controls['patient_id'].pristine || isSubmitted)) {
+                        <div id="templateValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary me-2">{{ 'messages.common.save' | translate }}</button>
+            <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">{{ 'messages.common.discard' | translate }}</button>
+        </div>
+    </form>
+</div>

@@ -5,6 +5,7 @@ import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
 import { SmartPatientCard } from './smart-patient-card.model';
 import { SmartPatientCardModalComponent } from './smart-patient-card-modal/smart-patient-card-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-smart-patient-cards',
@@ -31,6 +32,7 @@ export class SmartPatientCardsComponent implements AfterViewInit {
   constructor(
     private apiService: ApiService,
     private formService: FormService,
+    private toastService : ToastrService
   ) {}
 
   ngAfterViewInit() {
@@ -52,7 +54,7 @@ export class SmartPatientCardsComponent implements AfterViewInit {
     ['show_dob', 'messages.smart_patient_card.dob_show', '', true, 'template'],
     ['show_blood_group', 'messages.smart_patient_card.blood_group_show', '', true, 'template'],
     ['show_address', 'messages.smart_patient_card.address_show', '', true, 'template'],
-    ['show_email', 'messages.smart_patient_card.unique_id_show', '', true, 'template'],
+    ['show_patient_unique_id', 'messages.smart_patient_card.unique_id_show', '', true, 'template'],
     ['action', 'messages.common.action', '', false, 'action']
   ];
 
@@ -68,29 +70,35 @@ export class SmartPatientCardsComponent implements AfterViewInit {
   }
 
   create() {
-    this.formService.openEditCreateModal(SmartPatientCardModalComponent, 'modal-lg', {
-      title: 'messages.smart_patient_card.add_smart_card'
+    this.formService.openEditCreateModal(SmartPatientCardModalComponent, 'modal-xl', {
+      title: 'messages.smart_patient_card.add_smart_card',
+      clinicId : this.dataTableComponent.getClinicId()
     }, () => {
       this.dataTableComponent.reloadData();
     });
   }
 
   edit(id: number) {
-    this.formService.openEditCreateModal(SmartPatientCardModalComponent, 'modal-lg', {
+    this.formService.openEditCreateModal(SmartPatientCardModalComponent, 'modal-xl', {
       title: 'messages.smart_patient_card.edit_smart_card',
-      id
+      id,
+      clinicId : this.dataTableComponent.getClinicId()
     }, () => {
       this.dataTableComponent.reloadData();
     });
   }
 
-  activeSmartCard(column :string, target : any) {
-    const value = target.value;
-    console.log(value);
-    console.log(column);
-  }
+  activeSmartCard(column :string, target : any, id: number) {
+    let value = target.checked;
+    if (column === 'header_color') {
+      value = target.value;
+    } 
 
-  changeColor(target: any){
-    console.log(target.value);
+    this.apiService.post(`${this.url}/update-entity/${id}`, {
+      column,
+      value
+    }).subscribe((res : any) => {
+      this.toastService.success(res['message']);
+    });
   }
 }
