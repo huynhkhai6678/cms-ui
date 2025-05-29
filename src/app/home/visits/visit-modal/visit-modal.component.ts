@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ShareService, SingleSelect2Option } from '../../../services/share.service';
 import { Select2 } from 'ng-select2-component';
@@ -21,7 +21,7 @@ import { FormService } from '../../../services/form.service';
   templateUrl: './visit-modal.component.html',
   styleUrl: './visit-modal.component.scss'
 })
-export class VisitModalComponent {
+export class VisitModalComponent implements OnInit {
   visitForm!: FormGroup;
   title = '';
   id = 0;
