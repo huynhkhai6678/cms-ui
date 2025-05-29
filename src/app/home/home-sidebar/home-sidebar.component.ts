@@ -83,6 +83,12 @@ export class HomeSidebarComponent implements OnInit {
       permission: 'manage_patients'
     },
     {
+      icon : 'fa-solid fa-id-card',
+      name : 'messages.smart_patient_card.smart_patient_cards',
+      link: 'smart-patient-cards',
+      permission: 'manage_patients'
+    },
+    {
       icon : 'fa-solid fa-question-circle',
       name : 'messages.enquiries',
       link: 'enquiries',

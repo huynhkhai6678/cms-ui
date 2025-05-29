@@ -39,6 +39,6 @@
 
 <ng-template #activeTemplate let-item>
     <div class="form-check form-switch">
-        <input class="form-check-input clinicServiceActiveCheckbox" data-medicine-id="30" type="checkbox" role="switch" [checked]="item.active" (change)="activeService(item, $event.target)">
+        <input class="form-check-input clinicServiceActiveCheckbox" type="checkbox" role="switch" [checked]="item.active" (change)="activeService(item, $event.target)">
     </div>
 </ng-template>

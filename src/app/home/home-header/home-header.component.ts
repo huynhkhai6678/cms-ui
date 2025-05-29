@@ -68,6 +68,22 @@ export class HomeHeaderComponent implements OnInit {
         link: 'clinic-services'
       }
     ],
+    'patients': [
+      {
+        name : 'messages.patients',
+        link: 'patients'
+      }
+    ],
+    'smart-patient-cards': [
+      {
+        name : 'messages.smart_patient_card.smart_patient_cards',
+        link: 'smart-patient-cards'
+      },
+      {
+        name : 'messages.smart_patient_card.generate_patient_smart_cards',
+        link: 'generate-patient-smart-cards'
+      }
+    ],
     'master_list': [
       {
         name : 'messages.subscribers',
@@ -139,6 +155,7 @@ export class HomeHeaderComponent implements OnInit {
     'settings': ['settings', 'specializations', 'clinic-schedules'],
     'website' : ['cms', 'services', 'service-categories', 'sliders', 'faqs', 'testimonials'],
     'user' : ['doctors', 'staffs', 'doctor-holidays'],
+    'smart-patient-cards' : ['smart-patient-cards', 'generate-patient-smart-cards'],
   };
 
   constructor(

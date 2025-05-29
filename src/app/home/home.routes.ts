@@ -151,6 +151,16 @@ export const homeRoutes: Routes = [
         canActivate: [permissionGuard('manage_patients')]
       },
       {
+        path: 'smart-patient-cards',
+         loadComponent: () => import('./smart-patient-cards/smart-patient-cards.component').then(mod => mod.SmartPatientCardsComponent),
+        canActivate: [permissionGuard('manage_patients')]
+      },
+      {
+        path: 'generate-patient-smart-cards',
+         loadComponent: () => import('./generate-patient-smart-cards/generate-patient-smart-cards.component').then(mod => mod.GeneratePatientSmartCardsComponent),
+        canActivate: [permissionGuard('manage_patients')]
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
