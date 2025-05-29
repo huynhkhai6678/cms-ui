@@ -1,1 +1,19 @@
+#!/bin/sh
+
+echo "🔧 Pre-commit hook running..."
+
+# Manually add node and npm to PATH for GUI environments like Sourcetree
+export PATH="/usr/local/bin:$PATH"
+
+# Confirm they are found
+echo "📍 node path: $(which node)"
+echo "📍 npm path: $(which npm)"
+
+# Optional: sanity check
+if ! command -v node >/dev/null || ! command -v npm >/dev/null; then
+  echo "❌ node or npm not found. Aborting."
+  exit 1
+fi
+
+# Run your pre-commit script
 npm run lint
