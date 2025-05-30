@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="labelForm" (ngSubmit)="submit(labelForm.value, labelForm.valid)">
+        <div class="row">
+            @if (homeService.clinics.length > 1) {
+                <div class="col-md-12 mb-5">
+                    <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
+                    <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId"></select2>
+                        @if (!labelForm.controls['clinic_id'].valid && (!labelForm.controls['clinic_id'].pristine || isSubmitted)) {
+                        <div id="imageValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
+                </div>
+            }
+             <div class="col-lg-12 mb-5">
+                <label for="name" class="form-label required">{{'messages.label.name' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.label.name' | translate }}" formControlName="name" type="text" id="name">
+            </div>
+            <div class="col-lg-12 mb-5">
+                <label class="form-label" for="type">{{'messages.label.type' | translate}}:</label>
+                <select2 [data]="types" placeholder="{{'messages.label.type' | translate}}" formControlName="type" id="type"></select2>
+            </div>
+            <div>
+                <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

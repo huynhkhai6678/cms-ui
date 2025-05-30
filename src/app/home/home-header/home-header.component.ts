@@ -84,6 +84,24 @@ export class HomeHeaderComponent implements OnInit {
         link: 'generate-patient-smart-cards'
       }
     ],
+    'medicines': [
+      {
+        name : 'messages.medicines',
+        link: 'medicines'
+      },
+      {
+        name : 'messages.labels',
+        link: 'labels'
+      },
+      {
+        name : 'messages.brands',
+        link: 'brands'
+      },
+      {
+        name : 'messages.categories',
+        link: 'categories'
+      }
+    ],
     'master_list': [
       {
         name : 'messages.subscribers',
@@ -156,6 +174,7 @@ export class HomeHeaderComponent implements OnInit {
     'website' : ['cms', 'services', 'service-categories', 'sliders', 'faqs', 'testimonials'],
     'user' : ['doctors', 'staffs', 'doctor-holidays'],
     'smart-patient-cards' : ['smart-patient-cards', 'generate-patient-smart-cards'],
+    'medicines' : ['medicines', 'brands', 'categories', 'labels']
   };
 
   constructor(

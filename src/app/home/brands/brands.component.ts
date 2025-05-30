@@ -1,31 +1,29 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
-import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
-import { LabelModalComponent } from './label-modal/label-modal.component';
-import { Label } from './label.model';
-import { LABEL_TYPE } from './label.contant';
+import { BrandModalComponent } from './brand-modal/brand-modal.component';
+import { Brand } from './brand.model';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-labels',
+  selector: 'app-brands',
   imports: [
     DataTableComponent,
     TranslatePipe
   ],
-  templateUrl: './labels.component.html',
-  styleUrl: './labels.component.scss'
+  templateUrl: './brands.component.html',
+  styleUrl: './brands.component.scss'
 })
-export class LabelsComponent implements AfterViewInit {
-  url = 'labels';
-  TYPES = LABEL_TYPE;
+export class BrandsComponent implements AfterViewInit {
+  url = 'brands';
   clinics = [];
   filterParams = {
     view: -1,
   };
   columnCustomTemplates : Record<string, any> = {};
 
-  @ViewChild('typeTemplate') typeTemplate!: TemplateRef<any>;
+  @ViewChild('phoneTemplate') phoneTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
 
   constructor(
@@ -36,17 +34,18 @@ export class LabelsComponent implements AfterViewInit {
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
     ['name', 'messages.common.name', '', true, 'string'],
-    ['type', 'messages.web.message', '', true, 'template'],
+    ['email', 'messages.patient.email', '', true, 'string'],
+    ['phone', 'messages.web.phone', '', true, 'string'],
     ['action', 'messages.common.action', '', false, 'action'],
   ];
 
   ngAfterViewInit() {
-    this.columnCustomTemplates['type'] = this.typeTemplate;
+    this.columnCustomTemplates['type'] = this.phoneTemplate;
   }
 
   create() {
-    this.formService.openEditCreateModal(LabelModalComponent, 'modal-md', {
-      title: 'messages.label.new_label',
+    this.formService.openEditCreateModal(BrandModalComponent, 'modal-lg', {
+      title: 'messages.medicine.new_medicine_brand',
       clinicId : this.dataTableComponent.getClinicId()
     }, () => {
       this.dataTableComponent.reloadData();
@@ -54,8 +53,8 @@ export class LabelsComponent implements AfterViewInit {
   }
   
   edit(id: number) {
-    this.formService.openEditCreateModal(LabelModalComponent, 'modal-md', {
-      title: 'messages.label.edit_label',
+    this.formService.openEditCreateModal(BrandModalComponent, 'modal-lg', {
+      title: 'messages.medicine.edit_medicine_brand',
       clinicId : this.dataTableComponent.getClinicId(),
       id
     }, () => {
@@ -63,7 +62,7 @@ export class LabelsComponent implements AfterViewInit {
     });
   }
     
-  delete(row: Label) {
+  delete(row: Brand) {
     this.formService.showDeleteConfirm(row.name)
     .subscribe(confirmed => {
       if (confirmed) {

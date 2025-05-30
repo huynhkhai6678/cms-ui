@@ -157,8 +157,23 @@ export const homeRoutes: Routes = [
       },
       {
         path: 'generate-patient-smart-cards',
-         loadComponent: () => import('./generate-patient-smart-cards/generate-patient-smart-cards.component').then(mod => mod.GeneratePatientSmartCardsComponent),
+        loadComponent: () => import('./generate-patient-smart-cards/generate-patient-smart-cards.component').then(mod => mod.GeneratePatientSmartCardsComponent),
         canActivate: [permissionGuard('manage_patients')]
+      },
+      {
+        path: 'labels', 
+        loadComponent: () => import('./labels/labels.component').then(mod => mod.LabelsComponent),
+        canActivate: [permissionGuard('manage_medicines')]
+      },
+      {
+        path: 'brands', 
+        loadComponent: () => import('./brands/brands.component').then(mod => mod.BrandsComponent),
+        canActivate: [permissionGuard('manage_medicines')]
+      },
+      {
+        path: 'categories', 
+        loadComponent: () => import('./categories/categories.component').then(mod => mod.CategoriesComponent),
+        canActivate: [permissionGuard('manage_medicines')]
       },
       {
         path: '',

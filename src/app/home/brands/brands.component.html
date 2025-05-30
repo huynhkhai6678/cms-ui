@@ -9,7 +9,7 @@
 <ng-template #addTemplate>
     <div>
         <button class="btn btn-primary ms-auto" (click)="create()">
-            {{'messages.label.new_label' | translate}}
+            {{'messages.medicine.new_medicine_brand' | translate}}
         </button>
     </div>
 </ng-template>
@@ -23,6 +23,6 @@
     </button>
 </ng-template>
 
-<ng-template #typeTemplate let-item>
-    {{TYPES[item.type]}}
+<ng-template #phoneTemplate let-item>
+    +{{item.phone}}
 </ng-template>

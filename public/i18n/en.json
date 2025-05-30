@@ -1444,7 +1444,8 @@
       "low_stock_alert_level": "Low Stock Alert Level",
       "reorder_level": "Reorder Level",
       "expiration_warning": "Expiration Warning",
-      "active": "Active"
+      "active": "Active",
+      "inactive": "Inactive"
     },
     "label": {
       "labels": "Labels",

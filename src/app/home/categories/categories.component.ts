@@ -3,29 +3,24 @@ import { DataTableComponent } from '../../shared/data-table/data-table.component
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
-import { LabelModalComponent } from './label-modal/label-modal.component';
-import { Label } from './label.model';
-import { LABEL_TYPE } from './label.contant';
+import { CategoryModalComponent } from './category-modal/category-modal.component';
+import { Category } from './category.model';
 
 @Component({
-  selector: 'app-labels',
+  selector: 'app-categories',
   imports: [
     DataTableComponent,
     TranslatePipe
   ],
-  templateUrl: './labels.component.html',
-  styleUrl: './labels.component.scss'
+  templateUrl: './categories.component.html',
+  styleUrl: './categories.component.scss'
 })
-export class LabelsComponent implements AfterViewInit {
-  url = 'labels';
-  TYPES = LABEL_TYPE;
+export class CategoriesComponent implements AfterViewInit {
+  url = 'categories';
   clinics = [];
-  filterParams = {
-    view: -1,
-  };
   columnCustomTemplates : Record<string, any> = {};
 
-  @ViewChild('typeTemplate') typeTemplate!: TemplateRef<any>;
+  @ViewChild('activeTemplate') activeTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
 
   constructor(
@@ -36,17 +31,17 @@ export class LabelsComponent implements AfterViewInit {
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
     ['name', 'messages.common.name', '', true, 'string'],
-    ['type', 'messages.web.message', '', true, 'template'],
+    ['is_active', 'messages.common.active', '', true, 'template'],
     ['action', 'messages.common.action', '', false, 'action'],
   ];
 
   ngAfterViewInit() {
-    this.columnCustomTemplates['type'] = this.typeTemplate;
+    this.columnCustomTemplates['is_active'] = this.activeTemplate;
   }
 
   create() {
-    this.formService.openEditCreateModal(LabelModalComponent, 'modal-md', {
-      title: 'messages.label.new_label',
+    this.formService.openEditCreateModal(CategoryModalComponent, 'modal-md', {
+      title: 'messages.medicine.new_medicine_category',
       clinicId : this.dataTableComponent.getClinicId()
     }, () => {
       this.dataTableComponent.reloadData();
@@ -54,8 +49,8 @@ export class LabelsComponent implements AfterViewInit {
   }
   
   edit(id: number) {
-    this.formService.openEditCreateModal(LabelModalComponent, 'modal-md', {
-      title: 'messages.label.edit_label',
+    this.formService.openEditCreateModal(CategoryModalComponent, 'modal-lg', {
+      title: 'messages.medicine.edit_medicine_category',
       clinicId : this.dataTableComponent.getClinicId(),
       id
     }, () => {
@@ -63,7 +58,7 @@ export class LabelsComponent implements AfterViewInit {
     });
   }
     
-  delete(row: Label) {
+  delete(row: Category) {
     this.formService.showDeleteConfirm(row.name)
     .subscribe(confirmed => {
       if (confirmed) {
@@ -72,5 +67,14 @@ export class LabelsComponent implements AfterViewInit {
         })
       }
     });
+  }
+
+  activeCategory(id: number, target : any) { 
+    console.log(id);
+    console.log(target);
+  }
+
+  changeStatus(input: any) {
+    this.dataTableComponent.handleFilterChange({ is_active : input.value});
   }
 }

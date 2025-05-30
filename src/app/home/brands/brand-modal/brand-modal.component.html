@@ -1,0 +1,64 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="labelForm" (ngSubmit)="submit(labelForm.value, labelForm.valid)">
+        <div class="row">
+            @if (homeService.clinics.length > 1) {
+                <div class="col-md-12 mb-5">
+                    <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
+                    <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId"></select2>
+                        @if (!labelForm.controls['clinic_id'].valid && (!labelForm.controls['clinic_id'].pristine || isSubmitted)) {
+                        <div id="imageValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
+                </div>
+            }
+            <div class="col-lg-6 mb-5">
+                <label for="name" class="form-label required">{{'messages.medicine.brand' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.medicine.brand' | translate }}" formControlName="name" type="text" id="name">
+                @if (!labelForm.controls['name'].valid && (!labelForm.controls['name'].pristine || isSubmitted)) {
+                    <div id="nameValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6 mb-5">
+                <label class="form-label" for="type">{{'messages.web.phone' | translate}}:</label>
+                <app-phone-input formControlName="contact"></app-phone-input>
+            </div>
+            <div class="col-lg-6 mb-5">
+                <label for="email" class="form-label">{{'messages.web.email' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.web.email' | translate }}" formControlName="email" type="text" id="email">
+            </div>
+            <div class="col-lg-6 mb-5">
+                <label for="address" class="form-label">{{'messages.setting.address' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.setting.address' | translate }}" formControlName="address" type="text" id="address">
+            </div>
+            <div class="col-lg-6 mb-5">
+                <label for="contact_person" class="form-label">{{'messages.user.contact_person' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.user.contact_person' | translate }}" formControlName="contact_person" type="text" id="contact_person">
+            </div>
+            <div class="col-lg-6 mb-5">
+                <label for="payment_terms" class="form-label">{{'messages.user.payment_term' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.user.payment_term' | translate }}" formControlName="payment_terms" type="text" id="payment_terms">
+            </div>
+            <div class="col-lg-6 mb-5">
+                <label for="website" class="form-label">{{'messages.user.website' | translate }}:</label>
+                <input class="form-control" placeholder="{{'messages.user.website' | translate }}" formControlName="website" type="text" id="website">
+            </div>
+            <div class="col-lg-6 mb-5">
+                <label for="comment" class="form-label">{{'messages.user.comment' | translate }}:</label>
+                <textarea class="form-control" placeholder="{{'messages.user.comment' | translate }}" formControlName="comment" type="text" id="comment" rows="4" cols="50"></textarea>
+            </div>
+            <div>
+                <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>
