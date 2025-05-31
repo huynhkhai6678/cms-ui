@@ -104,7 +104,6 @@ export class UserModalComponent implements OnInit {
     const chain = this.chains.find(chain => { return chain.id === event.value});
     if (chain) {
       const clinicIds = chain.clinics.map((clinic: any) => { return clinic.id });
-      console.log(clinicIds);
       this.userForm.controls['clinic_ids'].setValue(clinicIds);
     }
   }

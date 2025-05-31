@@ -1,0 +1,76 @@
+<app-data-table 
+    [url]="url" 
+    [headers]="tableColumns" 
+    [actionTemplate]="actionTemplate" 
+    [addTemplate]="addTemplate"
+    [filterTemplate]="filterTemplate"
+    [columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #addTemplate>
+    <div>
+        <button class="btn btn-primary ms-auto" (click)="create()">
+            {{'messages.medicine.new_medicine' | translate}}
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #filterTemplate>
+    <div>
+        <select id="categoryStatusFilter" class="form-select w-auto me-3" (change)="changeStatus($event.target)">
+            <option value="1">{{'messages.medicine.active' | translate}}</option>
+            <option value="0">{{'messages.medicine.inactive' | translate}}</option>
+        </select>
+    </div>
+</ng-template>
+
+<ng-template #actionTemplate let-row>
+    <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.id)">
+        <i class="fa-solid fa-pen-to-square" title="Edit"></i>
+    </button>
+    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
+        <i class="fa-solid fa-trash" title="Delete"></i>
+    </button>
+</ng-template>
+
+<ng-template #nameTemplate let-item>
+    <div class="d-flex align-items-center">
+        <a [routerLink]="`/home/medicine-inventories/${item.id}`">
+            <div class="image image-circle image-mini me-3">
+                <img src="https://test.myclnqhealth.com/web/media/medicines/Med_PNG.png" alt="user" class="user-img">
+            
+            </div>
+        </a>
+        <div class="d-flex flex-column">
+            <a [routerLink]="`/home/medicine-inventories/${item.id}`" data-id="30" class="text-decoration-none">
+                {{item.name}}
+            </a>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #categoryTemplate let-item>
+    @for (category of item.categories; track category.id) {
+        {{category.name}},
+    }
+</ng-template>
+
+<ng-template #supplierTemplate let-item>
+    @for (brand of item.brands; track brand.id) {
+        {{brand.name}},
+    }
+</ng-template>
+
+<ng-template #quantityTemplate let-item>
+    <span class="badge bg-light-primary">{{item.available_quantity}}</span>
+</ng-template>
+
+<ng-template #expiryTemplate let-item>
+    <span class="badge bg-light-primary">{{item.first_expiration_date | date:'dd/MM/yyyy'}}</span>
+</ng-template>
+
+<ng-template #activeTemplate let-item>
+    <div class="form-check form-switch">
+        <input id="show-mail-{{item.id}}" class="form-check-input" type="checkbox" role="switch" [checked]="item.active" (change)="activeMedicine(item.id, $event.target)">
+    </div>
+</ng-template>

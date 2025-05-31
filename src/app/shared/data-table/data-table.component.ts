@@ -171,9 +171,10 @@ export class DataTableComponent {
     if (params.searchString) searchParams.set('search', params.searchString);
     if (params.itemPerPage) searchParams.set('limit', params.itemPerPage);
     if (params.page) searchParams.set('page', params.page);
-    if (params.clinicId) searchParams.set('clinic_id', params.clinicId);
 
-    if (params.dateRange) {
+    if (this.showClinicFilterTemplate && params.clinicId) searchParams.set('clinic_id', params.clinicId);
+
+    if (this.showFilterDateRange && params.dateRange) {
       const startDate = moment(params.dateRange[0]).format('YYYY-MM-DD');
       const endDate = moment(params.dateRange[1]).format('YYYY-MM-DD');
       searchParams.set('start_date', startDate);

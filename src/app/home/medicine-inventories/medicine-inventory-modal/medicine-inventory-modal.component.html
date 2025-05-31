@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit(inventoryForm.valid, inventoryForm.value)">
+        <div class="row">
+            <div class="col-md-6 mb-5">
+                <label for="quantity" class="form-label required">{{'messages.medicine-inventory.quantity' | translate }}:</label>
+                <input formControlName="quantity" type="number" class="form-control" id="quantity" placeholder="{{'messages.medicine-inventory.quantity' | translate }}" minlength="2"/>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="bonus" class="form-label">{{'messages.medicine-inventory.quantity' | translate }}:</label>
+                <input formControlName="bonus" type="number" class="form-control" id="bonus" placeholder="{{'messages.medicine-inventory.bonus' | translate }}" minlength="2"/>
+            </div>
+
+            <!-- UOM Field -->
+            <div class="col-md-6 mb-5">
+                <label for="uom" class="form-label required">{{'messages.medicine-inventory.uom' | translate }}:</label>
+                <input formControlName="uom" type="text" class="form-control" id="uom" placeholder="{{'messages.medicine-inventory.uom' | translate }}" readonly/>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="price" class="form-label required">{{'messages.medicine-inventory.price' | translate }}:</label>
+                <input formControlName="price" type="number" class="form-control" id="price" placeholder="{{'messages.medicine-inventory.price' | translate }}"/>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="cost_per_unit" class="form-label required">{{'messages.medicine-inventory.cost_per_unit' | translate }}:</label>
+                <input formControlName="cost_per_unit" type="text" class="form-control" id="cost_per_unit" placeholder="{{'messages.medicine-inventory.cost_per_unit' | translate }}" readonly/>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="batch_number" class="form-label">{{'messages.medicine-inventory.batch_number' | translate }}:</label>
+                <input formControlName="batch_number" type="text" class="form-control" id="batch_number" placeholder="{{'messages.medicine-inventory.batch_number' | translate }}"/>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="expiration_date" class="form-label required">{{'messages.medicine-inventory.expiration_date' | translate }}:</label>
+                <app-date-input formControlName="expiration_date" [minDate]="minDate" placeholder="{{'messages.medicine-inventory.expiration_date' | translate }}" id="expiration_date"></app-date-input>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <label for="description" class="form-label">{{'messages.medicine-inventory.description' | translate }}:</label>
+                <textarea formControlName="description" class="form-control" rows="5" placeholder="{{'messages.medicine-inventory.description' | translate }}"></textarea>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

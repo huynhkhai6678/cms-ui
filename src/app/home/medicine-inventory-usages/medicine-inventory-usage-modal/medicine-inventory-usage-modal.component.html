@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="inventoryUsageForm" (ngSubmit)="onSubmit(inventoryUsageForm.valid, inventoryUsageForm.value)">
+        <div class="row">
+             <div class="col-md-12 mb-5">
+                <label for="quantity" class="form-label required">{{'messages.medicine-inventory.quantity' | translate }}:</label>
+                <input id="quantity" formControlName="quantity" type="number" class="form-control"  placeholder="{{'messages.medicine-inventory.quantity' | translate }}" minlength="2"/>
+            </div>
+
+            <div class="col-md-12 mb-5">
+                <label for="type" class="form-label required">{{'messages.medicine-inventory.type' | translate }}:</label>            
+                <select2 [data]="types" placeholder="{{'messages.medicine-inventory.type' | translate }}" formControlName="type" id="type"></select2>
+            </div>
+
+            <div class="col-md-12 mb-5">
+                <label for="description" class="form-label">{{'messages.medicine-inventory.description' | translate }}:</label>
+                <textarea formControlName="description" class="form-control" rows="5" placeholder="{{'messages.medicine-inventory.description' | translate }}"></textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

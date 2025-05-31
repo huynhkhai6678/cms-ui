@@ -1,0 +1,136 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="medicineForm" (ngSubmit)="onSubmit(medicineForm.valid, medicineForm.value)">
+        <div class="row">
+            <div class="col-sm-12 mb-5">
+                @if (homeService.clinics.length > 1) {
+                    <div class="col-md-12 mb-5">
+                        <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
+                        @if (id) {
+                            <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId" (update)="loadFormSelection($event.value)"></select2>
+                            @if (!medicineForm.controls['clinic_id'].valid && (!medicineForm.controls['clinic_id'].pristine || isSubmitted)) {
+                                <div id="imageValidation" class="invalid-feedback d-block">
+                                    {{'messages.this_field' | translate}}
+                                </div>
+                            }
+                        } @else {
+                            <select2 [data]="homeService.selectClinics" multiple placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId" (update)="loadFormSelection($event.value)"></select2>
+                            @if (!medicineForm.controls['clinic_id'].valid && (!medicineForm.controls['clinic_id'].pristine || isSubmitted)) {
+                                <div id="imageValidation" class="invalid-feedback d-block">
+                                    {{'messages.this_field' | translate}}
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="type" class="form-label">{{'messages.user.type' | translate }}:</label>
+                <select2 [data]="types" placeholder="{{'messages.user.type' | translate }}" formControlName="type" id="type"></select2>
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="category_ids" class="form-label">{{'messages.medicine.category' | translate }}:</label>
+                <select2 [data]="categories" multiple placeholder="{{'messages.medicine.category' | translate }}" formControlName="category_ids" id="category_ids"></select2>
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="name" class="form-label required">{{'messages.medicine.name' | translate }}:</label>
+                <input id="name" formControlName="name" type="text" class="form-control" placeholder="{{'messages.medicine.name' | translate }}" minlength="2" required />
+                @if (!medicineForm.controls['name'].valid && (!medicineForm.controls['name'].pristine || isSubmitted)) {
+                    <div id="imageValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="salt_composition" class="form-label">{{'messages.medicine.salt_composition' | translate }}:</label>
+                <input id="salt_composition" formControlName="salt_composition" type="text" class="form-control" placeholder="{{'messages.medicine.salt_composition' | translate }}" />
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="salt_composition" class="form-label">{{'messages.user.code' | translate }}:</label>
+                <input id="salt_composition" formControlName="code" type="text" class="form-control" placeholder="{{'messages.user.code' | translate }}" />
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="type" class="form-label">{{'messages.medicine.brand' | translate }}:</label>
+                <select2 [data]="brands" multiple placeholder="{{'messages.medicine.brand' | translate }}" formControlName="brand_ids" id="type"></select2>
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="buying_price" class="form-label">{{'messages.medicine.buying_price' | translate }}:</label>
+                <input id="buying_price" formControlName="buying_price" type="number" class="form-control" placeholder="{{'messages.medicine.buying_price' | translate }}" />
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="selling_price" class="form-label">{{'messages.medicine.selling_price' | translate }}:</label>
+                <input id="selling_price" formControlName="selling_price" type="number" class="form-control" placeholder="{{'messages.medicine.selling_price' | translate }}" />
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="default_dispense" class="form-label">{{'messages.user.default_dispense' | translate }}:</label>
+                <input id="default_dispense" formControlName="default_dispense" type="text" class="form-control" placeholder="{{'messages.user.default_dispense' | translate }}" />
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="uom" class="form-label required">{{'messages.user.uom' | translate }}:</label>
+                <select2 [data]="uoms" placeholder="{{'messages.user.uom' | translate }}" formControlName="uom" id="uom"></select2>
+                @if (!medicineForm.controls['uom'].valid && (!medicineForm.controls['uom'].pristine || isSubmitted)) {
+                    <div id="uomValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="dosage" class="form-label">{{'messages.medicine.dosage' | translate }}:</label>
+                <input id="dosage" formControlName="dosage" type="text" class="form-control" placeholder="{{'messages.medicine.dosage' | translate }}" />
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="frequency" class="form-label">{{'messages.user.frequency' | translate }}:</label>
+                <select2 [data]="frequencies" placeholder="{{'messages.user.frequency' | translate }}" formControlName="frequency" id="frequency"></select2>
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="dosage" class="form-label">{{'messages.user.administration' | translate }}:</label>
+                <input id="dosage" formControlName="administration" type="text" class="form-control" placeholder="{{'messages.user.administration' | translate }}" />
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="purposes" class="form-label">{{'messages.user.purpose' | translate }}:</label>
+                <select2 [data]="purposes" placeholder="{{'messages.user.purpose' | translate }}" formControlName="purpose" id="purposes"></select2>
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="side_effects" class="form-label">{{'messages.medicine.side_effects' | translate }}:</label>
+                <textarea id="side_effects" formControlName="side_effects" class="form-control" placeholder="{{'messages.medicine.side_effects' | translate }}"></textarea>
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="packing" class="form-label">{{'messages.user.packing' | translate }}:</label>
+                <input id="packing" formControlName="packing" type="text" class="form-control" placeholder="{{'messages.user.packing' | translate }}" />
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="comment" class="form-label">{{'messages.user.comment' | translate }}:</label>
+                <textarea id="comment" formControlName="comment" class="form-control" placeholder="{{'messages.user.comment' | translate }}"></textarea>
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="inventory_image" class="form-label">{{'messages.user.inventory_image' | translate }}:</label>
+                <div class="col-lg-8">
+                    <div class="mb-3">
+                        <app-image-upload id="inventory_image" formControlName="image"></app-image-upload>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-5">
+                <label for="low_stock_level" class="form-label">{{'messages.medicine.low_stock_alert_level' | translate }}:</label>
+                <input id="low_stock_level" formControlName="low_stock_level" type="number" class="form-control" placeholder="{{'messages.medicine.low_stock_alert_level' | translate }}" />
+            </div>
+            <div class="col-sm-4 mb-5">
+                <label for="reorder_level" class="form-label">{{'messages.medicine.reorder_level' | translate }}:</label>
+                <input id="reorder_level" formControlName="reorder_level" type="number" class="form-control" placeholder="{{'messages.medicine.reorder_level' | translate }}" />
+            </div>
+            <div class="col-sm-4 mb-5">
+                <label for="expiration_warning" class="form-label">{{'messages.medicine.expiration_warning' | translate }}:</label>
+                <input id="expiration_warning" formControlName="expiration_warning" type="number" class="form-control" placeholder="{{'messages.medicine.expiration_warning' | translate }}" />
+            </div>
+            <div>
+                <button class="btn btn-primary m-0" type="submit">{{'messages.common.save' | translate}}</button>
+                <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{'messages.common.discard' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

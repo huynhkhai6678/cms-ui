@@ -161,6 +161,21 @@ export const homeRoutes: Routes = [
         canActivate: [permissionGuard('manage_patients')]
       },
       {
+        path: 'medicines', 
+        loadComponent: () => import('./medicines/medicines.component').then(mod => mod.MedicinesComponent),
+        canActivate: [permissionGuard('manage_medicines')]
+      },
+      {
+        path: 'medicine-inventories/:id', 
+        loadComponent: () => import('./medicine-inventories/medicine-inventories.component').then(mod => mod.MedicineInventoriesComponent),
+        canActivate: [permissionGuard('manage_medicines')]
+      },
+      {
+        path: 'medicine-inventory-usages/:id', 
+        loadComponent: () => import('./medicine-inventory-usages/medicine-inventory-usages.component').then(mod => mod.MedicineInventoryUsagesComponent),
+        canActivate: [permissionGuard('manage_medicines')]
+      },
+      {
         path: 'labels', 
         loadComponent: () => import('./labels/labels.component').then(mod => mod.LabelsComponent),
         canActivate: [permissionGuard('manage_medicines')]

@@ -5,6 +5,7 @@ import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
 import { CategoryModalComponent } from './category-modal/category-modal.component';
 import { Category } from './category.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-categories',
@@ -26,6 +27,7 @@ export class CategoriesComponent implements AfterViewInit {
   constructor(
     private apiService: ApiService,
     private formService: FormService,
+    private toastrService : ToastrService
   ) {}
 
   // field, header name, css, sortable, type
@@ -62,7 +64,8 @@ export class CategoriesComponent implements AfterViewInit {
     this.formService.showDeleteConfirm(row.name)
     .subscribe(confirmed => {
       if (confirmed) {
-        this.apiService.delete(`${this.url}/${row.id}`).subscribe(() => {
+        this.apiService.delete(`${this.url}/${row.id}`).subscribe((response : any) => {
+          this.toastrService.success(response['message']);
           this.dataTableComponent.reloadData();
         })
       }
@@ -70,8 +73,11 @@ export class CategoriesComponent implements AfterViewInit {
   }
 
   activeCategory(id: number, target : any) { 
-    console.log(id);
-    console.log(target);
+    this.apiService.post(`${this.url}/update-status/${id}`, {
+      active : target.checked
+    }).subscribe((response : any) => {
+      this.toastrService.success(response['message']);
+    })
   }
 
   changeStatus(input: any) {
