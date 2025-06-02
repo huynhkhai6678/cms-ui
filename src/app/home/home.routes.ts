@@ -176,6 +176,11 @@ export const homeRoutes: Routes = [
         canActivate: [permissionGuard('manage_medicines')]
       },
       {
+        path: 'medicine-purchase', 
+        loadComponent: () => import('./medicine-purchase/medicine-purchase.component').then(mod => mod.MedicinePurchaseComponent),
+        canActivate: [permissionGuard('manage_medicines')]
+      },
+      {
         path: 'labels', 
         loadComponent: () => import('./labels/labels.component').then(mod => mod.LabelsComponent),
         canActivate: [permissionGuard('manage_medicines')]

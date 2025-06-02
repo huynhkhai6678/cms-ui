@@ -100,6 +100,10 @@ export class HomeHeaderComponent implements OnInit {
       {
         name : 'messages.categories',
         link: 'categories'
+      },
+      {
+        name : 'messages.purchase_medicine.purchase_medicines',
+        link: 'medicine-purchase'
       }
     ],
     'master_list': [
@@ -174,7 +178,7 @@ export class HomeHeaderComponent implements OnInit {
     'website' : ['cms', 'services', 'service-categories', 'sliders', 'faqs', 'testimonials'],
     'user' : ['doctors', 'staffs', 'doctor-holidays'],
     'smart-patient-cards' : ['smart-patient-cards', 'generate-patient-smart-cards'],
-    'medicines' : ['medicines', 'brands', 'categories', 'labels']
+    'medicines' : ['medicines', 'brands', 'categories', 'labels', 'medicine-purchase']
   };
 
   constructor(
