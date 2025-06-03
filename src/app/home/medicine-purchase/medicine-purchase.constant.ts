@@ -7,7 +7,7 @@
  ] as const;
  
  export const PAYMENT_TYPE : Record<number, string> = {
-     1: 'Cash',
-     2: 'Cheque',
-     3: 'Other',
+    1: 'Cash',
+    2: 'Cheque',
+    3: 'Other',
  } as const;

@@ -1,0 +1,206 @@
+<div class="d-flex flex-wrap align-items-center justify-content-between mb-7">
+    <h1 class="mb-0 me-1">
+        {{ id ? ('messages.transaction.add_transaction' | translate) : ('messages.transaction.add_transaction' |
+        translate)}}
+    </h1>
+    <button class="btn btn-outline-primary mt-3" [routerLink]="'/home/transactions'">
+        {{'messages.common.back' | translate}}
+    </button>
+</div>
+<form [formGroup]="transactionForm" (ngSubmit)="onSubmit(transactionForm.valid, transactionForm.value)">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                @if (homeService.clinics.length > 1) {
+                <div class="col-md-4 mb-5">
+                    <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
+                    <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}"
+                        formControlName="clinic_id" id="clinicId" (update)="updateClinic($event.value)"></select2>
+                    @if (!transactionForm.controls['clinic_id'].valid && (!transactionForm.controls['clinic_id'].pristine ||
+                    isSubmitted)) {
+                    <div id="imageValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                    }
+                </div>
+                }
+                <div class="form-group col-sm-4 mb-5">
+                    <label for="bill_date" class="form-label required">{{'messages.transaction.date' | translate}}:</label>
+                    <app-date-input formControlName="bill_date" placeholder="{{'messages.transaction.date' | translate }}"
+                        id="bill_date"></app-date-input>
+                </div>
+                <div class="form-group col-sm-4 mb-5">
+                    <label for="invoice_number" class="form-label required">{{'messages.appointment.invoice_number' |
+                        translate}}:</label>
+                    <input id="invoice_number" class="form-control" autocomplete="off" formControlName="invoice_number"
+                        readonly>
+                </div>
+                <div class="form-group col-sm-4 mb-5">
+                    <label for="user_id" class="form-label required">{{'messages.visit.patient' | translate}}:</label>
+                    <select2 [data]="patients" placeholder="{{'messages.visit.patient' | translate}}"
+                        formControlName="user_id" id="user_id"></select2>
+                </div>
+                <div class="form-group col-sm-4 mb-5">
+                    <label for="doctor_id" class="form-label required">{{'messages.visit.doctor' | translate}}:</label>
+                    <select2 [data]="doctors" placeholder="{{'messages.visit.doctor' | translate}}"
+                        formControlName="doctor_id" id="doctor_id"></select2>
+                </div>
+                <div class="form-group col-sm-4 mb-5">
+                    <label for="important_notes" class="form-label">{{'messages.visit.important_notes' |
+                        translate}}:</label>
+                    <textarea id="important_notes" class="form-control" rows="4" note=""
+                        placeholder="{{'messages.visit.important_notes' | translate}}" formControlName="important_notes"
+                        cols="50"></textarea>
+                </div>
+                <div class="form-group col-sm-2 mb-5">
+                    <label for="status" class="form-label">{{'messages.transaction.paid' | translate}}:</label>
+                    <div class="form-check form-switch form-check-custom form-check-solid">
+                        <input id="status" class="form-check-input" type="checkbox" formControlName="status">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 mt-3">
+            <div class="card">
+                <div class="card-body" >
+                    <div class="row">
+                        <div class="form-group col-sm-12 mb-5" >
+                            <select2 [data]="serviceList" placeholder="{{'messages.transaction.select_service' | translate}}" (update)="openCreateServiceForm($event)" formControlName="service_id"></select2>
+                        </div>
+                    </div>
+
+                    <app-transaction-create-service
+                        [class.d-none]="!showCreateForm"
+                        [frequencies]="frequencies" 
+                        [purposes]="purposes" 
+                        [service]="createService"
+                        (serviceSelect)="addService($event)">
+                    </app-transaction-create-service>
+
+                    <div class="col-sm-12 overflow-auto mt-5">
+                        <table id="createTransactionTable" class="table table-striped box-shadow-none mt-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">{{'messages.transaction.name' | translate}}</th>
+                                    <th class="col">{{'messages.transaction.description' | translate}}</th>
+                                    <th scope="col">{{'messages.transaction.qty' | translate}}</th>
+                                    <th scope="col">{{'messages.transaction.price' | translate}}</th>
+                                    <th scope="col">{{'messages.transaction.discount' | translate}}</th>
+                                    <th scope="col">{{'messages.transaction.subtotal' | translate}}</th>
+                                    <th scope="col">{{'messages.common.action' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="services">
+                                <tr *ngFor="let service of services.controls; let i = index" [formGroupName]="i">
+                                    <td>
+                                        {{service.get('name')?.value}}
+                                    </td>
+                                    <td>
+                                        {{service.get('description')?.value}}
+                                    </td>
+                                    <td>
+                                        {{service.get('quantity')?.value}}
+                                    </td>
+                                    <td>
+                                        {{service.get('price')?.value}}
+                                    </td>
+                                    <td>
+                                        {{service.get('discount')?.value}}
+                                    </td>
+                                    <td>
+                                        {{service.get('sub_total')?.value}}
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn px-2 border-0 text-primary" (click)="editService(i)">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button type="button" class="btn px-2 border-0 text-danger" (click)="removeService(i)">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row mt-5 justify-content-between">
+                        <div class="col-sm-5 mb-md-0">
+                            <label for="note" class="fw-bold text-muted py-3">{{'messages.currency.note' | translate}}</label>
+                            <textarea class="form-control" rows="2" note="" placeholder="Note" formControlName="note"
+                                cols="50" id="note"></textarea>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <label for="transactionInvoiceTotalAmount" class="fw-bold text-muted py-3 required me-5">{{'messages.purchase_medicine.total' | translate}}</label>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">RM</span>
+                                    <input class="form-control required price-format"
+                                        id="transactionInvoiceTotalAmount" formControlName="total" type="number" readonly>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <label for="transactionInvoiceDiscountAmount" class="fw-bold text-muted py-3 me-5">{{'messages.purchase_medicine.discount' | translate}}</label>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">RM</span>
+                                    <input class="form-control price-format" id="transactionInvoiceDiscountAmount" formControlName="discount" type="number">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <label for="transactionInvoiceTaxAmount" class="fw-bold text-muted py-3">{{'messages.purchase_medicine.tax_amount' | translate}}</label>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">RM</span>
+                                    <div class="input-group">
+                                        <input class="form-control" id="transactionInvoiceTaxAmount" formControlName="tax" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <label for="transactionInvoiceNetAmount" class="fw-bold text-muted required py-3">{{'messages.purchase_medicine.net_amount' | translate}}</label>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">RM</span>
+                                    <input class="form-control required price-format" id="transactionInvoiceNetAmount" formControlName="net_amount" type="number" readonly>
+                                </div>
+                            </div>
+                            <div class="d-sm-flex d-block justify-content-between mb-3">
+                                <div>
+                                    <label for="payment_type" class="fw-bold text-muted py-3">{{ 'messages.medicine_bills.payment_type' | translate }}</label>
+                                </div>
+                                <div style="min-width:200px;">
+                                    <select2 id="payment_type" [data]="paymentTypes" placeholder="{{'messages.medicine_bills.payment_type' | translate}}" formControlName="payment_type"></select2>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="payment_note" class="fw-bold text-muted py-3">{{ 'messages.purchase_medicine.payment_note' | translate }}</label>
+                                <textarea id="payment_note" class="form-control" placeholder="{{ 'messages.purchase_medicine.payment_note' | translate }}" rows="3" formControlName="payment_note" cols="50"></textarea>
+                            </div>
+                            <div class="float-end mt-5">
+                                <input class="btn btn-primary me-2" id="saveTransactionInvoiceButton" type="submit"
+                                    value="Save">
+                                <a href="https://test.myclnqhealth.com/admin/transactions"
+                                    class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h1>History</h1>
+                    <div id="historyTransactionContent"><span>No history found</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

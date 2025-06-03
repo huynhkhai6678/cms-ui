@@ -196,6 +196,16 @@ export const homeRoutes: Routes = [
         canActivate: [permissionGuard('manage_medicines')]
       },
       {
+        path: 'transactions', 
+        loadComponent: () => import('./transactions/transactions.component').then(mod => mod.TransactionsComponent),
+        canActivate: [permissionGuard('manage_transactions')]
+      },
+      {
+        path: 'transactions/create/:id', 
+        loadComponent: () => import('./transactions/transaction-create/transaction-create.component').then(mod => mod.TransactionCreateComponent),
+        canActivate: [permissionGuard('manage_transactions')]
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'

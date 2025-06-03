@@ -438,6 +438,15 @@ export class ShareService {
     2: 'Female',
   }
 
+  readonly PAYMENT_METHOD = {
+    1: 'Cash / Bank Transfer',
+    2: 'Stripe',
+    3: 'Credit / Debit Card',
+    4: 'Paypal',
+    5: 'Online Banking',
+    6: 'E-Wallet / QR Payment'
+  }
+
   readonly MARIUS_STATUS : SingleSelect2Option[] = [
     { 
       label: 'Single',

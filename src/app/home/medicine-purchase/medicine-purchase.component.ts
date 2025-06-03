@@ -4,10 +4,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
-import { ToastrService } from 'ngx-toastr';
 import { MedicinePurchaseModalComponent } from './medicine-purchase-modal/medicine-purchase-modal.component';
 import { PAYMENT_TYPE } from './medicine-purchase.constant';
 import saveAs from 'file-saver';
+import { ShowMedicinePurchaseModalComponent } from './show-medicine-purchase-modal/show-medicine-purchase-modal.component';
 
 @Component({
   selector: 'app-medicine-purchase',
@@ -34,7 +34,6 @@ export class MedicinePurchaseComponent implements AfterViewInit {
   constructor(
     private apiService: ApiService,
     private formService: FormService,
-    private toastrService: ToastrService
   ) {}
 
   // field, header name, css, sortable, type
@@ -53,22 +52,20 @@ export class MedicinePurchaseComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.columnCustomTemplates['created_at'] = this.createTemplate;
     this.columnCustomTemplates['purchase_no'] = this.purchaseNumberTemplate;
-    this.columnCustomTemplates['payment'] = this.paymentTemplate;
+    this.columnCustomTemplates['payment_type'] = this.paymentTemplate;
   }
 
   create() {
     this.formService.openEditCreateModal(MedicinePurchaseModalComponent, 'modal-xl', {
-      title: 'messages.medicine.new_medicine_category',
+      title: 'messages.purchase_medicine.purchase_medicines',
       clinicId : this.dataTableComponent.getClinicId()
     }, () => {
       this.dataTableComponent.reloadData();
     });
   }
   
-  edit(id: number) {
-    this.formService.openEditCreateModal(MedicinePurchaseModalComponent, 'modal-xl', {
-      title: 'messages.medicine.edit_medicine_category',
-      clinicId : this.dataTableComponent.getClinicId(),
+  show(id: number) {
+    this.formService.openEditCreateModal(ShowMedicinePurchaseModalComponent, 'modal-xl', {
       id
     }, () => {
       this.dataTableComponent.reloadData();
@@ -76,7 +73,7 @@ export class MedicinePurchaseComponent implements AfterViewInit {
   }
     
   delete(row: any) {
-    this.formService.showDeleteConfirm(row.name)
+    this.formService.showDeleteConfirm(row.purchase_no)
     .subscribe(confirmed => {
       if (confirmed) {
         this.apiService.delete(`${this.url}/${row.id}`).subscribe(() => {
@@ -87,7 +84,9 @@ export class MedicinePurchaseComponent implements AfterViewInit {
   }
 
   export() {
-    this.apiService.downloadFile(`medicine-purchase/export`).subscribe({
+    const clinicId = this.dataTableComponent.getClinicId();
+
+    this.apiService.downloadFile(`medicine-purchase/export/${clinicId}`).subscribe({
         next : (response: Blob) => {
           saveAs(response, 'report.xlsx');
         },

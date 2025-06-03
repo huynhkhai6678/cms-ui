@@ -89,6 +89,12 @@ export class HomeSidebarComponent implements OnInit {
       permission: 'manage_patients'
     },
     {
+      icon : 'fa-solid fa-money-bill-wave',
+      name : 'messages.transactions',
+      link: 'transactions',
+      permission: 'manage_transactions'
+    },
+    {
       icon : 'fa-solid fa-capsules',
       name : 'messages.medicines',
       link: 'medicines',

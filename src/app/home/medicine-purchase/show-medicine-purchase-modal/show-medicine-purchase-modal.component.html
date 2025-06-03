@@ -1,0 +1,155 @@
+<div class="modal-header">
+    <h3>{{'messages.purchase_medicine.purchase_medicines' | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+@if (data) {
+    <div class="modal-body">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xxl-9">
+                    <div class="row">
+                        <div class="col-lg-4 d-flex flex-column">
+                            <span class="fw-bold text-muted py-3">{{'messages.purchase_medicine.purchase_number' | translate}}</span>
+                            <span class="fw-bold fs-6 text-gray-800">
+                                <span class="badge bg-light-primary ">#{{data.purchase_no}}</span>
+                            </span>
+                        </div>
+                        <div class="col-lg-4 d-flex flex-column">
+                            <span class="fw-bold text-muted py-3">{{'messages.purchase_medicine.discount' | translate}}</span>
+                            <span class="fw-bold fs-6 text-gray-800">{{formatNumber(data.discount)}}</span>
+                        </div>
+                        <div class="col-lg-4 d-flex flex-column">
+                            <span class="fw-bold text-muted py-3">{{'messages.purchase_medicine.shipping_fee' | translate}}</span>
+                            <span class="fw-bold fs-6 text-gray-800">{{formatNumber(data.shipping_fee)}}</span>
+                        </div>
+                        <div class="col-lg-4 d-flex flex-column">
+                            <span class="fw-bold text-muted py-3">{{'messages.purchase_medicine.net_amount' | translate}}</span>
+                            <span class="fw-bold fs-6 text-gray-800">{{formatNumber(data.net_amount)}}</span>
+                        </div>
+
+                        <div class="col-lg-4 d-flex flex-column">
+                            <span class="fw-bold text-muted py-3">{{'messages.purchase_medicine.note' | translate}}</span>
+                            <span class="fw-bold fs-6 text-gray-800">{{data.note ?? 'N/A'}}</span>
+                        </div>
+                        <div class="col-12 overflow-auto">
+                            <table class="table table-striped box-shadow-none mt-4">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{{'messages.medicine.inventories' | translate }}</th>
+                                        <th class="col">{{'messages.medicine-inventory.label' | translate }}</th>
+                                        <th scope="col">{{'messages.common.purchase_price' | translate }}</th>
+                                        <th scope="col">{{'messages.purchase_medicine.tax' | translate }}</th>
+                                        <th scope="col">{{'messages.purchase_medicine.quantity' | translate }}</th>
+                                        <th scope="col" class="text-end ">{{'messages.purchase_medicine.amount' | translate }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (purchasedMedicine of data.purchased_medicines; track purchasedMedicine.id) {
+                                        <tr>
+                                            <td class="py-4">
+                                                {{purchasedMedicine.medicine.name ? purchasedMedicine.medicine.name : 'N/A'}}
+                                            </td>
+                                            <td class="py-4">
+                                                {{purchasedMedicine.label.name ? purchasedMedicine.label.name : 'N/A'}}
+                                            </td>
+                                            <td class="py-4">
+                                                {{getBuyingPrice(purchasedMedicine)}}
+                                            </td>
+                                            <td class="py-4">
+                                                {{purchasedMedicine.tax}}%
+                                            </td>
+                                            <td class="py-4">
+                                                {{purchasedMedicine.quantity}}
+                                            </td>
+                                            <td class="py-4 text-end ">
+                                                {{formatNumber(purchasedMedicine.amount)}}
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-lg-6 ms-lg-auto mt-4">
+                            <div class="border-top">
+                                <table class="table table-borderless  box-shadow-none mb-0 mt-5 text-end">
+                                    <tbody>
+                                        <tr>
+                                            <td class="ps-0">{{'messages.purchase_medicine.total' | translate }}:</td>
+                                            <td class="text-gray-900 text-end pe-0">
+                                                {{formatNumber(data.total)}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-0">{{'messages.purchase_medicine.tax' | translate }}:</td>
+                                            <td class="text-gray-900 text-end pe-0">
+                                               {{formatNumber(data.tax)}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-0">{{'messages.purchase_medicine.discount' | translate }}:</td>
+                                            <td class="text-gray-900 text-end pe-0">
+                                                {{formatNumber(data.discount)}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-0">{{'messages.purchase_medicine.shipping_fee' | translate }}:</td>
+                                            <td class="text-gray-900 text-end pe-0">
+                                                {{formatNumber(data.shipping_fee)}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-0">{{'messages.purchase_medicine.net_amount' | translate }}:</td>
+                                            <td class="text-gray-900 text-end pe-0">
+                                                {{formatNumber(data.net_amount)}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3">
+                    <div class="bg-gray-100 rounded-15 p-md-7 p-5 h-100 mt-xxl-0 mt-5 col-xxl-9 ms-xxl-auto w-100">
+                        <h3 class="mb-5">{{'messages.purchase_medicine.other_details' | translate }}</h3>
+                        <div class="row">
+                            <div class="col-xxl-12 col-lg-4 col-sm-6 d-flex flex-column mb-xxl-7 mb-lg-0 mb-4">
+                                <span class="pb-2 fs-4 text-gray-600">{{'messages.supplier' | translate }}</span>
+                                <h2 class="fw-bold text-gray-800">{{data.brand.name}}</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xxl-12 col-lg-4 col-sm-6 d-flex flex-column mb-xxl-7 mb-lg-0 mb-4">
+                                <span class="pb-2 fs-4 text-gray-600">{{'messages.purchase_medicine.payment_note' | translate }}</span>
+                                <span class="fw-bold fs-6 text-gray-800">{{data.payment_note ? data.payment_note : 'N/A'}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xxl-12 col-lg-4 col-sm-6 d-flex flex-column mb-xxl-7 mb-lg-0 mb-4">
+                                <span for="name" class="pb-2 fs-4 text-gray-600">{{'messages.purchase_medicine.note' | translate }}</span>
+                                <span class="fw-bold fs-6 text-gray-800">{{data.note ? data.note : 'N/A'}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xxl-12 col-lg-4 col-sm-6 d-flex flex-column mb-xxl-7 mb-lg-0 mb-4">
+                                <span for="name" class="pb-2 fs-4 text-gray-600">{{'messages.purchase_medicine.payment_mode' | translate }}</span>
+                                <span class="fw-bold fs-6 text-gray-800">{{PAYMENT_TYPE[data.payment_type]}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xxl-12 col-lg-4 col-sm-6 d-flex flex-column mb-xxl-7 mb-lg-0 mb-4">
+                                <span for="name" class="pb-2 fs-4 text-gray-600">{{'messages.web.created_at' | translate }}</span>
+                                <span class="fw-bold fs-6 text-gray-800">{{getTimeDifference(data.created_at)}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}

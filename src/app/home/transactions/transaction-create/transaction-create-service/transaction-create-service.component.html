@@ -1,0 +1,85 @@
+<form [formGroup]="serviceForm">
+    <div class="card">
+        <div class="card-header bg-light row">
+            <div class="form-group col-sm-6 mb-3">
+                <label for="createTransactionServiceName" class="form-label required">{{'messages.transaction.name' |
+                    translate}}:</label>
+                <input class="form-control" required="" id="createTransactionServiceName" formControlName="name"
+                    type="text" readonly>
+                @if (!serviceForm.controls['name'].valid && (!serviceForm.controls['name'].pristine || isSubmitted)) {
+                    <div id="nameValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="form-group col-sm-6 mb-3">
+                <label for="createTransactionPrice" class="form-label required">{{'messages.transaction.price' |
+                    translate}}:</label>
+                <input class="form-control" id="createTransactionPrice" formControlName="price" type="number">
+                @if (!serviceForm.controls['price'].valid && (!serviceForm.controls['price'].pristine || isSubmitted)) {
+                    <div id="priceValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="form-group col-sm-6 mb-3">
+                <label for="quantity" class="form-label required">{{'messages.transaction.quantity' |
+                    translate}}:</label>
+                <div class="input-group">
+                    <input id="createTransactionQuantity" type="number" class="form-control required"
+                        formControlName="quantity">
+                    @if (service?.uom) {
+                        <div class="input-group-append">
+                            <span id="createTransactionUOM" class="input-group-text h-100">
+                                {{service?.uom}}
+                            </span>
+                        </div>
+                    }
+                </div>
+                @if (!serviceForm.controls['quantity'].valid && (!serviceForm.controls['quantity'].pristine || isSubmitted)) {
+                    <div id="quantityValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="form-group col-sm-6 mb-3">
+                <label for="discount" class="form-label">{{'messages.transaction.discount' | translate}}:</label>
+                <input class="form-control" id="createTransactionDiscount" formControlName="discount" type="number">
+            </div>
+            <div class="form-group col-sm-12 mb-3">
+                <label for="description" class="form-label">{{'messages.transaction.description' | translate}}:</label>
+                <input class="form-control" id="createTransactionDescription" formControlName="description" type="text">
+            </div>
+            @if(serviceForm.controls['type'].value === 'Inventories') {
+                <div id="createTransactionDosageSection" class="row">
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="dosage" class="form-label">{{'messages.transaction.dosage' | translate}}:</label>
+                        <input class="form-control" id="createTransactionDosage" formControlName="dosage" type="text">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="frequency" class="form-label">{{'messages.transaction.frequency' | translate}}:</label>
+                        <select2 [data]="frequencies" formControlName="frequency"></select2>
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="administration" class="form-label">{{'messages.transaction.administration' |
+                            translate}}:</label>
+                        <input class="form-control" id="createTransactionAdministration" formControlName="administration"
+                            type="text">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="purpose" class="form-label">{{'messages.transaction.purpose' | translate}}:</label>
+                        <select2 [data]="purposes" formControlName="purpose"></select2>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3 mt-3 text-end">
+                    <span>Available Quatity:</span>
+                    <span id="transactionServiceAvailableQuantity" class="fw-bold">{{serviceForm.controls['avaiable_quantity'].value}}</span>
+                </div>
+            }
+            <div class="col-sm-12 mb-3">
+                <button id="addTransactionService" class="btn border-0 btn-success me-3" (click)="submit(serviceForm.valid, serviceForm.value)">{{'messages.transaction.ok' | translate}}</button>
+                <button id="cancelTransactionService" class="btn border-0 btn-secondary" (click)="serviceSelect.emit(null)">{{'messages.transaction.cancel' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

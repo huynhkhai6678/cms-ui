@@ -1,0 +1,88 @@
+<app-data-table 
+    [url]="url" 
+    [headers]="tableColumns" 
+    [actionTemplate]="actionTemplate" 
+    [addTemplate]="addTemplate"
+    [filterTemplate]="filterTemplate"
+    [showFilterDateRange]="true"
+    [columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #addTemplate>
+    <div>
+        <button class="btn btn-primary ms-auto" (click)="create()">
+            {{'messages.transaction.add_transaction' | translate}}
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #filterTemplate>
+    <div>
+        <select id="categoryStatusFilter" class="form-select w-auto me-3" (change)="changeStatus($event.target)">
+            <option value="1">{{'messages.medicine.active' | translate}}</option>
+            <option value="0">{{'messages.medicine.inactive' | translate}}</option>
+        </select>
+    </div>
+</ng-template>
+
+<ng-template #actionTemplate let-row>
+    <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.id)">
+        <i class="fa-solid fa-tag" title="Edit"></i>
+    </button>
+     <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.id)">
+        <i class="fa-solid fa-print" title="Edit"></i>
+    </button>
+    <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.id)">
+        <i class="fa-solid fa-pen-to-square" title="Edit"></i>
+    </button>
+    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
+        <i class="fa-solid fa-trash" title="Delete"></i>
+    </button>
+</ng-template>
+
+<ng-template #fullNameTemplate let-item>
+    <div class="d-flex align-items-center">
+        <a [routerLink]="item.patient_id">
+            <div class="image image-circle image-mini me-3">
+                @if (item.image_url) {
+                    <img [src]="`${apiUrl}${item.image_url}`" alt="" class="user-img" loading="lazy">
+                } @else {
+                    <img [src]="`${apiUrl}public/media/male.png`" alt="user" class="user-img" loading="lazy">
+                }
+            </div>
+        </a>
+        <div class="d-flex flex-column">
+            <div class="d-inline-block align-top">
+                <div class="d-inline-block align-self-center d-flex">
+                    <a [routerLink]="item.patient_id" class="mb-1 text-decoration-none fs-6">
+                        {{item.full_name}}
+                    </a>
+                </div>
+            </div>
+            <span class="fs-6">{{item.user_email}}</span>
+        </div>
+        @if (!item.user_email) {
+            <i class="text-danger fa-solid fa-triangle-exclamation"></i>
+        }
+    </div>
+</ng-template>
+
+<ng-template #billDateTemplate let-item>
+    <div class="badge bg-primary">
+        <div class="mb-2">
+            {{item.transaction_invoice_bill_date | date:'dd/MM/yyyy'}}
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #statusTemplate let-item>
+    {{TRANSACTION_STATUS[item.transaction_invoice_status]}}
+</ng-template>
+
+<ng-template #typeTemplate let-item>
+    {{PAYMENT_METHOD[item.transaction_invoice_payment_type]}}
+</ng-template>
+
+<ng-template #amountTemplate let-item>
+    RM {{formatNumber(item.transaction_invoice_net_amount)}}
+</ng-template>
