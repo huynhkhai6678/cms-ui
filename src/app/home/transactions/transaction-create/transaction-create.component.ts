@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HomeService } from '../../home.service';
 import { Select2 } from 'ng-select2-component';
@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TransactionCreateServiceComponent } from './transaction-create-service/transaction-create-service.component';
 import { SingleSelect2Option } from '../../../services/share.service';
 import { CommonModule } from '@angular/common';
+import moment from 'moment';
 
 @Component({
   selector: 'app-transaction-create',
@@ -51,6 +52,7 @@ export class TransactionCreateComponent implements OnInit {
     private apiService : ApiService,
     private formService : FormService,
     private activeRoute : ActivatedRoute,
+    private router : Router,
     private toastrService: ToastrService,
     public homeService: HomeService
   ) {}
@@ -58,7 +60,7 @@ export class TransactionCreateComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.activeRoute.params.subscribe((params : any) => {
-      console.log(params['id']);
+      this.getTransactionData(params['id']);
     });
 
     this.activeRoute.queryParams.subscribe((queryParams : any) => {
@@ -72,6 +74,7 @@ export class TransactionCreateComponent implements OnInit {
       clinic_id: ['', []],
       doctor_id: ['', [Validators.required]],
       user_id: ['', [Validators.required]],
+      visit_id: [null],
       service_id: [''],
       important_notes: [''],
       invoice_number: ['', Validators.required],
@@ -80,11 +83,11 @@ export class TransactionCreateComponent implements OnInit {
       services: this.fb.array([]),
       note: [null],
       payment_note: [null],
-      payment_type: [''],
-      tax: [''],
-      total: [''],
-      net_amount: [''],
-      discount: [''],
+      payment_type: [null],
+      tax: [null],
+      total: [null],
+      net_amount: [null],
+      discount: [null],
     });
 
     if (this.homeService.selectClinics.length > 1) {
@@ -96,6 +99,12 @@ export class TransactionCreateComponent implements OnInit {
     this.watchServicesChanges()
   }
 
+  getTransactionData(id: number) {
+    this.apiService.get(`${this.url}/${id}`).subscribe((res : any) => {
+      this.transactionForm.patchValue(res['data']);
+    })
+  }
+
   createServiceGroup(): FormGroup {
     return this.fb.group({
       service_id: [''],
@@ -104,8 +113,9 @@ export class TransactionCreateComponent implements OnInit {
       description: [''],
       quantity: [0],
       price: [0],
-      discount: [0],
+      discount: [null],
       sub_total: [0],
+      uom: [''],
       dosage: [''],
       frequency: [''],
       administration: [''],
@@ -117,37 +127,41 @@ export class TransactionCreateComponent implements OnInit {
     this.transactionForm.controls['clinic_id'].setValue(clinicId);
 
     this.apiService.get(`${this.url}/get-selection/${clinicId}`).subscribe((res : any) => {
-      this.doctors = res['doctors'];
-      this.patients = res['patients'];
-      this.paymentTypes = res['payment_types'];
-      this.frequencies = res['frequencies'];
-      this.purposes = res['purposes'];
+      const {
+        doctors,
+        patients,
+        payment_types: paymentTypes,
+        frequencies,
+        purposes,
+        medicines,
+        clinic_services: clinicServices
+      } = res;
 
-      // Format services 
-      const medicines = res['medicines'];
-      const clinicServices = res['clinic_services'];
-      medicines.forEach((medicine : any) => {
-        this.serviceList.push({
-          label : `MEDICINE - ${medicine.name}`,
-          name  :  medicine.name,
-          value : medicine.id,
-          service_id : medicine.id,
-          type : 'Inventories',
+      this.doctors = doctors;
+      this.patients = patients;
+      this.paymentTypes = paymentTypes;
+      this.frequencies = frequencies;
+      this.purposes = purposes;
+      this.serviceList = [
+        ...medicines.map((medicine: any) => ({
+          label: `MEDICINE - ${medicine.name}`,
+          name: medicine.name,
+          value: medicine.id,
+          service_id: medicine.id,
+          type: 'Inventories',
           uom: medicine.uom,
-          avaiable_quantity : medicine.available_quantity
-        })
-      });
-      clinicServices.forEach((service : any) => {
-        this.serviceList.push({
-          label : `SERVICE - ${service.name}`,
-          name  : service.name,
-          value : service.id,
-          service_id : service.id,
+          avaiable_quantity: medicine.available_quantity
+        })),
+        ...clinicServices.map((service: any) => ({
+          label: `SERVICE - ${service.name}`,
+          name: service.name,
+          value: service.id,
+          service_id: service.id,
+          type: 'Services',
           uom: null,
-          type : 'Services',
           avaiable_quantity: 0
-        })
-      });
+        }))
+      ];
 
       this.resetServices();
     });
@@ -166,12 +180,22 @@ export class TransactionCreateComponent implements OnInit {
     this.isSubmitted = true;
     if (!valid) return;
 
+    // format data
+    value.total = parseFloat(value.total || 0);
+    value.net_amount = parseFloat(value.net_amount) || 0;
+    value.discount = parseFloat(value.discount || 0);
+    value.tax = parseFloat(value.tax || 0);
+    value.bill_date = moment(value.bill_date, 'DD/MM/YYYY').toDate();
+    value.status = value.status ? 1 : 0;
+
     this.formService.submitForm(this.url, this.id, value).subscribe({
       next: () => {
         this.isSubmitted = false;
+        this.toastrService.success('Transaction create success');
+        this.router.navigate(['/home/transactions']);
       },
       error: (error) => {
-        this.toastrService.error(error);
+        this.toastrService.error(error.error);
       }
     })
   }
@@ -183,7 +207,7 @@ export class TransactionCreateComponent implements OnInit {
         // Create
         const formGroup = this.createServiceGroup();
         formGroup.patchValue(service);
-        services.push(formGroup);
+        services.insert(0, formGroup);
       } else {
         // Edit
         const control = this.services.at(this.currentEditIndex);

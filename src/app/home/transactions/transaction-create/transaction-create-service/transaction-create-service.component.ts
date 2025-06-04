@@ -23,6 +23,7 @@ export class TransactionCreateServiceComponent implements OnInit, OnChanges {
 
   serviceForm! : FormGroup;
   isSubmitted = false;
+  avaiableQuantity = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -33,6 +34,7 @@ export class TransactionCreateServiceComponent implements OnInit, OnChanges {
       const service = changes['service']['currentValue'];
       if (this.serviceForm) {
         this.serviceForm.patchValue(service);
+        this.avaiableQuantity = service.avaiable_quantity ?? 0;
       }
     }
   }
@@ -42,15 +44,15 @@ export class TransactionCreateServiceComponent implements OnInit, OnChanges {
       name: ['', [Validators.required]],
       price: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
+      uom: [''],
       service_id : [],
       type: [''],
-      discount: [''],
+      discount: [null],
       description: [''],
       dosage: [''],
       frequency: [''],
       administration: [''],
       purpose: [''],
-      avaiable_quantity: [0],
     });
 
     this.watchDiscriptionName();
@@ -60,14 +62,18 @@ export class TransactionCreateServiceComponent implements OnInit, OnChanges {
     this.isSubmitted = true;
     if (!valid) return;
 
-    const price = parseFloat(value.price || 0);
-    const qty = parseInt(value.quantity || 0, 10);
-    const discount = parseFloat(value.discount || 0);
+    value.price = parseFloat(value.price || 0);
+    value.quantity = parseFloat(value.quantity || 0);
+    value.discount = parseFloat(value.discount || 0);
 
-    value.sub_total = (price * qty) - discount;
+    value.sub_total = (value.quantity * value.quantity) - value.discount;
     value.frequency = value.frequency ?? '';
     value.purpose = value.purpose ?? '';
+    value.uom = value.uom ?? '';
+
     this.serviceSelect.emit(value);
+    this.serviceForm.reset();
+    this.isSubmitted = false;
   }
 
   watchDiscriptionName() {

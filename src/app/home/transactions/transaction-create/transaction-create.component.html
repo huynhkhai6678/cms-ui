@@ -18,9 +18,9 @@
                         formControlName="clinic_id" id="clinicId" (update)="updateClinic($event.value)"></select2>
                     @if (!transactionForm.controls['clinic_id'].valid && (!transactionForm.controls['clinic_id'].pristine ||
                     isSubmitted)) {
-                    <div id="imageValidation" class="invalid-feedback d-block">
-                        {{'messages.this_field' | translate}}
-                    </div>
+                        <div id="imageValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
                     }
                 </div>
                 }
@@ -28,22 +28,46 @@
                     <label for="bill_date" class="form-label required">{{'messages.transaction.date' | translate}}:</label>
                     <app-date-input formControlName="bill_date" placeholder="{{'messages.transaction.date' | translate }}"
                         id="bill_date"></app-date-input>
+                    @if (!transactionForm.controls['bill_date'].valid && (!transactionForm.controls['bill_date'].pristine ||
+                    isSubmitted)) {
+                        <div id="billDateValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
                 </div>
                 <div class="form-group col-sm-4 mb-5">
                     <label for="invoice_number" class="form-label required">{{'messages.appointment.invoice_number' |
                         translate}}:</label>
                     <input id="invoice_number" class="form-control" autocomplete="off" formControlName="invoice_number"
                         readonly>
+                    @if (!transactionForm.controls['invoice_number'].valid && (!transactionForm.controls['invoice_number'].pristine ||
+                    isSubmitted)) {
+                        <div id="invoiceNumberValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
                 </div>
                 <div class="form-group col-sm-4 mb-5">
                     <label for="user_id" class="form-label required">{{'messages.visit.patient' | translate}}:</label>
                     <select2 [data]="patients" placeholder="{{'messages.visit.patient' | translate}}"
                         formControlName="user_id" id="user_id"></select2>
+                    @if (!transactionForm.controls['user_id'].valid && (!transactionForm.controls['user_id'].pristine ||
+                    isSubmitted)) {
+                        <div id="patientValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
                 </div>
                 <div class="form-group col-sm-4 mb-5">
                     <label for="doctor_id" class="form-label required">{{'messages.visit.doctor' | translate}}:</label>
                     <select2 [data]="doctors" placeholder="{{'messages.visit.doctor' | translate}}"
                         formControlName="doctor_id" id="doctor_id"></select2>
+                    @if (!transactionForm.controls['doctor_id'].valid && (!transactionForm.controls['doctor_id'].pristine ||
+                    isSubmitted)) {
+                        <div id="doctorValidation" class="invalid-feedback d-block">
+                            {{'messages.this_field' | translate}}
+                        </div>
+                    }
                 </div>
                 <div class="form-group col-sm-4 mb-5">
                     <label for="important_notes" class="form-label">{{'messages.visit.important_notes' |
@@ -184,10 +208,12 @@
                                 <textarea id="payment_note" class="form-control" placeholder="{{ 'messages.purchase_medicine.payment_note' | translate }}" rows="3" formControlName="payment_note" cols="50"></textarea>
                             </div>
                             <div class="float-end mt-5">
-                                <input class="btn btn-primary me-2" id="saveTransactionInvoiceButton" type="submit"
-                                    value="Save">
-                                <a href="https://test.myclnqhealth.com/admin/transactions"
-                                    class="btn btn-secondary">Cancel</a>
+                                <button class="btn btn-primary me-2" id="saveTransactionInvoiceButton" type="submit">
+                                    {{'messages.common.save' | translate}}
+                                </button>
+                                <button class="btn btn-secondary">
+                                    {{'messages.common.cancel' | translate}}
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -85,10 +85,10 @@ export class TransactionsComponent implements AfterViewInit {
   }
     
   delete(row: any) {
-    this.formService.showDeleteConfirm(row.name)
+    this.formService.showDeleteConfirm(row.invoice_number)
     .subscribe(confirmed => {
       if (confirmed) {
-        this.apiService.delete(`${this.url}/${row.id}`).subscribe((response : any) => {
+        this.apiService.delete(`${this.url}/${row.transaction_invoice_id}`).subscribe((response : any) => {
           this.toastrService.success(response['message']);
           this.dataTableComponent.reloadData();
         })

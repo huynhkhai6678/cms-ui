@@ -6,12 +6,14 @@ import { FormService } from '../../services/form.service';
 import { SmartPatientCard } from './smart-patient-card.model';
 import { SmartPatientCardModalComponent } from './smart-patient-card-modal/smart-patient-card-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-smart-patient-cards',
   imports: [
     DataTableComponent,
-    TranslatePipe
+    TranslatePipe,
+    FormsModule
   ],
   templateUrl: './smart-patient-cards.component.html',
   styleUrl: './smart-patient-cards.component.scss'

@@ -25,7 +25,7 @@
 
 <ng-template #headerColorTemplate let-item>
     <div class="form-check form-switch">
-        <input id="show-header-{{item.id}}" class="card_header_color_change" type="color" [value]="item.header_color" (change)="activeSmartCard('header_color', $event.target, item.id)">
+        <input id="show-header-{{item.id}}" class="card_header_color_change" type="color" [(ngModel)]="item.header_color" (change)="activeSmartCard('header_color', $event.target, item.id)">
       </div>
 </ng-template>
 
