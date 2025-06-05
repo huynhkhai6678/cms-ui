@@ -30,7 +30,10 @@ export class ApiService {
   }
 
   downloadFile(url: string) {
-    return this.httpClient.get(`${environment.apiUrl}` + url, { responseType: 'blob' });
+    return this.httpClient.get(`${environment.apiUrl}` + url, {
+      observe: 'response',
+      responseType: 'blob' 
+    });
   }
 
   postFileWithParams(url: string, params: Record<string, any>): Observable<any> {

@@ -41,6 +41,7 @@ export class TransactionCreateServiceComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.serviceForm = this.fb.group({
+      id: [null],
       name: ['', [Validators.required]],
       price: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
@@ -66,7 +67,7 @@ export class TransactionCreateServiceComponent implements OnInit, OnChanges {
     value.quantity = parseFloat(value.quantity || 0);
     value.discount = parseFloat(value.discount || 0);
 
-    value.sub_total = (value.quantity * value.quantity) - value.discount;
+    value.sub_total = (value.quantity * value.price) - value.discount;
     value.frequency = value.frequency ?? '';
     value.purpose = value.purpose ?? '';
     value.uom = value.uom ?? '';

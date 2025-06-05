@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
 import { TRANSACTION_STATUS } from './transactions.constant';
 import { ShareService } from '../../services/share.service';
 import { DatePipe } from '@angular/common';
+import { downloadFile } from '../../utils/download-file.util';
 
 @Component({
   selector: 'app-transactions',
@@ -110,5 +111,21 @@ export class TransactionsComponent implements AfterViewInit {
 
   formatNumber(value: string) {
     return Number(value).toFixed(2);
+  }
+
+  openLabelPage(id: number) {
+    const url = `transactions-label/${id}`;
+    window.open(url, '_blank');
+  }
+  
+  exportInvoice(id : number) {
+    this.apiService.downloadFile(`transactions/export-invoice/${id}`).subscribe({
+      next : (response) => {
+        downloadFile(response, 'invoice.pdf');
+      },
+      error : (error) => {
+        this.toastrService.error('Error downloading PDF:', error);
+      }
+    })
   }
 }

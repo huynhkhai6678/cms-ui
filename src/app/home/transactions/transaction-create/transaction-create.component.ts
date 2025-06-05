@@ -11,7 +11,11 @@ import { ToastrService } from 'ngx-toastr';
 import { TransactionCreateServiceComponent } from './transaction-create-service/transaction-create-service.component';
 import { SingleSelect2Option } from '../../../services/share.service';
 import { CommonModule } from '@angular/common';
+import { TransactionService } from '../transaction.model';
+import { MedicalCertificateComponent } from '../medical-certificate/medical-certificate.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import moment from 'moment';
+import { downloadFile } from '../../../utils/download-file.util';
 
 @Component({
   selector: 'app-transaction-create',
@@ -22,6 +26,7 @@ import moment from 'moment';
     DateInputComponent,
     RouterLink,
     TranslatePipe,
+    BsDropdownModule,
     TransactionCreateServiceComponent
   ],
   templateUrl: './transaction-create.component.html',
@@ -46,6 +51,7 @@ export class TransactionCreateComponent implements OnInit {
   showCreateForm = false;
   createService : any = {};
   currentEditIndex = -1;
+  medicalCertificateId = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -60,12 +66,15 @@ export class TransactionCreateComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.activeRoute.params.subscribe((params : any) => {
-      this.getTransactionData(params['id']);
+      this.id = params['id'];
+      this.getTransactionData(this.id);
     });
 
     this.activeRoute.queryParams.subscribe((queryParams : any) => {
       const clinicId = queryParams['clinicId'];
-      this.updateClinic(clinicId);
+      if (clinicId) {
+        this.updateClinic(clinicId);
+      }
     });
   }
 
@@ -101,12 +110,24 @@ export class TransactionCreateComponent implements OnInit {
 
   getTransactionData(id: number) {
     this.apiService.get(`${this.url}/${id}`).subscribe((res : any) => {
-      this.transactionForm.patchValue(res['data']);
+      // Store medical certificate id
+      if (res['data'] && res['data']['medical_certificate']) {
+        this.medicalCertificateId = res['data']['medical_certificate']['id'];
+      }
+
+      if (res['data'] && !res['data']['id']) {
+        this.transactionForm.patchValue(res['data']);
+      }
+
+      if (res['data'] && res['data']['id']) {
+        this.updateClinic(res['data']['clinic_id'], res['data']);
+      }
     })
   }
 
   createServiceGroup(): FormGroup {
     return this.fb.group({
+      id: [null],
       service_id: [''],
       type: [''],
       name: [''],
@@ -123,7 +144,7 @@ export class TransactionCreateComponent implements OnInit {
     });
   }
 
-  updateClinic(clinicId : any) {
+  updateClinic(clinicId : any, formData : any = null) {
     this.transactionForm.controls['clinic_id'].setValue(clinicId);
 
     this.apiService.get(`${this.url}/get-selection/${clinicId}`).subscribe((res : any) => {
@@ -162,9 +183,24 @@ export class TransactionCreateComponent implements OnInit {
           avaiable_quantity: 0
         }))
       ];
-
       this.resetServices();
+
+      if (formData) {
+        setTimeout(() => {
+          this.transactionForm.patchValue(formData);
+          this.patchServiceData(formData.services);
+        }, 100);
+      }
     });
+  }
+
+  patchServiceData(formDataServices : TransactionService[]) {
+    const serviceFormArray = this.transactionForm.get('services') as FormArray;
+    formDataServices.forEach((service : TransactionService) => {
+      const formGroup = this.createServiceGroup();
+      formGroup.patchValue(service);
+      serviceFormArray.insert(0, formGroup);
+    })
   }
 
   get services(): FormArray {
@@ -272,5 +308,29 @@ export class TransactionCreateComponent implements OnInit {
       total: total.toFixed(2),
       net_amount: netAmount.toFixed(2)
     }, { emitEvent: false });
+  }
+
+  openMedicalCertificate(transactionCertificateId : number) {
+    this.formService.openEditCreateModal(MedicalCertificateComponent, 'modal-lg', {
+      title: 'messages.transaction.medical_certificate',
+      id : transactionCertificateId,
+      transactionInvoiceId : this.id
+    });
+  }
+
+  openLabelPage(id: number) {
+    const url = `transactions-label/${id}`;
+    window.open(url, '_blank');
+  }
+
+  exportInvoice() {
+    this.apiService.downloadFile(`transactions/export-invoice/${this.id}`).subscribe({
+      next : (response) => {
+        downloadFile(response, 'invoice.pdf');
+      },
+      error : (error) => {
+        this.toastrService.error('Error downloading PDF:', error);
+      }
+    })
   }
 }

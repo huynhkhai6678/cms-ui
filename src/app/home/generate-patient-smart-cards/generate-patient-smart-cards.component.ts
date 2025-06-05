@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { GeneratePatientSmartCardModalComponent } from './generate-patient-smart-card-modal/generate-patient-smart-card-modal.component';
 import { CardReviewModalComponent } from './card-review-modal/card-review-modal.component';
-import { saveAs } from 'file-saver';
+import { downloadFile } from '../../utils/download-file.util';
 
 @Component({
   selector: 'app-generate-patient-smart-cards',
@@ -74,8 +74,8 @@ export class GeneratePatientSmartCardsComponent implements AfterViewInit {
 
   download(id: number) {
     this.apiService.downloadFile(`smart-patient-cards/export/${id}`).subscribe({
-      next : (response: Blob) => {
-        saveAs(response, 'SmartPatientCard.pdf');
+      next : (response) => {
+        downloadFile(response, 'SmartPatientCard.pdf');
       },
       error : (error) => {
         console.error('Error downloading PDF:', error);

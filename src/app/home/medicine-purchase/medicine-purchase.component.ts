@@ -6,8 +6,8 @@ import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
 import { MedicinePurchaseModalComponent } from './medicine-purchase-modal/medicine-purchase-modal.component';
 import { PAYMENT_TYPE } from './medicine-purchase.constant';
-import saveAs from 'file-saver';
 import { ShowMedicinePurchaseModalComponent } from './show-medicine-purchase-modal/show-medicine-purchase-modal.component';
+import { downloadFile } from '../../utils/download-file.util';
 
 @Component({
   selector: 'app-medicine-purchase',
@@ -87,8 +87,8 @@ export class MedicinePurchaseComponent implements AfterViewInit {
     const clinicId = this.dataTableComponent.getClinicId();
 
     this.apiService.downloadFile(`medicine-purchase/export/${clinicId}`).subscribe({
-        next : (response: Blob) => {
-          saveAs(response, 'report.xlsx');
+        next : (response) => {
+          downloadFile(response, 'report.xlsx')
         },
         error : (error) => {
           console.error('Error downloading PDF:', error);

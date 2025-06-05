@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './auths/auth.guard';
+import { permissionGuard } from './auths/permission.guard';
 
 export const routes: Routes = [
     {
@@ -10,6 +11,11 @@ export const routes: Routes = [
         path: 'home',
         loadChildren: () => import('./home/home.routes').then(mod => mod.homeRoutes),
         canActivate: [authGuard] 
+    },
+    {
+        path: 'transactions-label/:id', 
+        loadComponent: () => import('./home/transactions/transaction-label/transaction-label.component').then(mod => mod.TransactionLabelComponent),
+        canActivate: [permissionGuard('manage_transactions')]
     },
     { 
         path: 'login', 

@@ -1,0 +1,68 @@
+<div class="modal-header">
+    <h3>{{title | translate }}</h3>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="certificateForm" (ngSubmit)="onSubmit(certificateForm.valid, certificateForm.value)">
+        <div class="row">
+            @if (this.certificateForm.controls['certificate_number'].value) {
+                <div class="col-sm-12 mb-5" id="certificateNumber">
+                    MC{{this.certificateForm.controls['certificate_number'].value}}
+                </div>
+            }
+            <div class="col-sm-12 mb-5">
+                <label for="doctor_id" class="form-label required">{{ 'messages.transaction.doctors' | translate }}:</label>
+                <select2 for="doctor_id" [data]="doctors" formControlName="doctor_id" placeholder="{{ 'messages.transaction.select_doctor' | translate }}"></select2>
+                @if (!certificateForm.controls['doctor_id'].valid && (!certificateForm.controls['doctor_id'].pristine ||
+                    isSubmitted)) {
+                    <div id="billDateValidation" class="invalid-feedback d-block">
+                        {{'messages.this_field' | translate}}
+                    </div>
+                }
+            </div>
+            <div class="col-sm-12 mb-5">
+                <label for="duration" class="form-label">{{ 'messages.transaction.period' | translate }}:</label>
+                <input type="text"
+                    class="form-control daterangepicker"
+                    bsDaterangepicker
+                    formControlName="range"
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default'}">
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="type" class="form-label">{{ 'messages.transaction.certificate_type' | translate }}:</label>
+                <select2 for="language" [data]="types" formControlName="type" placeholder="{{ 'messages.transaction.select_type' | translate }}"></select2>
+            </div>
+            <div class="col-sm-3 mb-5">
+                <div [class.d-none]="this.certificateForm.controls['type'].value !== 2">
+                    <label for="medicalCertificateStartTime" class="form-label">{{ 'messages.transaction.start_time' | translate }}:</label>
+                    <app-time-input id="medicalCertificateStartTime" formControlName="start_time"></app-time-input>
+                </div>
+            </div>
+            <div class="col-sm-3 mb-5">
+                <div [class.d-none]="this.certificateForm.controls['type'].value !== 2">
+                    <label for="medicalCertificateEndTime" class="form-label">{{ 'messages.transaction.end_time' | translate }}:</label>
+                    <app-time-input id="medicalCertificateEndTime" formControlName="end_time"></app-time-input>
+                </div>
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="medicalCertificateReason" class="form-label">{{ 'messages.transaction.reason' | translate }}:</label>
+                <textarea class="form-control" id="medicalCertificateReason" rows="3" formControlName="reason" cols="50"></textarea>
+            </div>
+            <div class="col-sm-6 mb-5">
+                <label for="medicalCertificateDescription" class="form-label">{{ 'messages.transaction.description' | translate }}:</label>
+                <textarea class="form-control" id="medicalCertificateDescription" rows="3" formControlName="description" cols="50"></textarea>
+            </div>
+            <div class="col-sm-12">
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary me-3 m-0" id="medicalCertificateTransactionBtn" type="submit">{{'messages.common.save' | translate }}</button>
+                    @if (this.certificateForm.controls['certificate_number'].value) {
+                        <button class="btn btn-primary me-3 m-0" type="button" (click)="export()">{{'messages.common.print' | translate }}</button>
+                    }
+                    <button class="btn btn-secondary my-0" (click)="bsModalRef.hide()" type="button">{{'messages.common.cancel' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

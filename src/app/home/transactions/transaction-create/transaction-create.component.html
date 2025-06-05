@@ -1,11 +1,45 @@
 <div class="d-flex flex-wrap align-items-center justify-content-between mb-7">
     <h1 class="mb-0 me-1">
-        {{ id ? ('messages.transaction.add_transaction' | translate) : ('messages.transaction.add_transaction' |
-        translate)}}
+        {{ id > 0 ? ('messages.transaction.edit_transaction' | translate) : ('messages.transaction.add_transaction' | translate)}}
     </h1>
-    <button class="btn btn-outline-primary mt-3" [routerLink]="'/home/transactions'">
-        {{'messages.common.back' | translate}}
-    </button>
+    <div>
+        @if (id > 0) {
+            <div class="btn-group mt-3 me-3" dropdown>
+                <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                        aria-controls="dropdown-basic">
+                    {{'messages.common.print' | translate}} <span class="caret"></span>
+                </button>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                    role="menu" aria-labelledby="button-basic">
+                    <li role="menuitem">
+                        <button class="dropdown-item" (click)="exportInvoice()">
+                            {{'messages.transaction.invoice' | translate }}
+                        </button>
+                    </li>
+                    <li role="menuitem">
+                        <button class="dropdown-item" (click)="openLabelPage(id)">
+                            {{'messages.transaction.label' | translate }}
+                        </button>
+                    </li>
+                    @if (medicalCertificateId) {
+                        <li role="menuitem">
+                            <button class="dropdown-item" >
+                                {{'messages.transaction.medical_certificate' | translate }}
+                            </button>
+                        </li>
+                    }
+                </ul>
+            </div>
+            @if (medicalCertificateId) {
+                <button class="btn btn-primary mt-3 me-3" (click)="openMedicalCertificate(medicalCertificateId)">
+                    {{'messages.transaction.medical_certificate' | translate}} 
+                </button>
+            }
+        }
+        <button class="btn btn-outline-primary mt-3" [routerLink]="'/home/transactions'">
+            {{'messages.common.back' | translate}}
+        </button>
+    </div>
 </div>
 <form [formGroup]="transactionForm" (ngSubmit)="onSubmit(transactionForm.valid, transactionForm.value)">
     <div class="card">

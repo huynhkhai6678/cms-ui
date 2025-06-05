@@ -1,0 +1,28 @@
+<body>
+    <div class="print-button">
+        <button type="button" onclick="window.print()">Print</button>
+    </div>
+    @for (service of services(); track service.id) {
+        <div class="label-item">
+            <div class="font-weight-bold mt-10">
+                {{patient().user.clinic.name}}
+            </div>
+            <div class="label-item-name mt-10">
+                {{patient().user.clinic.address}}
+            </div>
+            <div class="label-item-service">
+                <div class="label-item-service-name font-weight-bold mt-10">
+                    {{service.name}}
+                </div>
+                <div class="label-item-service-description mt-10">
+                    {{service.description}}
+                </div>
+            </div>
+            <div class="label-item-patient mt-10">
+                <div class="label-item-patient-item font-weight-bold">{{`${patient().user.first_name} ${patient().user.last_name}`}}</div>
+                <div class="label-item-patient-number font-weight-bold">{{patient().user.id_number}}</div>
+                <div class="label-item-patient-number text-right font-weight-bold">{{patient().patient_mrn}}</div>
+            </div>
+        </div>
+    }
+</body>

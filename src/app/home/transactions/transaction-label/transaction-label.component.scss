@@ -1,0 +1,67 @@
+* {
+    font-family: DejaVu Sans, Arial, "Helvetica", Arial, "Liberation Sans", sans-serif;
+    font-size: 14px;
+}
+
+body {
+    display: block;
+    margin: 8px;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
+
+.label-item {
+    background-color: #f8f9fa !important;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: auto;
+    height: auto;
+}
+
+.label-item-patient-item {
+    display: inline-block;
+}
+
+.label-item-name {
+    border-bottom: 1px solid;
+}
+
+.mt-10 {
+    margin-bottom: 10px;
+}
+
+.label-item-patient-number {
+    display: inline-block;
+}
+
+.text-right {
+    text-align: right;
+}
+
+@media print {
+
+    @page {
+        padding: 0px !important;
+        margin: 4px !important;
+        -webkit-print-color-adjust: exact;
+    }
+
+    body {
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+
+    .label-item {
+        height: auto;
+        min-width: 302px;
+        padding: 0px !important;
+        margin: 0px !important;
+        page-break-after: always;
+    }
+
+    .print-button {
+        display: none;
+    }
+}
