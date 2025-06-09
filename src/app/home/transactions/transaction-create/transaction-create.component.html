@@ -21,17 +21,24 @@
                             {{'messages.transaction.label' | translate }}
                         </button>
                     </li>
-                    @if (medicalCertificateId) {
+                    @if(transaction?.receipt) {
+                        <li>
+                            <button class="dropdown-item" (click)="exportReceipt()">
+                                {{'messages.transaction.receipt' | translate }}
+                            </button>
+                        </li>
+                    }
+                    @if (transaction?.medical_certificate) {
                         <li role="menuitem">
-                            <button class="dropdown-item" >
+                            <button class="dropdown-item" (click)="openMedicalCertificate(transaction?.medical_certificate.id)">
                                 {{'messages.transaction.medical_certificate' | translate }}
                             </button>
                         </li>
                     }
                 </ul>
             </div>
-            @if (medicalCertificateId) {
-                <button class="btn btn-primary mt-3 me-3" (click)="openMedicalCertificate(medicalCertificateId)">
+            @if (transaction?.medical_certificate) {
+                <button class="btn btn-primary mt-3 me-3" (click)="openMedicalCertificate(transaction?.medical_certificate.id)">
                     {{'messages.transaction.medical_certificate' | translate}} 
                 </button>
             }

@@ -206,6 +206,16 @@ export const homeRoutes: Routes = [
         canActivate: [permissionGuard('manage_transactions')]
       },
       {
+        path: 'reports/sales', 
+        loadComponent: () => import('./reports/daily-sales/daily-sales.component').then(mod => mod.DailySalesComponent),
+        canActivate: [permissionGuard('manage_report')]
+      },
+      {
+        path: 'reports/service-inventory-sales', 
+        loadComponent: () => import('./reports/service-inventory-sales/service-inventory-sales.component').then(mod => mod.ServiceInventorySalesComponent),
+        canActivate: [permissionGuard('manage_report')]
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'

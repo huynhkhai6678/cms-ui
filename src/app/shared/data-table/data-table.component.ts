@@ -1,4 +1,4 @@
-import { Component, computed, Input, signal, TemplateRef } from '@angular/core';
+import { Component, computed, EventEmitter, Input, Output, signal, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { toObservable, toSignal } from "@angular/core/rxjs-interop";
 import { debounceTime, map, switchMap, tap } from 'rxjs';
@@ -33,6 +33,9 @@ export class DataTableComponent {
   @Input() showSearchTemplate = true;
   @Input() defaultTrackingColumn = 'id';
   @Input() showFilterDateRange = false;
+
+  @Output() dateRangeChange = new EventEmitter<Date[]>();
+  @Output() clinicChange = new EventEmitter<number>();
 
   refreshKey = signal<number>(0);
   sortColumnName = signal<string>('');
@@ -71,52 +74,51 @@ export class DataTableComponent {
   pages = signal<number[]>([]);
   
   ranges: IRange[] = [
-  {
-    value: [new Date(new Date().setFullYear(new Date().getFullYear() - 1)), new Date()],
-    name: 'all',
-    label: 'js.all'
-  },
-  {
-    value: [new Date(), new Date()],
-    name: 'today',
-    label: 'js.today'
-  },
-  {
-    value: [new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1))],
-    name: 'yesterday',
-    label: 'js.yesterday'
-  },
-  {
-    value: [
-      new Date(new Date().setDate(new Date().getDate() - new Date().getDay())),
-      new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 6)),
-    ],
-    name: 'this_week',
-    label: 'js.this_week'
-  },
-  {
-    value: [new Date(new Date().setDate(new Date().getDate() - 29)), new Date()],
-    name: 'last_30_days',
-    label: 'js.last_30_days'
-  },
-  {
-    value: [
-      new Date(new Date().setDate(1)), // Start of this month
-      new Date(new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)),
-    ],
-    name: 'this_month',
-    label: 'js.this_month'
-  },
-  {
-    value: [
-      new Date(new Date(new Date().setMonth(new Date().getMonth() - 1)).setDate(1)),
-      new Date(new Date(new Date().setMonth(new Date().getMonth())).setDate(0))
-    ],
-    name: 'last_month',
-    label: 'js.last_month'
-  }
-];
-
+    {
+      value: [new Date(new Date().setFullYear(new Date().getFullYear() - 1)), new Date()],
+      name: 'all',
+      label: 'js.all'
+    },
+    {
+      value: [new Date(), new Date()],
+      name: 'today',
+      label: 'js.today'
+    },
+    {
+      value: [new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1))],
+      name: 'yesterday',
+      label: 'js.yesterday'
+    },
+    {
+      value: [
+        new Date(new Date().setDate(new Date().getDate() - new Date().getDay())),
+        new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 6)),
+      ],
+      name: 'this_week',
+      label: 'js.this_week'
+    },
+    {
+      value: [new Date(new Date().setDate(new Date().getDate() - 29)), new Date()],
+      name: 'last_30_days',
+      label: 'js.last_30_days'
+    },
+    {
+      value: [
+        new Date(new Date().setDate(1)), // Start of this month
+        new Date(new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)),
+      ],
+      name: 'this_month',
+      label: 'js.this_month'
+    },
+    {
+      value: [
+        new Date(new Date(new Date().setMonth(new Date().getMonth() - 1)).setDate(1)),
+        new Date(new Date(new Date().setMonth(new Date().getMonth())).setDate(0))
+      ],
+      name: 'last_month',
+      label: 'js.last_month'
+    }
+  ];
 
   constructor(
     public apiService: ApiService,
@@ -225,6 +227,10 @@ export class DataTableComponent {
 
   getClinicId() {
     return this.clinicId();
+  }
+
+  getDateRange() {
+    return this.dateRange();
   }
   
   getNestedValue(obj: any, path: string): any {

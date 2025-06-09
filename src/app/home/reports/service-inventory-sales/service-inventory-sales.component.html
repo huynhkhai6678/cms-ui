@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-sm-4">
+        <div id="serviceInventoryChart">
+            @if(showServiceAndInventoryChart) {
+                <highcharts-chart
+                    [Highcharts]="Highcharts"
+                    [options]="chartServiceAndInventoryOptions"
+                    style="width: 100%; height: 400px; display: block;"
+                ></highcharts-chart>
+            }
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="serviceChart">
+            @if(showServiceChart) {
+                <highcharts-chart
+                    [Highcharts]="Highcharts"
+                    [options]="chartServiceOptions"
+                    style="width: 100%; height: 400px; display: block;"
+                ></highcharts-chart>
+            }
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="inventoryChart">
+            @if(showInventoryChart) {
+                <highcharts-chart
+                    [Highcharts]="Highcharts"
+                    [options]="chartInventoryOptions"
+                    style="width: 100%; height: 400px; display: block;"
+                ></highcharts-chart>
+            }
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="report-page-summary-block">Overall Summary:</div>
+        <div class="report-page-summary-block">
+            Total Revenue: {{totalServiceAndInventoryRevenue}}
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="report-page-summary-block">Overall Summary:</div>
+        <div class="report-page-summary-block">
+            Total Revenue: {{totalServiceRevenue}}
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="report-page-summary-block">Overall Summary:</div>
+        <div class="report-page-summary-block">
+            Total Revenue: {{totalInventoryRevenue}}
+        </div>
+    </div>
+    <div class="col-sm-12 mt-5">
+        <app-data-table [url]="url" [headers]="tableColumns" [defaultTrackingColumn]="'transaction_invoice_service_id'"
+            [showFilterDateRange]="true" [columnCustomTemplates]="columnCustomTemplates" (dateRangeChange)="getChartData()"
+            (clinicChange)="getChartData()">
+        </app-data-table>
+    </div>
+</div>
+
+<ng-template #dateTemplate let-item>
+    {{item.transaction_invoice_service_created_at | date:'dd/MM/yyyy'}}
+</ng-template>
+
+<ng-template #priceTemplate let-item>
+    RM {{item.transaction_invoice_service_price.toFixed(2)}}
+</ng-template>
+
+<ng-template #amountTemplate let-item>
+    RM {{item.transaction_invoice_service_sub_total.toFixed(2)}}
+</ng-template>

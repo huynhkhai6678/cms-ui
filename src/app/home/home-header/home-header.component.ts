@@ -74,6 +74,12 @@ export class HomeHeaderComponent implements OnInit {
         link: 'patients'
       }
     ],
+    'visits': [
+      {
+        name : 'messages.visits',
+        link: 'visits'
+      }
+    ],
     'smart-patient-cards': [
       {
         name : 'messages.smart_patient_card.smart_patient_cards',
@@ -169,6 +175,16 @@ export class HomeHeaderComponent implements OnInit {
         name : 'messages.holiday.doctor_holiday',
         link: 'doctor-holidays'
       }
+    ],
+    'reports': [
+      {
+        name : 'messages.report.sale',
+        link: 'reports/sales'
+      },
+      {
+        name : 'messages.report.service',
+        link: 'reports/service-inventory-sales'
+      },
     ],
   }
 

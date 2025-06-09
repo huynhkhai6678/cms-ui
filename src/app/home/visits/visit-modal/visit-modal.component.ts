@@ -8,6 +8,7 @@ import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.com
 import { DateInputComponent } from '../../../shared/date-input/date-input.component';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormService } from '../../../services/form.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-visit-modal',
@@ -36,7 +37,7 @@ export class VisitModalComponent implements OnInit {
   idTypes : SingleSelect2Option[] = [];
   visitTypes : SingleSelect2Option[] = [];
 
-  constructor(private fb: FormBuilder, public homeService: HomeService, public bsModalRef: BsModalRef, private shareService : ShareService, private formService : FormService) {}
+  constructor(private fb: FormBuilder, public homeService: HomeService, public bsModalRef: BsModalRef, private shareService : ShareService, private formService : FormService, private toastrService: ToastrService) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -110,6 +111,7 @@ export class VisitModalComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
+        this.toastrService.error(error.error.message);
       }
     })
   }

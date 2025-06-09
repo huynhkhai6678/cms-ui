@@ -70,14 +70,7 @@ export class TransactionsComponent implements AfterViewInit {
   }
 
   create() {
-    // this.formService.openEditCreateModal(TransactionModalComponent, 'modal-xl', {
-    //   title: 'messages.transaction.add_transaction',
-    //   clinicId : this.dataTableComponent.getClinicId()
-    // }, () => {
-    //   this.dataTableComponent.reloadData();
-    // });
     const clinicId = this.dataTableComponent.getClinicId();
-    console.log(clinicId);
     this.router.navigate([`/home/transactions/create/0`], { queryParams: {clinicId: clinicId}});
   }
   

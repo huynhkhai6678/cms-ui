@@ -113,6 +113,12 @@ export class HomeSidebarComponent implements OnInit {
       permission: 'manage_clinic_service'
     },
     {
+      icon : 'fa-solid fa-file',
+      name : 'messages.reports',
+      link: 'reports/sales',
+      permission: 'manage_report'
+    },
+    {
       icon : 'fa-solid fa-list',
       name : 'messages.master_list',
       link: 'subscribers',

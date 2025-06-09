@@ -20,13 +20,13 @@
                             class="form-control daterangepicker"
                             bsDaterangepicker
                             [ngModel]="dateRange()"
-                            (ngModelChange)="dateRange.set($event)"
+                            (ngModelChange)="dateRange.set($event);this.dateRangeChange.emit(this.dateRange());"
                             [bsConfig]="{ ranges: ranges, dateInputFormat: 'DD/MM/YYYY', rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default'}">
                     </div>
                 }
                 @if (showClinicFilterTemplate) {
                     <div class="mb-5 me-5">
-                        <select id="filterClinic" class="form-select" [ngModel]="clinicId()" (ngModelChange)="clinicId.set($event)">
+                        <select id="filterClinic" class="form-select" [ngModel]="clinicId()" (ngModelChange)="clinicId.set($event);this.clinicChange.emit(this.clinicId());">
                             @for(clinic of homeService.clinics; track clinic.id) {
                                 <option value="{{clinic.id}}">{{clinic.name}}</option>
                             }

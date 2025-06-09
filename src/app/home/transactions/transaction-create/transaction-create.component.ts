@@ -51,7 +51,7 @@ export class TransactionCreateComponent implements OnInit {
   showCreateForm = false;
   createService : any = {};
   currentEditIndex = -1;
-  medicalCertificateId = 0;
+  transaction : any = null;
 
   constructor(
     private fb: FormBuilder,
@@ -66,14 +66,17 @@ export class TransactionCreateComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.activeRoute.params.subscribe((params : any) => {
-      this.id = params['id'];
+      this.id = parseInt(params['id']);
       this.getTransactionData(this.id);
     });
 
     this.activeRoute.queryParams.subscribe((queryParams : any) => {
-      const clinicId = queryParams['clinicId'];
-      if (clinicId) {
-        this.updateClinic(clinicId);
+      if (queryParams['clinicId']) {
+        this.updateClinic(queryParams['clinicId']);
+      }
+
+      if (queryParams['visitId']) {
+        this.transactionForm.controls['visit_id'].setValue(queryParams['visitId']);
       }
     });
   }
@@ -111,8 +114,8 @@ export class TransactionCreateComponent implements OnInit {
   getTransactionData(id: number) {
     this.apiService.get(`${this.url}/${id}`).subscribe((res : any) => {
       // Store medical certificate id
-      if (res['data'] && res['data']['medical_certificate']) {
-        this.medicalCertificateId = res['data']['medical_certificate']['id'];
+      if (res['data']) {
+        this.transaction = res['data'];
       }
 
       if (res['data'] && !res['data']['id']) {
@@ -169,6 +172,7 @@ export class TransactionCreateComponent implements OnInit {
           name: medicine.name,
           value: medicine.id,
           service_id: medicine.id,
+          price : medicine.buying_price,
           type: 'Inventories',
           uom: medicine.uom,
           avaiable_quantity: medicine.available_quantity
@@ -178,6 +182,7 @@ export class TransactionCreateComponent implements OnInit {
           name: service.name,
           value: service.id,
           service_id: service.id,
+          price : service.price,
           type: 'Services',
           uom: null,
           avaiable_quantity: 0
@@ -327,6 +332,17 @@ export class TransactionCreateComponent implements OnInit {
     this.apiService.downloadFile(`transactions/export-invoice/${this.id}`).subscribe({
       next : (response) => {
         downloadFile(response, 'invoice.pdf');
+      },
+      error : (error) => {
+        this.toastrService.error('Error downloading PDF:', error);
+      }
+    })
+  }
+
+  exportReceipt() {
+    this.apiService.downloadFile(`transactions/export-receipt/${this.id}`).subscribe({
+      next : (response) => {
+        downloadFile(response, 'receipt.pdf');
       },
       error : (error) => {
         this.toastrService.error('Error downloading PDF:', error);

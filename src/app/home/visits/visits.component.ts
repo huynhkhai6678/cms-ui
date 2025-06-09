@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -22,7 +22,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './visits.component.scss'
 })
 export class VisitsComponent implements AfterViewInit {
-url = 'visits';
+  url = 'visits';
   columnCustomTemplates : Record<string, any> = {};
   apiUrl = environment.apiUrl;
 
@@ -43,6 +43,7 @@ url = 'visits';
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
 
   constructor(
+    private router : Router,
     private apiService: ApiService,
     private formService: FormService,
     public shareService: ShareService,
@@ -112,13 +113,19 @@ url = 'visits';
   }
 
   openTransaction(item: any) {
-    console.log('Todo Transaction');
-    console.log(item);
+    if (!item.transaction_invoice_id) {
+      return this.router.navigate([`/home/transactions/create/0`], { queryParams: {clinicId: item.visit_clinic_id, visitId: item.visit_id}});
+    }
+    return this.router.navigate([`/home/transactions/create/${item.transaction_invoice_id}`]);
   }
 
   openCetificate(item: any) {
-    console.log('Todo certificate');
-    console.log(item);
+    if (item.certificate_id) {
+      return;
+    }
+
+    // Open cetificate id
+
   }
 
   updateVisitStatus(id : number, event : any){
