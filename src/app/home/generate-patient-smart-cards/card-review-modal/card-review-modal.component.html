@@ -74,8 +74,8 @@
 
             <div class="w-25 float-end">
                 <div class="text-end mb-5 ms-3">
-                    <div class="svgContainer bg-white p-1 ms-5" style="width: 98px" id="svgContainer">
-                        QR-code here
+                    <div class="svgContainer bg-white p-1 ms-5" id="svgContainer">
+                        <div [innerHTML]="qrCodeSvg"></div>
                     </div>
                 </div>
                 @if (data.smart_patient_card.show_patient_unique_id) {

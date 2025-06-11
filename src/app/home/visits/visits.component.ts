@@ -108,8 +108,7 @@ export class VisitsComponent implements AfterViewInit {
   }
 
   openMedicalRecord(item : any) {
-    console.log('Todo medical record');
-    console.log(item);
+    return this.router.navigate([`/home/patient-medical-record/${item.medical_record_id}`]);
   }
 
   openTransaction(item: any) {

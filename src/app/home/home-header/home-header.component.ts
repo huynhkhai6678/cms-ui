@@ -80,6 +80,12 @@ export class HomeHeaderComponent implements OnInit {
         link: 'visits'
       }
     ],
+    'transactions': [
+      {
+        name : 'messages.transactions',
+        link: 'transactions'
+      }
+    ],
     'smart-patient-cards': [
       {
         name : 'messages.smart_patient_card.smart_patient_cards',
@@ -111,6 +117,18 @@ export class HomeHeaderComponent implements OnInit {
         name : 'messages.purchase_medicine.purchase_medicines',
         link: 'medicine-purchase'
       }
+    ],
+    'medicine-inventories': [
+      {
+        name : 'messages.medicine-inventory.labels',
+        link: ''
+      },
+    ],
+    'medicine-inventory-usages/': [
+      {
+        name : 'messages.medicine-inventory.labels',
+        link: ''
+      },
     ],
     'master_list': [
       {

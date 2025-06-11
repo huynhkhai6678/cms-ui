@@ -1,0 +1,86 @@
+<div class="container-fluid">
+    <div class="d-flex flex-stack mb-2">
+        <div>
+            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-3 me-1">
+                {{'messages.medical_record.medical_record' | translate}}
+            </h1>
+        </div>
+        <input id="medicalRecordId" name="id" type="hidden" value="54">
+        <div class="d-flex align-items-center py-1 ms-auto">
+            <a href="https://cms-testing.myclnq.com/admin/transactions/create?visitId=162" data-id="162" title="Transaction"
+                class="btn btn-primary me-2">
+                {{'messages.transaction.add_transaction' | translate}}
+            </a>
+            <a routerLink="'home/visits'">
+                <button type="button" class="btn btn-outline-primary float-end">{{'messages.common.back' | translate}}</button>
+            </a>
+        </div>
+    </div>
+    @if (data) {
+        <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 d-flex flex-column mb-md-5 mb-2">
+                            <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.profile' | translate }}</span>
+                            <div>
+                                @if (data.image_url) {
+                                    <img [src]="`${apiUrl}${data.image_url}`" alt="" class="object-cover image image-circle">
+                                } @else {
+                                    <img [src]="`${apiUrl}public/media/male.png`" alt="user" class="object-cover image image-circle">
+                                }
+                                <span class="fs-4 text-primary-800">
+                                    <a href="https://cms-testing.myclnq.com/admin/patients/88" class="fs-3 text-primary-800 text-hover-primary mb-3 text-decoration-none">
+                                       {{data.full_name}}
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex flex-column mb-md-5 mb-2">
+                            <span class="pb-2 fs-4 text-gray-600">{{'messages.web.email' | translate }}</span>
+                            <span class="fs-4 text-gray-800">{{data.email}}</span>
+                        </div>
+                        <div class="col-md-6 d-flex flex-column mb-md-5 mb-2">
+                            <span class="pb-2 fs-4 text-gray-600">{{'messages.user_manage.mobile' | translate }}</span>
+                            <span class="fs-4 text-gray-800">{{data.phone}}</span>
+                        </div>
+                        
+                        <div class="col-md-6 d-flex flex-column mb-md-5 mb-2">
+                            <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.allergy' | translate }}</span>
+                            <span class="fs-4 text-gray-800">
+                                {{data.allergy}}
+                            </span>
+                        </div>
+
+                        <div class="col-md-6 d-flex flex-column mb-md-5 mb-2">
+                            <span class="pb-2 fs-4 text-gray-600">{{'messages.doctor.updated_at' | translate }}</span>
+                            <span class="fs-4 text-gray-800">2 months ago</span>
+                        </div>
+
+                        <div class="col-md-6 d-flex flex-column mb-md-5 mb-2">
+                            <span class="pb-2 fs-4 text-gray-600">{{'messages.visit.important_notes' | translate }}</span>
+                            <span class="fs-4 text-gray-800">
+                                {{data.important_notes}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-sm-8">
+            <tabset>
+                <tab heading="{{'messages.visit.vital' | translate }}" >
+                </tab>
+                <tab heading="{{'messages.visit.notes' | translate }}">
+                </tab>
+                <tab heading="{{'messages.visit.documents' | translate }}" >
+                </tab>
+            </tabset>
+        </div>
+        <div class="col-sm-4">
+            Medical record history
+        </div>
+    </div>
+</div>

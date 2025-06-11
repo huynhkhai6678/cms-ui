@@ -1,58 +1,56 @@
-<div class="container-fluid">
-    <div class="d-flex flex-column">
-        <div class="row">
-            @if (homeService.clinics.length > 1) {
-                <div class="col-xl-3 offset-xl-9 mb-5">
-                    <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" id="clinicId" [(ngModel)]="clinicId" (update)="getData()"></select2>
-                </div>
-            }
-            <div class="col-xl-4">
-                <div class="row">
-                    @if (data?.user_card) {
-                        <div class="col-xl-12 col-md-6">
-                            <app-dashboard-user-card [data]="data.user_card"></app-dashboard-user-card>
-                        </div>
-                    }
-                    <div class="col-xl-12 col-md-6" >
-                        <app-dashboard-erning-card></app-dashboard-erning-card>
+<div class="d-flex flex-column">
+    <div class="row">
+        @if (homeService.clinics.length > 1) {
+            <div class="col-xl-3 offset-xl-9 mb-5">
+                <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" id="clinicId" [(ngModel)]="clinicId" (update)="getData()"></select2>
+            </div>
+        }
+        <div class="col-xl-4">
+            <div class="row">
+                @if (data?.user_card) {
+                    <div class="col-xl-12 col-md-6">
+                        <app-dashboard-user-card [data]="data.user_card"></app-dashboard-user-card>
                     </div>
-                    @if (data?.visit_card) {
-                        <div class="col-xl-12 col-md-6">
-                            <app-dashboard-visit-card [data]="data.visit_card"></app-dashboard-visit-card>
-                        </div>
-                    }
+                }
+                <div class="col-xl-12 col-md-6" >
+                    <app-dashboard-erning-card></app-dashboard-erning-card>
                 </div>
-            </div>
-            <div class="col-xxl-8 col-xl-8">
-                @if (data?.appointment_card) {
-                    <app-dashboard-appointment-card [data]="data.appointment_card"></app-dashboard-appointment-card>
-                }
-
-                @if (authService.isAdmin()) {
-                    <app-dashboard-admin-chart [clinicId]="clinicId"></app-dashboard-admin-chart>
-                }
-
-                @if (authService.isDoctor()) {
-                    <app-dashboard-doctor-appointment-chart [clinicId]="clinicId"></app-dashboard-doctor-appointment-chart>
-                }
-
-                @if (authService.isPatient()) {
-                    <app-dashboard-patient-today-appointment></app-dashboard-patient-today-appointment>
-                    <app-dashboard-patient-upcomming-appointment></app-dashboard-patient-upcomming-appointment>
+                @if (data?.visit_card) {
+                    <div class="col-xl-12 col-md-6">
+                        <app-dashboard-visit-card [data]="data.visit_card"></app-dashboard-visit-card>
+                    </div>
                 }
             </div>
+        </div>
+        <div class="col-xxl-8 col-xl-8">
+            @if (data?.appointment_card) {
+                <app-dashboard-appointment-card [data]="data.appointment_card"></app-dashboard-appointment-card>
+            }
 
             @if (authService.isAdmin()) {
-                <div class="col-xxl-12">
-                    <app-dashboard-patient-registration [clinicId]="clinicId"></app-dashboard-patient-registration>
-                </div>
+                <app-dashboard-admin-chart [clinicId]="clinicId"></app-dashboard-admin-chart>
             }
 
             @if (authService.isDoctor()) {
-                <div class="col-xxl-12">
-                    <app-dashboard-doctor-appointment [clinicId]="clinicId"></app-dashboard-doctor-appointment>
-                </div>
+                <app-dashboard-doctor-appointment-chart [clinicId]="clinicId"></app-dashboard-doctor-appointment-chart>
+            }
+
+            @if (authService.isPatient()) {
+                <app-dashboard-patient-today-appointment></app-dashboard-patient-today-appointment>
+                <app-dashboard-patient-upcomming-appointment></app-dashboard-patient-upcomming-appointment>
             }
         </div>
+
+        @if (authService.isAdmin()) {
+            <div class="col-xxl-12">
+                <app-dashboard-patient-registration [clinicId]="clinicId"></app-dashboard-patient-registration>
+            </div>
+        }
+
+        @if (authService.isDoctor()) {
+            <div class="col-xxl-12">
+                <app-dashboard-doctor-appointment [clinicId]="clinicId"></app-dashboard-doctor-appointment>
+            </div>
+        }
     </div>
 </div>

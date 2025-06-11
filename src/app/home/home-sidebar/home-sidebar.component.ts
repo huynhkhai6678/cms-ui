@@ -1,6 +1,6 @@
 import { Component, computed, model, OnInit, Signal, signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HomeService } from '../home.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -86,7 +86,8 @@ export class HomeSidebarComponent implements OnInit {
       icon : 'fa-solid fa-id-card',
       name : 'messages.smart_patient_card.smart_patient_cards',
       link: 'smart-patient-cards',
-      permission: 'manage_patients'
+      permission: 'manage_patients',
+      groups : ['smart-patient-cards', 'generate-patient-smart-cards'],
     },
     {
       icon : 'fa-solid fa-money-bill-wave',
@@ -98,7 +99,8 @@ export class HomeSidebarComponent implements OnInit {
       icon : 'fa-solid fa-capsules',
       name : 'messages.medicines',
       link: 'medicines',
-      permission: 'manage_medicines'
+      permission: 'manage_medicines',
+      groups : ['medicines', 'labels', 'brands', 'brands', 'categories', 'medicine-purchase'],
     },
     {
       icon : 'fa-solid fa-question-circle',
@@ -116,40 +118,44 @@ export class HomeSidebarComponent implements OnInit {
       icon : 'fa-solid fa-file',
       name : 'messages.reports',
       link: 'reports/sales',
-      permission: 'manage_report'
+      permission: 'manage_report',
+      groups : ['sales', 'service-inventory-sales'],
     },
     {
       icon : 'fa-solid fa-list',
       name : 'messages.master_list',
       link: 'subscribers',
+      groups : ['subscribers', 'clinic-document-setting'],
       permission: 'manage_settings'
     },
     {
       icon : 'fa-solid fa-cogs',
       name : 'messages.settings',
       link: 'specializations',
-      permission: 'manage_settings'
+      permission: 'manage_settings',
+      groups : ['settings', 'specializations', 'clinic-schedules'],
     },
     {
       icon : 'fa-solid fa-tasks',
       name : 'messages.website',
       link: 'cms',
-      permission: 'manage_front_cms'
+      permission: 'manage_front_cms',
+      groups : ['cms', 'services', 'service-categories', 'sliders', 'faqs', 'testimonials'],
     },
     {
       icon : 'fa-solid fa-users',
       name : 'messages.users',
       link: 'staffs',
-      permission: 'manage_staff'
+      permission: 'manage_staff',
+      groups : ['staffs', 'doctors', 'doctor-holidays'],
     },
   ];
 
   constructor(
     private authService: AuthService,
-    private homeService : HomeService
-  ) {
-
-  }
+    private homeService : HomeService,
+    private router : Router
+  ) {}
 
   ngOnInit(): void {
     const user : any = this.authService.getUser();
@@ -165,6 +171,13 @@ export class HomeSidebarComponent implements OnInit {
   collapseMenu() {
     this.homeService.updateCollapseSidebar();
   }
+
+  isActiveRoute(route: HomeSidebarLink): boolean {
+    const currentPath = this.router.url.split('?')[0].split('#')[0];
+
+    const routePaths = [route.link, ...(route.groups || [])];
+    return routePaths.some(path => currentPath.endsWith('/' + path) || currentPath === '/' + path);
+  }
 }
 
 export interface HomeSidebarLink {
@@ -172,4 +185,5 @@ export interface HomeSidebarLink {
   name: string;
   link: string;
   permission: string;
+  groups?: string[];
 }
