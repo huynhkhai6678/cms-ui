@@ -1,7 +1,7 @@
 <div class="row">
     @if (data.upcoming_appointments !== undefined) {
-        <div class="col-xxl-6 col-xl-4 col-md-6 widget">
-            <a href="https://cms-testing.myclnq.com/admin/appointments" class="text-decoration-none">
+        <div [ngClass]="authService.isAdmin() ? 'col-md-6' : 'col-md-4'" class=" widget">
+            <a [routerLink]="'home/appointments'" class="text-decoration-none">
                 <div
                     class="admin-wiget-appointment-card1 rounded-10 p-xxl-8 px-7 py-10 d-flex align-items-center justify-content-between mb-5">
                     <div class="text-start text-dark">
@@ -19,8 +19,8 @@
         </div>
     }
     @if (data.total_appointments !== undefined) {
-        <div class="col-xxl-6 col-xl-4 col-md-6 widget">
-            <a href="https://cms-testing.myclnq.com/admin/appointments" class="text-decoration-none">
+        <div [ngClass]="authService.isAdmin() ? 'col-md-6' : 'col-md-4'" class="widget">
+            <a [routerLink]="'home/appointments'" class="text-decoration-none">
                 <div
                     class="admin-wiget-appointment-card3 rounded-10 p-xxl-8 px-7 py-10 d-flex align-items-center justify-content-between mb-5">
                     <div class="text-start text-dark">
@@ -38,15 +38,15 @@
         </div>
     }
     @if (data.today_appointments !== undefined) {
-        <div class="col-xxl-6 col-xl-4 col-md-6 widget">
-            <a href="https://cms-testing.myclnq.com/admin/appointments" class="text-decoration-none">
+        <div [ngClass]="authService.isAdmin() ? 'col-md-6' : 'col-md-4'" class="widget">
+            <a [routerLink]="'home/appointments'" class="text-decoration-none">
                 <div
                     class="admin-wiget-appointment-card3 rounded-10 p-xxl-8 px-7 py-10 d-flex align-items-center justify-content-between mb-5">
                     <div class="text-start text-dark">
                         <h3 class="mb-0 fs-6 mb-3 fw-light">
                             {{'messages.patient_dashboard.today_appointments' | translate }}
                         </h3>
-                        <h1 class="fs-2-xxl fw-bolder">{{data.total_appointments}}</h1>
+                        <h1 class="fs-2-xxl fw-bolder">{{data.today_appointments}}</h1>
                     </div>
                     <div
                         class="bg-theme-500 widget-icon admin-patient-widget-icon rounded-50 d-flex align-items-center justify-content-center">
@@ -56,9 +56,9 @@
             </a>
         </div>
     }
-    @if (data.completed_appointment !== undefined) {
-        <div class="col-xxl-6 col-xl-4 col-md-6 widget">
-            <a href="https://cms-testing.myclnq.com/admin/appointments" class="text-decoration-none">
+    @if (data.completed_appointments !== undefined) {
+        <div [ngClass]="authService.isAdmin() ? 'col-md-6' : 'col-md-4'" class="widget">
+            <a [routerLink]="'home/appointments'" class="text-decoration-none">
                 <div
                     class="admin-wiget-appointment-card3 rounded-10 p-xxl-8 px-7 py-10 d-flex align-items-center justify-content-between mb-5">
                     <div class="text-start text-dark">

@@ -1,0 +1,19 @@
+<div class="card card-xl-stretch mb-5 mb-xl-8">
+    <div class="card-header card-header-dashbord border-0 p-3 ps-5">
+        <h3 class="card-title align-items-start flex-column mb-3">
+            <span class="card-label fw-bolder fs-3 mb-1">
+                {{'messages.monthly_appointments' | translate }}
+            </span>
+        </h3>
+    </div>
+    <div class="card-body appointmentChart">
+        <div id="appointmentChartId" style="height: 350px; min-height: 365px;" class="card-rounded-bottom">
+            @if(showChart) {
+                <highcharts-chart
+                    [Highcharts]="Highcharts"
+                    [options]="chartOptions"
+                ></highcharts-chart>
+            }
+        </div>
+    </div>
+</div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ErningCardComponent } from './erning-card.component';
+import { DashboardErningCardComponent } from './erning-card.component';
 
-describe('ErningCardComponent', () => {
-  let component: ErningCardComponent;
-  let fixture: ComponentFixture<ErningCardComponent>;
+describe('DashboardErningCardComponent', () => {
+  let component: DashboardErningCardComponent;
+  let fixture: ComponentFixture<DashboardErningCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ErningCardComponent]
+      imports: [DashboardErningCardComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ErningCardComponent);
+    fixture = TestBed.createComponent(DashboardErningCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

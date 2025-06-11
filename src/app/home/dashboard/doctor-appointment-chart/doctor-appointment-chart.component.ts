@@ -1,24 +1,25 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import * as Highcharts from 'highcharts';
+import { TranslatePipe } from '@ngx-translate/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { ApiService } from '../../../services/api.service';
+import * as Highcharts from 'highcharts';
 import { DashboardService } from '../dashboard.service';
 
 @Component({
-  selector: 'app-dashboard-admin-chart',
+  selector: 'app-dashboard-doctor-appointment-chart',
   imports: [
+    TranslatePipe,
     HighchartsChartModule
   ],
-  templateUrl: './admin-chart.component.html',
-  styleUrl: './admin-chart.component.scss'
+  templateUrl: './doctor-appointment-chart.component.html',
+  styleUrl: './doctor-appointment-chart.component.scss'
 })
-export class DashboardAdminChartComponent implements OnChanges {
+export class DashboardDoctorAppointmentChartComponent implements OnChanges {
   data : any;
   showChart = false;
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
-  totalRevenue = 0;
-  
+
   @Input() clinicId = 0;
 
   constructor(private apiService: ApiService, private dashboardService: DashboardService) {}
@@ -30,10 +31,11 @@ export class DashboardAdminChartComponent implements OnChanges {
   }
 
   getData() {
-    this.apiService.get(`dashboard/admin-revenue?clinic_id=${this.clinicId}`).subscribe((res : any) => {
+    console.log(';;;;');
+    this.apiService.get(`dashboard/doctor-appointment-chart?clinic_id=${this.clinicId}`).subscribe((res : any) => {
       this.data = res.data;
       this.drawChart(res.data);
-      this.calculateRevenue(res.data);
+      this.calculateAppointment(res.data);
       this.showChart = true;
     })
   }
@@ -64,14 +66,12 @@ export class DashboardAdminChartComponent implements OnChanges {
     }
   }
 
-  calculateRevenue(data : Record<string, number>) {
-    this.totalRevenue  = 0;
+  calculateAppointment(data : Record<string, number>) {
     const now = new Date();
     const lastMonthIndex = now.getMonth() > 0 ? now.getMonth() - 1 :  0;
+
     Object.entries(data).forEach((month, index) => {
       const value = month[1]; 
-      this.totalRevenue += value;
-
       if (lastMonthIndex === index) {
         this.dashboardService.updateEarningLastMonth(value);
       }

@@ -1,0 +1,72 @@
+<div class="d-flex border-0 pt-5">
+    <h3 class="align-items-start flex-column">
+        <span class="fw-bolder fs-3 mb-1">
+            {{'messages.admin_dashboard.recent_patients_registration' | translate}}
+        </span>
+    </h3>
+    <div class="ms-auto d-sm-block d-none">
+        <ul class="nav">
+            <li class="nav-item">
+                <button (click)="setFilterDay('today')" [class.text-primary]="filterDate === 'today'" class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bolder px-4">
+                    {{'js.day' | translate}}
+                </button>
+            </li>
+            <li class="nav-item">
+                <button (click)="setFilterDay('week')" [class.text-primary]="filterDate === 'week'" class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bolder px-4 me-1">
+                    {{'js.week' | translate}}
+                </button>
+            </li>
+            <li class="nav-item">
+                <button (click)="setFilterDay('month')" [class.text-primary]="filterDate === 'month'" class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bolder px-4 me-1">
+                    {{'js.month' | translate}}
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+<app-data-table 
+    [url]="url" 
+    [headers]="tableColumns" 
+    [defaultTrackingColumn]="'patient_id'"
+    [showFilterDateRange]="false"
+    [showSearchTemplate]="false"
+    [showClinicFilterTemplate]="false"
+    [showPagination]="false"
+    [columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #fullNameTemplate let-item>
+    <div class="d-flex align-items-center">
+        <a [routerLink]="item.patient_id">
+            <div class="image image-circle image-mini me-3">
+                @if (item.image_url) {
+                    <img [src]="`${apiUrl}${item.image_url}`" alt="" class="user-img" loading="lazy">
+                } @else {
+                    <img [src]="`${apiUrl}public/media/male.png`" alt="user" class="user-img" loading="lazy">
+                }
+            </div>
+        </a>
+        <div class="d-flex flex-column">
+            <div class="d-inline-block align-top">
+                <div class="d-inline-block align-self-center d-flex">
+                    <a [routerLink]="item.patient_id" class="mb-1 text-decoration-none fs-6">
+                        {{item.patient_full_name}}
+                    </a>
+                </div>
+            </div>
+            <span class="fs-6">{{item.patient_email}}</span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #totalAppointment let-item>
+    <div class="badge bg-light-danger">{{item.total_appointment }}</div>
+</ng-template>
+
+<ng-template #uniqueId let-item>
+    <div class="badge bg-light-success">{{item.patient_unique_id }}</div>
+</ng-template>
+
+<ng-template #createdAtTemplate let-item>
+    <div class="badge bg-light-info">{{item.created_at | date:'dd MMM yyyy hh:mm a' }}</div>
+</ng-template>

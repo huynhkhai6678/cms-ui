@@ -1,6 +1,11 @@
 <div class="container-fluid">
     <div class="d-flex flex-column">
         <div class="row">
+            @if (homeService.clinics.length > 1) {
+                <div class="col-xl-3 offset-xl-9 mb-5">
+                    <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" id="clinicId" [(ngModel)]="clinicId" (update)="getData()"></select2>
+                </div>
+            }
             <div class="col-xl-4">
                 <div class="row">
                     @if (data?.user_card) {
@@ -22,12 +27,32 @@
                 @if (data?.appointment_card) {
                     <app-dashboard-appointment-card [data]="data.appointment_card"></app-dashboard-appointment-card>
                 }
-                <app-dashboard-admin-chart></app-dashboard-admin-chart>
+
+                @if (authService.isAdmin()) {
+                    <app-dashboard-admin-chart [clinicId]="clinicId"></app-dashboard-admin-chart>
+                }
+
+                @if (authService.isDoctor()) {
+                    <app-dashboard-doctor-appointment-chart [clinicId]="clinicId"></app-dashboard-doctor-appointment-chart>
+                }
+
+                @if (authService.isPatient()) {
+                    <app-dashboard-patient-today-appointment></app-dashboard-patient-today-appointment>
+                    <app-dashboard-patient-upcomming-appointment></app-dashboard-patient-upcomming-appointment>
+                }
             </div>
 
-            <div class="col-xxl-12">
-                 <!-- <livewire:admin-dashBoard-table /> -->
-            </div>
+            @if (authService.isAdmin()) {
+                <div class="col-xxl-12">
+                    <app-dashboard-patient-registration [clinicId]="clinicId"></app-dashboard-patient-registration>
+                </div>
+            }
+
+            @if (authService.isDoctor()) {
+                <div class="col-xxl-12">
+                    <app-dashboard-doctor-appointment [clinicId]="clinicId"></app-dashboard-doctor-appointment>
+                </div>
+            }
         </div>
     </div>
 </div>

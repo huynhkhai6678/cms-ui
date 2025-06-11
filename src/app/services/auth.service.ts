@@ -7,6 +7,7 @@ export class AuthService {
 
     readonly ADMIN_TYPE = 1;
     readonly DOCTOR_TYPE = 2;
+    readonly PATIENT_TYPE = 3;
     readonly SUPER_ADMIN_TYPE = 5;
 
     constructor(
@@ -54,6 +55,14 @@ export class AuthService {
         const user = this.getUser();
         if (user) {
             return user.type == this.DOCTOR_TYPE;
+        } 
+        return false;
+    }
+
+    isPatient(): boolean {
+        const user = this.getUser();
+        if (user) {
+            return user.type == this.PATIENT_TYPE;
         } 
         return false;
     }

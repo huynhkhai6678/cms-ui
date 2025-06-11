@@ -1,13 +1,16 @@
 <div class="admin-dashbord-earning-card widget mb-5">
     <div class="admin-dashbord-earning-card-header">
-        <h3>Monthly Earning !</h3>
-        <span class="mt-4 fw-light">This Month</span>
+        <h3>{{'messages.monthly_earning' | translate }}</h3>
+        <span class="mt-4 fw-light">{{'js.this_month' | translate }}</span>
     </div>
     <div class="admin-dashbord-earning-card-body d-flex align-items-center justify-content-between">
-        <div class="total-amount fs-1 my-2">RM 0</div>
+        <div class="total-amount fs-1 my-2">RM {{earningThisMonth()}}</div>
         <div>
-            <i class="fa fa-arrow-up" aria-hidden="true"></i>
-            <div> From Previous Month</div>
+            <span [ngClass]="isReduce() ? 'text-danger' : 'text-success'">
+                {{percentChange()}}%
+                <i [ngClass]="isReduce() ? 'fa-arrow-down' : 'fa-arrow-up'" class="fa" aria-hidden="true"></i>
+            </span>
+            <div>{{'messages.from_previous_month' | translate }}</div>
         </div>
     </div>
 </div>

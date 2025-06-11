@@ -33,6 +33,7 @@ export class DataTableComponent {
   @Input() showSearchTemplate = true;
   @Input() defaultTrackingColumn = 'id';
   @Input() showFilterDateRange = false;
+  @Input() showPagination = true;
 
   @Output() dateRangeChange = new EventEmitter<Date[]>();
   @Output() clinicChange = new EventEmitter<number>();
@@ -150,6 +151,9 @@ export class DataTableComponent {
   }
 
   renderPagination(data: any) {
+    if (!this.showPagination) {
+      return;
+    }
     this.totalPages.set(data.totalPages);
     this.totalItem.set(data.total);
     this.pages.set(Array.from({ length: this.totalPages() }, (_, i) => i + 1));
@@ -174,7 +178,7 @@ export class DataTableComponent {
     if (params.itemPerPage) searchParams.set('limit', params.itemPerPage);
     if (params.page) searchParams.set('page', params.page);
 
-    if (this.showClinicFilterTemplate && params.clinicId) searchParams.set('clinic_id', params.clinicId);
+    if ((this.showClinicFilterTemplate && params.clinicId)) searchParams.set('clinic_id', params.clinicId);
 
     if (this.showFilterDateRange && params.dateRange) {
       const startDate = moment(params.dateRange[0]).format('YYYY-MM-DD');

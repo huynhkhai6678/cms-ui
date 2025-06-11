@@ -5,6 +5,13 @@ import { ThemeService } from './services/theme.service';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { AuthService } from './services/auth.service';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import * as moment from 'moment';
+
+moment.updateLocale('en', {
+  week: {
+    dow: 1, // Monday
+  }
+});
 
 @Component({
   selector: 'app-root',
@@ -22,6 +29,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 })
 export class AppComponent {
   title = 'cms-ui';
+  
 
   constructor(private translate: TranslateService, private authService : AuthService) {
     this.translate.setDefaultLang('en');
