@@ -1,0 +1,39 @@
+<div class="card card-flush mt-6">
+    <div class="card-header align-items-center">
+        <h3 class="align-left m-0">{{ 'messages.visit.notes' | translate }}</h3>
+    </div>
+    <form [formGroup]="noteForm" (ngSubmit)="submit(noteForm.valid, noteForm.value)">
+        <div class="card-body">
+            <div class="p-0 visit-detail-card">
+                <div class="card-footer p-0">
+                    <div class="w-100">
+                        <div class="form-group mb-0" *ngIf="( Editor && config )">
+                            <label for="title" class="sr-only">{{ 'messages.visit.notes'| translate }}</label>
+                            <ckeditor [editor]="Editor" [config]="config" formControlName="notes"></ckeditor>
+                            <div class="form-group mb-0 mt-5">
+                                <label for="diagnosis" class="form-label">{{'messages.medical_record.diagnosis' |
+                                    translate }}</label>
+                                <textarea class="form-control form-textarea" id="diagnosis"
+                                    placeholder="{{'messages.medical_record.diagnosis' | translate }}"
+                                    formControlName="diagnosis" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex mt-6">
+                <button class="btn btn-primary m-0" type="submit">
+                    @if (id) {
+                        {{ 'messages.common.edit' | translate }}
+                    } @else {
+                        {{ 'messages.common.save' | translate }}
+                    }
+                </button>
+
+                @if (id) {
+                    <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="clearData()">{{'messages.common.cancel' | translate }}</button>
+                }
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,115 @@
+<div class="card card-flush medical-history-card mb-6 mb-xl-9">
+    <div class="card-header justify-content-center">
+        <h3 class="align-left m-0">{{ 'messages.medical_record.history' | translate }}</h3>
+    </div>
+    <div class="card-body p-9 pt-4">
+        <div class="list-group medical-history-card-list">
+            @for (history of data; track history.id) {
+                <div class="list-group-item" id="list-group-item-{{history.id}}">
+                    <div>
+                        <span class="me-2">Created At:</span>
+                        <span>{{history.created_at | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                    </div>
+                    <div>
+                        <span class="me-2">Created By:</span>
+                        <span>{{history.user.first_name}} {{history.user.last_name}}</span>
+                    </div>
+                    <br/>
+                    @if (history.type === 1) {
+                        <div>
+                            <span>{{history.data}}</span>
+                        </div>
+                    }
+
+                    @if (history.type === 2) {
+                        <div>
+                            <span [innerHTML]="history.note_data.notes"></span>
+                        </div>
+                        <div>
+                            <span>Diagnosis: {{history.note_data.diagnosis}}</span>
+                        </div>
+                        <div class="float-end">
+                            <button title="{{ 'messages.common.edit' | translate }}" class="btn px-1 text-primary fs-3 ps-0 mc-record-history-edit-btn" (click)="edit(history)">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button title="{{ 'messages.common.delete' | translate }}" class="mc-record-history-delete-btn btn px-1 text-danger fs-3 pe-0" (click)="removeNote(history.id)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    }
+                </div>
+            }
+            <!-- @foreach ($data as $item)
+                @if(empty($item->invoice_number))
+                    <div class="list-group-item" id="list-group-item-{{$item->id}}">
+                        <div>
+                            <span class="me-2">Created At:</span>
+                            <span>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y h:i A')}}</span>
+                        </div>
+                        @if(\Carbon\Carbon::parse($item->updated_at)->format('d/m/Y h:i A') != \Carbon\Carbon::parse($item->created_at)->format('d/m/Y h:i A'))
+                        <div>
+                            <span class="me-2">Updated At:</span>
+                            <span>{{\Carbon\Carbon::parse($item->updated_at)->format('d/m/Y h:i A')}}</span>
+                        </div>
+                        @endif
+                        <div>
+                            <span class="me-2">Created By:</span>
+                            <span>{{$item->created_by_user}}</span>
+                        </div>
+                        <br/>
+                        @if($item->type == 1)
+                            <div>
+                                <span>{{$item->data}}</span>
+                            </div>
+                        @endif
+                        @if($item->type == 2)
+                            <div>
+                                <span>{!! $item->data_without_html->note !!}</span>
+                            </div>
+                            <div>
+                                <span>Diagnosis: {{$item->data_without_html->diagnosis}}</span>
+                            </div>
+                            <div class="float-end">
+                                <span title="<?php echo __('messages.common.edit') ?>" class="btn px-1 text-primary fs-3 ps-0 mc-record-history-edit-btn" data-id="{{$item->id}}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
+                                <span title="<?php echo __('messages.common.delete') ?>" class="mc-record-history-delete-btn  btn px-1 text-danger fs-3 pe-0" data-id="{{$item->id}}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </span>
+                            </div>
+                        @endif
+                    </div>
+                @else
+                    <div class="list-group-item">
+                        <div>
+                            <span class="me-2">Date:</span>
+                            <span>{{\Carbon\Carbon::parse($item->bill_date)->format('d/m/Y h:i A')}}
+                                - #{{$item->invoice_number}}
+                            </span>
+                        </div>
+                        <div class="mt-2">
+                            <table class="table box-shadow-none">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($item->services as $index => $service)
+                                        <tr>
+                                            <td>{{ $service->name }}</td>
+                                            <td>{{ $service->description }}</td>
+                                            <td>{{ $service->quantity }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endif
+            @endforeach -->
+        </div>
+    </div>
+</div>

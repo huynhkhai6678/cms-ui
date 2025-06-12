@@ -1,0 +1,33 @@
+<div class="modal-header">
+    @if (id) {
+        <h3 id="createDocumentHeader">{{ 'messages.common.edit' | translate }}</h3>
+    } @else {
+        <h3 id="createDocumentHeader">{{ 'messages.common.add' | translate }}</h3>
+    }
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="documentForm" (ngSubmit)="submit(documentForm.valid, documentForm.value)">
+        <div class="col-sm-12 mt-5">
+            <label for="date" class="required form-label">File:</label>
+            <input name="file" class="form-control" type="file" id="documentFileButton" accept="image/png, image/jpeg, image/jpeg,.pdf" (change)="onFileChange($event)" >
+        </div>
+        @if (documentForm.controls['path'].value) {
+            <div class="col-sm-12 mt-5">
+                <a id="reviewDocumentPath" target="_blank" href="{{`${apiUrl}${documentForm.controls['path'].value}`}}">
+                    {{documentForm.controls['file_name'].value}}
+                </a>
+            </div>
+        }
+        <div class="col-sm-12 mt-5">
+            <label for="category_id" class="required form-label">{{'messages.medical_record.category' | translate }}:</label>
+            <select2 [data]="categories" placeholder="{{'messages.medical_record.category' | translate}}" formControlName="category_id"></select2>
+        </div>
+        <div class="mt-6">
+            <button class="btn btn-primary m-0" type="submit">{{ 'messages.common.save' | translate }}</button>
+            <button class="btn btn-secondary my-0 ms-5 me-0" type="button" (click)="bsModalRef.hide()">{{ 'messages.common.cancel' | translate }}</button>
+        </div>
+    </form>
+</div>

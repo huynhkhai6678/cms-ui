@@ -31,7 +31,6 @@ export class DashboardDoctorAppointmentChartComponent implements OnChanges {
   }
 
   getData() {
-    console.log(';;;;');
     this.apiService.get(`dashboard/doctor-appointment-chart?clinic_id=${this.clinicId}`).subscribe((res : any) => {
       this.data = res.data;
       this.drawChart(res.data);

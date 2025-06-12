@@ -1,0 +1,51 @@
+<!--begin::Card-->
+<div class="card card-flush mt-6">
+    <div class="card-header align-items-center">
+        <h3 class="align-left m-0">{{ 'messages.visit.documents' | translate }}</h3>
+    </div>
+    <div class="card-body">
+        <div class="p-0 visit-detail-card">
+            <div class="card-footer p-0">
+                <div class="w-100 text-end">
+                    <button id="createDocumentBtn" class="btn btn-primary" (click)="create()">
+                        {{ 'messages.common.upload_document' | translate }}
+                    </button>
+                </div>
+
+                <hr>
+
+                <div id="documentBlock" class="medical-document-body pt-5">
+                    @for (document of documents; track document.id) {
+                        <div id="medical-document-item-{{document.id}}" tabindex="0" class="medical-document-item" (click)="openNewTab(document.path)" (keydown.enter)="openNewTab(document.path)">
+                            <div class="medical-document-item-body">
+                                @if (document.type === 'application/pdf') {
+                                    <div class="medical-document-item-body-image">
+                                        <i class="fa-solid fa-file-pdf text-primary"></i>
+                                    </div>
+                                } @else {
+                                    <div class="medical-document-item-body-image">
+                                        <img src="{{`${this.apiUrl}${document.path}`}}" class="rounded float-start" alt="">
+                                    </div>
+                                }
+                                <div class="medical-document-item-body-info">
+                                    <span class="badge rounded-pill bg-primary">
+                                        {{CATEGORIES[document.category_id]}}
+                                    </span>
+                                    <button class="btn p-0 border-0 text-primary fs-2" (click)="edit(document.id);$event.stopPropagation()">
+                                        <i class="fa-solid fa-pen-to-square" title="Edit"></i>
+                                    </button>
+                                    <button class="btn p-0 border-0 text-danger fs-2" (click)="delete(document);$event.stopPropagation()">
+                                        <i class="fa-solid fa-trash" title="Delete"></i>
+                                    </button>
+                                </div>
+                                <div>
+                                    {{ document.updated_at | date : 'dd/MM/yyyy hh:mm a'}}
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

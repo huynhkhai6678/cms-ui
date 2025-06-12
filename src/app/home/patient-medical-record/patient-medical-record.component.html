@@ -7,7 +7,7 @@
         </div>
         <input id="medicalRecordId" name="id" type="hidden" value="54">
         <div class="d-flex align-items-center py-1 ms-auto">
-            <a href="https://cms-testing.myclnq.com/admin/transactions/create?visitId=162" data-id="162" title="Transaction"
+            <a [routerLink]="['/home/transactions/create', 0]" [queryParams]="{ visitId: 1 }"title="Transaction"
                 class="btn btn-primary me-2">
                 {{'messages.transaction.add_transaction' | translate}}
             </a>
@@ -70,17 +70,52 @@
     }
     <div class="row">
         <div class="col-sm-8">
-            <tabset>
-                <tab heading="{{'messages.visit.vital' | translate }}" >
+            <tabset #tabs>
+                <tab heading="{{'messages.visit.vital' | translate }}">
+                    <div class="card card-flush mt-5">
+                        <div class="card-header align-items-center">
+                            <h3 class="align-left m-0">{{ 'messages.visit.vital' | translate }}</h3>
+                        </div>
+                        <div class="card-body pt-4">
+                            <div class="row">
+                                <div class="col-sm-6 mb-4">
+                                    <app-patient-medical-record-blood-pressure-chart [medicalRecordId]="medicalRecordId"></app-patient-medical-record-blood-pressure-chart>
+                                    <div class="text-center">
+                                        <a [routerLink]="'blood-pressure'">{{'messages.common.details' | translate}}</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mb-4">
+                                    <app-patient-medical-record-pulse-rate-chart [medicalRecordId]="medicalRecordId"></app-patient-medical-record-pulse-rate-chart>
+                                    <div class="text-center">
+                                        <a [routerLink]="'pulse-rate'">{{'messages.common.details' | translate}}</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mb-4">
+                                    <app-patient-medical-record-weight-chart [medicalRecordId]="medicalRecordId"></app-patient-medical-record-weight-chart>
+                                    <div class="text-center">
+                                        <a [routerLink]="'weight'">{{'messages.common.details' | translate}}</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mb-4">
+                                    <app-patient-medical-record-temperature-chart [medicalRecordId]="medicalRecordId"></app-patient-medical-record-temperature-chart>
+                                    <div class="text-center">
+                                         <a [routerLink]="'temperature'">{{'messages.common.details' | translate}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </tab>
                 <tab heading="{{'messages.visit.notes' | translate }}">
+                    <app-patient-medical-record-note [medicalRecordId]="medicalRecordId" (reloadHistory)="reloadHistory()"></app-patient-medical-record-note>
                 </tab>
                 <tab heading="{{'messages.visit.documents' | translate }}" >
+                    <app-patient-medical-record-document [medicalRecordId]="medicalRecordId" [clinicId]="data?.clinic_id"></app-patient-medical-record-document>
                 </tab>
             </tabset>
         </div>
         <div class="col-sm-4">
-            Medical record history
+            <app-patient-medical-record-history [medicalRecordId]="medicalRecordId" (editNote)="openEditNote($event)"></app-patient-medical-record-history>
         </div>
     </div>
 </div>

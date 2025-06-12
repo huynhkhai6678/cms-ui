@@ -4,10 +4,10 @@ import { ApiService } from '../../../services/api.service';
 import { DataTableComponent } from '../../../shared/data-table/data-table.component';
 import { FormService } from '../../../services/form.service';
 import { DatePipe } from '@angular/common';
-import { PatientMedicalRecordBloodPressureModalComponent } from './patient-medical-record-blood-pressure-modal/patient-medical-record-blood-pressure-modal.component';
-import { PatientMedicalRecordBloodPressureChartComponent } from './patient-medical-record-blood-pressure-chart/patient-medical-record-blood-pressure-chart.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { PatientMedicalRecordBloodPressure } from './patient-medical-record-blood-pressure.model';
+import { PatientMedicalRecordPulseRate } from './patient-medical-record-pulse-rate.model';
+import { PatientMedicalRecordPulseRateChartComponent } from './patient-medical-record-pulse-rate-chart/patient-medical-record-pulse-rate-chart.component';
+import { PatientMedicalRecordPulseRateModalComponent } from './patient-medical-record-pulse-rate-modal/patient-medical-record-pulse-rate-modal.component';
 
 @Component({
   selector: 'app-patient-medical-record-blood-pressure',
@@ -16,13 +16,13 @@ import { PatientMedicalRecordBloodPressure } from './patient-medical-record-bloo
     DatePipe,
     RouterLink,
     DataTableComponent,
-    PatientMedicalRecordBloodPressureChartComponent
+    PatientMedicalRecordPulseRateChartComponent
   ],
-  templateUrl: './patient-medical-record-blood-pressure.component.html',
-  styleUrl: './patient-medical-record-blood-pressure.component.scss'
+  templateUrl: './patient-medical-record-pulse-rate.component.html',
+  styleUrl: './patient-medical-record-pulse-rate.component.scss'
 })
-export class PatientMedicalRecordBloodPressureComponent implements OnInit, AfterViewInit {
-  url = 'medical-record-blood-pressure';
+export class PatientMedicalRecordPulseRateComponent implements OnInit, AfterViewInit {
+  url = 'medical-record-pulse-rate';
   tableUrl = '';
   medicalRecordId = 0;
   columnCustomTemplates : Record<string, any> = {};
@@ -30,14 +30,13 @@ export class PatientMedicalRecordBloodPressureComponent implements OnInit, After
   readonly tableColumns : any = [
     ['date', 'messages.medical_record.date', '', false, 'template'],
     ['time', 'messages.medical_record.time', '', false, 'template'],
-    ['bp_diastolic', 'messages.medical_record.bp_diastolic', '', false, 'string'],
-    ['bp_systolic', 'messages.medical_record.bp_systolic', '', false, 'string'],
+    ['pulse', 'messages.medical_record.pulse_rate', '', false, 'string'],
     ['action', 'messages.common.action', '', false, 'action'],
   ];
 
   @ViewChild('dateTemplate') dateTemplate!: TemplateRef<any>;
   @ViewChild('timeTemplate') timeTemplate!: TemplateRef<any>;
-  @ViewChild(PatientMedicalRecordBloodPressureChartComponent) chartComponent!: PatientMedicalRecordBloodPressureChartComponent;
+  @ViewChild(PatientMedicalRecordPulseRateChartComponent) chartComponent!: PatientMedicalRecordPulseRateChartComponent;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
 
   constructor(
@@ -49,7 +48,7 @@ export class PatientMedicalRecordBloodPressureComponent implements OnInit, After
   ngOnInit() {
     this.activedRoute.params.subscribe((params : any) => {
       this.medicalRecordId = params['id'];
-      this.tableUrl = `medical-record-blood-pressure/all/${this.medicalRecordId}`;
+      this.tableUrl = `medical-record-pulse-rate/all/${this.medicalRecordId}`;
     });
   }
 
@@ -58,7 +57,7 @@ export class PatientMedicalRecordBloodPressureComponent implements OnInit, After
     this.columnCustomTemplates['time'] = this.timeTemplate;
   }
   
-  delete(data : PatientMedicalRecordBloodPressure) {
+  delete(data : PatientMedicalRecordPulseRate) {
     this.formService.showDeleteConfirm(data?.date || '')
     .subscribe(confirmed => {
       if (confirmed) {
@@ -71,7 +70,7 @@ export class PatientMedicalRecordBloodPressureComponent implements OnInit, After
   }
 
   create() {
-    this.formService.openEditCreateModal(PatientMedicalRecordBloodPressureModalComponent, 'modal-md', {
+    this.formService.openEditCreateModal(PatientMedicalRecordPulseRateModalComponent, 'modal-md', {
       title: 'messages.common.add',
       medicalRecordId : this.medicalRecordId
     }, () => {
@@ -81,7 +80,7 @@ export class PatientMedicalRecordBloodPressureComponent implements OnInit, After
   }
 
   edit(id: number) {
-    this.formService.openEditCreateModal(PatientMedicalRecordBloodPressureModalComponent, 'modal-md', {
+    this.formService.openEditCreateModal(PatientMedicalRecordPulseRateModalComponent, 'modal-md', {
       title: 'messages.common.edit',
       id,
       medicalRecordId : this.medicalRecordId
