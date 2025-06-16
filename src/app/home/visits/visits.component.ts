@@ -57,7 +57,7 @@ export class VisitsComponent implements AfterViewInit {
     ['visit_type', 'messages.visit.visit_type', '', false, 'template'],
     ['appointment_date', 'messages.visit.appointment_time', '', false, 'template'],
     ['patient_full_name', 'messages.visit.patient', '', true, 'template'],
-    ['user_profile', 'messages.common.profile', '', true, 'template'],
+    ['user_profile', 'messages.patient.profile', '', true, 'template'],
     ['doctor_full_name', 'messages.visit.doctor', '', true, 'template'],
     ['visit_description', 'messages.visit.description', '', false, 'string'],
     ['visit_important_notes', 'messages.visit.important_notes', '', false, 'string'],

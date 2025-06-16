@@ -8,6 +8,7 @@ import moment from 'moment';
 import { DoctorDetailAppointmentComponent } from './doctor-detail-appointment/doctor-detail-appointment.component';
 import { FormService } from '../../../services/form.service';
 import { DoctorModalComponent } from '../doctor-modal/doctor-modal.component';
+import { DiffForHumansPipe } from '../../../pipes/diff-for-humans.pipe';
 
 @Component({
   selector: 'app-doctor-detail',
@@ -15,7 +16,8 @@ import { DoctorModalComponent } from '../doctor-modal/doctor-modal.component';
     TabsModule,
     TranslatePipe,
     RouterLink,
-    DoctorDetailAppointmentComponent
+    DoctorDetailAppointmentComponent,
+    DiffForHumansPipe
   ],
   templateUrl: './doctor-detail.component.html',
   styleUrl: './doctor-detail.component.scss'
@@ -23,8 +25,6 @@ import { DoctorModalComponent } from '../doctor-modal/doctor-modal.component';
 export class DoctorDetailComponent implements OnInit {
   id = 0;
   data : any = null;
-  registeredOn = '';
-  lastUpdated = '';
 
   totalAppointment = [];
   todayAppointment = [];
@@ -47,8 +47,6 @@ export class DoctorDetailComponent implements OnInit {
   loadData() {
     this.apiService.get(`doctors/detail/${this.id}`).subscribe((res : any) => {
       this.data = res['data'];
-      this.registeredOn = moment(this.data.register_on).fromNow();
-      this.lastUpdated = moment(this.data.last_update).fromNow();
       const today = moment().format('YYYY-MM-DD');
 
       this.todayAppointment = this.data.appointments.filter(

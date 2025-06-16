@@ -22,9 +22,7 @@ export class ChangePasswordComponent implements OnInit {
   showNewPassword = false;
   showComfirmPassword = false;
 
-  constructor(public bsModalRef: BsModalRef, private fb: FormBuilder) {
-
-  }
+  constructor(public bsModalRef: BsModalRef, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.changePasswordForm = this.fb.group({

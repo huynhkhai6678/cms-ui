@@ -6,6 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import moment from 'moment';
 import { PatientDetailAppointmentComponent } from './patient-detail-appointment/patient-detail-appointment.component';
 import { ShareService } from '../../../services/share.service';
+import { DiffForHumansPipe } from '../../../pipes/diff-for-humans.pipe';
 
 @Component({
   selector: 'app-patient-detail',
@@ -13,7 +14,8 @@ import { ShareService } from '../../../services/share.service';
     TabsModule,
     TranslatePipe,
     PatientDetailAppointmentComponent,
-    RouterLink
+    RouterLink,
+    DiffForHumansPipe
   ],
   templateUrl: './patient-detail.component.html',
   styleUrl: './patient-detail.component.scss'
@@ -21,8 +23,7 @@ import { ShareService } from '../../../services/share.service';
 export class PatientDetailComponent implements OnInit {
   id = 0;
   data : any = null;
-  registeredOn = '';
-  lastUpdated = '';
+
   completedAppointment = [];
   todayAppointment = [];
   upcommingComponent = [];
@@ -44,8 +45,6 @@ export class PatientDetailComponent implements OnInit {
   loadData() {
     this.apiService.get(`patients/detail/${this.id}`).subscribe((res : any) => {
       this.data = res['data'];
-      this.registeredOn = moment(this.data.register_on).fromNow();
-      this.lastUpdated = moment(this.data.last_update).fromNow();
       const today = moment().format('YYYY-MM-DD');
 
       this.todayAppointment = this.data.appointments.filter(

@@ -12,6 +12,7 @@ import { ThemeService } from '../../services/theme.service';
 import { ProfileService } from './home-header.service';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileModalComponent } from './profile-modal/profile-modal.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @Component({
   selector: 'app-home-header',
@@ -22,6 +23,7 @@ import { ProfileModalComponent } from './profile-modal/profile-modal.component';
     CommonModule,
     ModalModule,
     TranslatePipe,
+    NotificationComponent
   ],
   providers: [
     BsModalService,

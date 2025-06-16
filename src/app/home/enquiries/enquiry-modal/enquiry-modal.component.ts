@@ -3,12 +3,13 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiService } from '../../../services/api.service';
 import { Enquiry } from '../enquiry.model';
-import moment from 'moment';
+import { DiffForHumansPipe } from '../../../pipes/diff-for-humans.pipe';
 
 @Component({
   selector: 'app-enquiry-modal',
   imports: [
-    TranslatePipe
+    TranslatePipe,
+    DiffForHumansPipe
   ],
   templateUrl: './enquiry-modal.component.html',
   styleUrl: './enquiry-modal.component.scss'
@@ -16,16 +17,12 @@ import moment from 'moment';
 export class EnquiryModalComponent implements OnInit {
   id = 0;
   enquiry?: Enquiry;
-  lastViewed = '';
-  registerOn = '';
 
   constructor(public bsModalRef: BsModalRef, private apiService: ApiService) {}
 
   ngOnInit(): void {
     this.apiService.get(`enquiries/${this.id}`).subscribe((res : any) => {
       this.enquiry = res['data'];
-      this.lastViewed = moment(this.enquiry?.updated_at).fromNow();
-      this.registerOn = moment(this.enquiry?.updated_at).fromNow();
     });
   }
 }

@@ -1,0 +1,44 @@
+<div class="btn-group" dropdown placement="bottom">
+    <button id="profile-button" class="btn notification__group__btn" dropdownToggle type="button"
+        aria-controls="notification-basic">
+        <i class="fa-solid fa-bell text-primary notification__group__icon"></i>
+    </button>
+    @if (unreadNotification()) {
+        <span class="badge bg-primary rounded-circle notification__group__counter">
+            {{unreadNotification()}}
+        </span>
+    }
+    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-left py-4 my-2" role="menu"
+        aria-labelledby="button-basic">
+        <div class="text-start border-bottom py-4 px-7">
+            <h3 class="text-gray-900 mb-0">{{'messages.notification.notification' | translate }}</h3>
+        </div>
+        <div class="px-7 mt-5 inner-scroll height-270">
+            @for (notification of data(); track notification.id) {
+                <button class="text-decoration-none btn p-0 m-0 text-start w-100" (click)="read(notification.id);$event.stopPropagation()">
+                    <div class="d-flex position-relative mb-5">
+                        <span class="me-5 text-primary fs-2 icon-label">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        <div>
+                            <div [class.fw-bold]="!notification.read_at" class="text-gray-900 fs-6 mb-2 fw-bold">{{notification.title}}</div>
+                            <div class="text-gray-600 fs-small fw-light mb-0">{{ notification.created_at | diffForHumans }}</div>
+                        </div>
+                    </div>
+                </button>
+            }
+            @if (!data().length) {
+                <div class="empty-state fs-6 text-gray-800 fw-bold text-center mt-5">
+                    <h5 class="text-gray-900 fs-6 mb-2">{{'messages.notification.you_don`t_have_any_new_notification' | translate}}</h5>
+                </div>
+            }
+        </div>
+        <div class="text-center border-top p-4 " id="readAllNotification">
+            <button class="text-decoration-none btn" (click)="readAll();$event.stopPropagation()">
+                <h5 class="text-primary mb-0 fs-5">
+                    {{'messages.notification.mark_all_as_read' | translate}}
+                </h5>
+            </button>
+        </div>
+    </ul>
+</div>

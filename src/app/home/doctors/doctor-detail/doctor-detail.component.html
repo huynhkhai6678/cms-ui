@@ -102,11 +102,11 @@
                                         </div>
                                         <div class="col-md-6 d-flex flex-column mb-md-10 mb-5">
                                             <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.registered_on' | translate}}</span>
-                                            <span class="fs-4 text-gray-800">{{registeredOn}}</span>
+                                            <span class="fs-4 text-gray-800">{{data.register_on | diffForHumans }}</span>
                                         </div>
                                         <div class="col-md-6 d-flex flex-column mb-md-10 mb-5">
                                             <span class="pb-2 fs-4 text-gray-600">{{'messages.patient.last_updated' | translate}}</span>
-                                            <span class="fs-4 text-gray-800">{{lastUpdated}}</span>
+                                            <span class="fs-4 text-gray-800">{{data.last_update | diffForHumans }}</span>
                                         </div>
                                     </div>
                                 </div>

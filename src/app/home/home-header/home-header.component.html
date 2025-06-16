@@ -1,4 +1,4 @@
-    <div class="container-fluid d-flex align-items-stretch justify-content-between px-0">
+    <div class="container-fluid d-flex align-items-stretch justify-content-between px-0 home-header">
         <header class="d-flex align-items-center justify-content-between flex-grow-1 header px-3 px-xl-0">
             <button type="button" class="btn px-0 aside-menu-container__aside-menubar d-block d-xl-none sidebar-btn">
                 <i class="fa-solid fa-bars fs-1"></i>
@@ -23,6 +23,10 @@
                     <button (click)="toggleTheme()" class="btn p-0 border-0 bg-transparent" aria-label="Toggle theme">
                         <i class="fa-solid text-primary fs-2 {{iconClass()}}"></i>
                     </button>
+                </li>
+
+                <li class="px-sm-3 px-2 notification__group">
+                    <app-notification></app-notification>
                 </li>
                             
                 <li class="px-sm-3 px-2">

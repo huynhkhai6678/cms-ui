@@ -18,9 +18,9 @@
 
 <ng-template #filterTemplate>
     <div>
-        <select id="clinicServiceFilterStatus" class="form-select w-auto ms-3" (change)="changeStatus($event.target)">
-            <option value="1">Active</option>
-            <option value="0">Inactive</option>
+        <select id="clinicServiceFilterStatus" class="form-select w-auto me-5" (change)="changeStatus($event.target)">
+            <option value="1">{{'messages.medicine.active' | translate }}</option>
+            <option value="0">{{'messages.medicine.inactive' | translate }}</option>
         </select>
     </div>
 </ng-template>
