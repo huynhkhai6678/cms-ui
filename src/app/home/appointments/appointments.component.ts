@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { FormService } from '../../services/form.service';
 import { AppointmentModalComponent } from './appointment-modal/appointment-modal.component';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import moment from 'moment';
 
 @Component({
   selector: 'app-appointments',
@@ -21,7 +23,8 @@ import { AppointmentModalComponent } from './appointment-modal/appointment-modal
     CommonModule,
     FormsModule,
     FullCalendarModule,
-    TranslatePipe
+    TranslatePipe,
+    RouterLink
   ],
   templateUrl: './appointments.component.html',
   styleUrl: './appointments.component.scss'
@@ -62,13 +65,23 @@ export class AppointmentsComponent implements OnInit {
         titleFormat: 'DD MMM YYYY',
         dayHeaderFormat: 'dddd, DD/MM',
         eventMaxStack: 2,
-        dayPopoverFormat: 'DD MMM YYYY'
+        dayPopoverFormat: 'DD MMM YYYY',
+        slotLabelFormat: {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        },
       },
       timeGridDay: {
-          titleFormat: 'DD MMM YYYY',
+        titleFormat: 'DD MMM YYYY',
+        slotLabelFormat: {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        },
       },
       dayGridMonth: {
-          displayEventTime: false
+        displayEventTime: false
       }
     },
     select: this.handleDateSelect.bind(this),
@@ -83,7 +96,14 @@ export class AppointmentsComponent implements OnInit {
   currentEvents = signal<EventInput[]>([]);
   clinicId = 0;
 
-  constructor(private formService: FormService, private translate : TranslateService, public homeService: HomeService, private apiService: ApiService, private authService : AuthService) {
+  constructor(
+    private formService: FormService,
+    private translate : TranslateService,
+    public homeService: HomeService,
+    private apiService: ApiService,
+    private authService : AuthService,
+    private activeRoute : ActivatedRoute
+  ) {
     translate.get(['js.today', 'js.day', 'js.week', 'js.month']).subscribe(res => {
       this.translationValue = res;
     });
@@ -95,13 +115,28 @@ export class AppointmentsComponent implements OnInit {
     if (calendarOptions.buttonText) {
       calendarOptions.buttonText.today =  this.translationValue['js.today'];
     }
+
+    const time = moment().format("HH:mm:ss");
+    calendarOptions.scrollTime = time;
+
     this.calendarOptions.set(calendarOptions);
-    this.calendarVisible.update((bool) => !bool);
+
+    setTimeout(() => {
+      this.calendarVisible.set(true);
+    }, 100);
+
     const user = this.authService.getUser();
     if (user) {
       this.clinicId = user.clinic_id;
     }
     this.loadData();
+
+    // Auto open create modal after navigate from list
+    this.activeRoute.queryParams.subscribe((params : any) => {
+      if (params['openModal']) {
+        this.openCreateModal();
+      }
+    });
   }
 
   handleWeekendsToggle() {
@@ -112,6 +147,7 @@ export class AppointmentsComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
+    console.log(selectInfo.startStr);
     this.formService.openEditCreateModal(AppointmentModalComponent, 'modal-lg', {
       title: 'messages.appointment.add_new_appointment',
       clinicId: this.clinicId,
@@ -120,7 +156,6 @@ export class AppointmentsComponent implements OnInit {
     }, () => {
         this.loadData();
     });
-    
   }
 
   handleEventClick(clickInfo: EventClickArg) {
@@ -142,6 +177,26 @@ export class AppointmentsComponent implements OnInit {
         ...options,
         events: [...data]
       }));
+    });
+  }
+
+  openCreateModal() {
+    const now = new Date();
+    const hour = now.getHours() + 1;
+
+    const startTime = new Date(now);
+    startTime.setHours(hour, 0, 0, 0);
+
+    const endTime = new Date(now);
+    endTime.setHours(hour, 15, 0, 0);
+
+    this.formService.openEditCreateModal(AppointmentModalComponent, 'modal-lg', {
+      title: 'messages.appointment.add_new_appointment',
+      clinicId: this.clinicId,
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString(),
+    }, () => {
+        this.loadData();
     });
   }
 }

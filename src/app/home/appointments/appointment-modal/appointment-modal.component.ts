@@ -162,7 +162,7 @@ export class AppointmentModalComponent implements OnInit {
 
   onServiceChange(event: any) {
     const option = event.options[0];
-    this.appointmentForm.controls['payable_amount'].setValue(option.charges);
+    this.appointmentForm.controls['payable_amount'].setValue(option.charges ?? 0);
   }
 
   onSubmit(valid : boolean, value : any) {

@@ -19,7 +19,24 @@ export const routes: Routes = [
     },
     { 
         path: 'login', 
-        loadComponent: () => import('./auth/login/login.component').then(mod => mod.LoginComponent) 
+        loadComponent: () => import('./auth/login/login.component').then(mod => mod.LoginComponent),
+        data: { 
+          title: 'messages.web.login' 
+        }
+    },
+    { 
+        path: 'forgot-password', 
+        loadComponent: () => import('./auth/forgot-password/forgot-password.component').then(mod => mod.ForgotPasswordComponent),
+        data: { 
+          title: 'messages.web.forgot_password' 
+        }
+    },
+    { 
+        path: 'reset-password', 
+        loadComponent: () => import('./auth/reset-password/reset-password.component').then(mod => mod.ResetPasswordComponent),
+        data: { 
+          title: 'auth.reset_password.title' 
+        }
     },
     { 
         path: 'forbidden', 

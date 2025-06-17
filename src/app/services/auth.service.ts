@@ -83,6 +83,14 @@ export class AuthService {
         return this.apiService.post('auth/login', data);
     }
 
+    forgotPassword(data : any) {
+        return this.apiService.post('auth/forgot-password', data);
+    }
+
+    resetPassword(data : any) {
+        return this.apiService.post('auth/reset-password', data);
+    }
+
     logout(): void {
         localStorage.clear();
         this.router.navigate(['/']);

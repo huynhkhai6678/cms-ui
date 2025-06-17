@@ -7,21 +7,24 @@
     <div class="bg-white rounded-15 shadow-md width-540 px-5 px-sm-7 py-10 mx-auto">
         @if (showAlert) {
             <div id="errorBlock" class="alert alert-danger" role="alert" >
-              {{'These credentials do not match our records.'}}
+              {{'auth.failed' | translate}}
             </div>
         }
-        <h1 class="text-center mb-7">Sign In</h1>
+        <h1 class="text-center mb-7">{{'auth.sign_in' | translate }}</h1>
         <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value, loginForm.valid)">
             <div class="mb-sm-7 mb-4">
-                <label for="email" class="form-label required">Email</label>
-                <input name="email" formControlName="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" required placeholder="Enter email">
+                <label for="email" class="form-label required">{{'messages.patient.email' | translate }}</label>
+                <input name="email" formControlName="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" required placeholder="{{ 'messages.patient.enter_email' | translate}}">
             </div>
 
             <div class="mb-sm-7 mb-4 position-relative">
                 <div class="d-flex justify-content-between">
-                    <label for="password" class="form-label required">Password</label>
+                    <label for="password" class="form-label required">{{'messages.patient.password' | translate }}</label>
+                    <a routerLink="/forgot-password" class="link-info fs-6 text-decoration-none">
+                        {{'messages.common.forgot_your_password' | translate }}
+                    </a>
                 </div>
-                <input name="password" type="password" formControlName="password" class="form-control" id="password" required placeholder="Enter password">
+                <input name="password" type="password" formControlName="password" class="form-control" id="password" required placeholder="{{'messages.common.forgot_your_password' | translate }}">
                 <span class="position-absolute d-flex align-items-center top-0 bottom-0 end-0 mt-7 me-4 input-icon input-password-hide cursor-pointer text-gray-600 change-type">
                     <i class="fas fa-eye-slash"></i>
                 </span>
@@ -29,10 +32,10 @@
 
             <div class="mb-sm-7 mb-4 form-check">
                 <input type="checkbox" class="form-check-input" id="remember_me">
-                <label class="form-check-label" for="remember_me">Remember me</label>
+                <label class="form-check-label" for="remember_me">{{'messages.common.remember_me' | translate}}</label>
             </div>
             <div class="d-grid">
-                <button type="submit" class="btn text-light" style="background-color: #f83a3d">Login</button>
+                <button type="submit" class="btn text-light" style="background-color: #f83a3d">{{'messages.login' | translate}}</button>
             </div>
         </form>
     </div>

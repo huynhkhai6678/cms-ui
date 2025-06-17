@@ -100,11 +100,11 @@
             </div>
             <div class="col-md-6 mb-7">
                 <label for="country_id" class="form-label">{{ 'messages.patient.country' | translate }}:</label>
-                <select2 [data]="countries" formControlName="country_id" placeholder="{{ 'messages.patient.country' | translate }}"></select2>
+                <select2 [data]="countries" formControlName="country_id" placeholder="{{ 'messages.patient.country' | translate }}" (update)="onCountryChange($event)"></select2>
             </div>
             <div class="col-md-6 mb-7">
                 <label for="state_id" class="form-label">{{ 'messages.patient.state' | translate }}:</label>
-                <select2 [data]="states" formControlName="state_id" placeholder="{{ 'messages.patient.state' | translate }}"></select2>
+                <select2 [data]="states" formControlName="state_id" placeholder="{{ 'messages.patient.state' | translate }}" (update)="onStateChange($event)"></select2>
             </div>
             <div class="col-md-6 mb-7">
                 <label for="city_id" class="form-label">{{ 'messages.patient.city' | translate }}:</label>

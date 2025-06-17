@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ApiService } from '../../../services/api.service';
 import { ShareService } from '../../../services/share.service';
@@ -9,13 +9,13 @@ import { DoctorDetailAppointmentComponent } from './doctor-detail-appointment/do
 import { FormService } from '../../../services/form.service';
 import { DoctorModalComponent } from '../doctor-modal/doctor-modal.component';
 import { DiffForHumansPipe } from '../../../pipes/diff-for-humans.pipe';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-doctor-detail',
   imports: [
     TabsModule,
     TranslatePipe,
-    RouterLink,
     DoctorDetailAppointmentComponent,
     DiffForHumansPipe
   ],
@@ -32,7 +32,13 @@ export class DoctorDetailComponent implements OnInit {
   BLOOD_GROUP : Record<string, any> = {};
   GENDER : Record<string, any> = {}
 
-  constructor(private activeRoute : ActivatedRoute, private apiService : ApiService, public shareService : ShareService, private formService : FormService) {}
+  constructor(
+    private activeRoute : ActivatedRoute,
+    private apiService : ApiService,
+    public shareService : ShareService,
+    private formService : FormService,
+    private location : Location
+  ) {}
   
   ngOnInit(): void {
     this.BLOOD_GROUP = this.shareService.BLOOD_GROUP;
@@ -68,5 +74,9 @@ export class DoctorDetailComponent implements OnInit {
     }, () => {
       this.loadData();
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

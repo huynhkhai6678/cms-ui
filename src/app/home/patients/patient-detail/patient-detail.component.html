@@ -3,12 +3,10 @@
         <div class="d-flex flex-wrap align-items-center justify-content-between mb-7">
             <h1 class="mb-0 me-1">{{'messages.patient.details' | translate}}</h1>
             <div class="text-end mt-4 mt-md-0">
-                <a >
-                    <button type="button" class="btn btn-primary me-4">{{'messages.common.edit' | translate}}</button>
-                </a>
-                <a routerLink="/home/patients">
-                    <button type="button" class="btn btn-outline-primary float-end">{{'messages.common.back' | translate}}</button>
-                </a>
+                <button type="button" class="btn btn-primary me-4" (click)="openEditModal()">
+                    {{'messages.common.edit' | translate}}
+                </button>
+                <button type="button" class="btn btn-outline-primary float-end" (click)="goBack()">{{'messages.common.back' | translate}}</button>
             </div>
         </div>
     </div>

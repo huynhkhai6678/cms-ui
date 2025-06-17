@@ -71,7 +71,7 @@ export class ChangeLanguageModalComponent implements OnInit {
         });
       },
       error: (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error(error.error.message);
       }
     })
   }

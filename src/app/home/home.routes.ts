@@ -24,6 +24,14 @@ export const homeRoutes: Routes = [
         }
       },
       {
+        path: 'appointments/list',
+        loadComponent: () => import('./appointments/appointment-list/appointment-list.component').then(mod => mod.AppointmentListComponent),
+        canActivate: [permissionGuard('manage_appointments')],
+        data: { 
+          title: 'messages.appointments' 
+        }
+      },
+      {
           path: 'clinics',
           loadComponent: () => import('./clinics/clinics.component').then(mod => mod.ClinicsComponent),
           canActivate: [permissionGuard('manage_clinics')],

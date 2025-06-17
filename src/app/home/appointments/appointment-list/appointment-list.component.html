@@ -1,0 +1,101 @@
+<app-data-table 
+    [url]="url" 
+    [headers]="tableColumns" 
+    [actionTemplate]="actionTemplate"
+    [addTemplate]="addTemplate"
+    [defaultTrackingColumn]="'appointment_id'"
+    [showFilterDateRange]="true"
+    [columnCustomTemplates]="columnCustomTemplates">
+</app-data-table>
+
+<ng-template #actionTemplate let-row>
+        <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
+            <i class="fa-solid fa-trash" title="Delete"></i>
+        </button>
+</ng-template>
+
+<ng-template #addTemplate>
+    <div class="">
+        <a class="btn btn-primary" [routerLink]="'/home/appointments'">
+            {{'View calandar' | translate }}
+        </a>
+        <a class="btn btn-primary ms-3" [routerLink]="'/home/appointments'" [queryParams]="{openModal : true}">
+            {{'messages.appointment.add_new_appointment' | translate}}
+        </a>
+    </div>
+</ng-template>
+
+<ng-template #patientNameTemplate let-item>
+    <div class="d-flex align-items-center">
+        <a [routerLink]="item.patient_id">
+            <div class="image image-circle image-mini me-3">
+                @if (item.image_url) {
+                    <img [src]="`${apiUrl}${item.patient_image_url}`" alt="" class="user-img" loading="lazy">
+                } @else {
+                    <img [src]="`${apiUrl}public/media/male.png`" alt="user" class="user-img" loading="lazy">
+                }
+            </div>
+        </a>
+        <div class="d-flex flex-column">
+            <div class="d-inline-block align-top">
+                <div class="d-inline-block align-self-center d-flex">
+                    <a [routerLink]="`/home/patients/${item.patient_id}`" class="mb-1 text-decoration-none fs-6">
+                        {{item.patient_full_name}}
+                    </a>
+                </div>
+            </div>
+            <span class="fs-6">{{item.patient_email}}</span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #doctorNameTemplate let-item>
+    <div class="d-flex align-items-center">
+        <div class="d-flex flex-column">
+            <div class="d-inline-block align-top">
+                <div class="d-inline-block align-self-center d-flex">
+                    <a [routerLink]="`/home/doctors/${item.doctor_id}`" class="mb-1 text-decoration-none fs-6">
+                        {{item.doctor_full_name}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #profileTemplate let-item>
+    <div class="d-flex flex-column">
+    <div>
+        @if(item.patient_gender === 1) {
+            M,
+        } @else if(item.patient_gender === 2) {
+            F,
+        } @else {
+            U,
+        }
+        {{ item.patient_dob }}
+    </div>
+    <div>
+        {{ item.patient_dob }}
+    </div>
+    <div>
+        {{item.patient_id_number}}
+    </div>
+    <div>
+        {{item.patient_region_code ? `(+${item.patient_region_code}) ${item.patient_contact}` : '' }}
+    </div>
+</div>
+</ng-template>
+
+<ng-template #apptTemplate let-item>
+    @if (item.appointment_date) {
+        <div class="badge bg-primary">
+             <div class="mb-2">
+                {{item.appointment_date | date:'dd/MM/yyyy'}}
+             </div>
+             <div>
+                {{item.appointment_from_time}} {{item.appointment_from_time_type}} - {{item.appointment_to_time}} {{item.appointment_to_time_type}}
+             </div>
+        </div>
+    }
+</ng-template>

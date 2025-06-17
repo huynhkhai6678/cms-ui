@@ -9,6 +9,7 @@ import { ShareService, SingleSelect2Option } from '../../../services/share.servi
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DateInputComponent } from '../../../shared/date-input/date-input.component';
+import { LocationService } from '../../../services/location.service';
 
 @Component({
   selector: 'app-profile-modal',
@@ -37,8 +38,14 @@ export class ProfileModalComponent implements OnInit {
   profileForm! : FormGroup;
   isSubmitted = false;
 
-
-  constructor(public bsModalRef: BsModalRef, private apiService: ApiService, private fb: FormBuilder, private shareService: ShareService, private spinnerService: NgxSpinnerService) {}
+  constructor(
+    public bsModalRef: BsModalRef,
+    private apiService: ApiService,
+    private fb: FormBuilder,
+    private shareService: ShareService,
+    private spinnerService: NgxSpinnerService,
+    private locationService : LocationService
+  ) {}
 
   ngOnInit(): void {
     this.TIMEZONES = this.shareService.TIME_ZONES_ARRAY;
@@ -64,7 +71,9 @@ export class ProfileModalComponent implements OnInit {
 
     this.spinnerService.show();
     this.apiService.get('profile').subscribe((res : any) => {
-      this.profileForm.patchValue(res.data);
+      setTimeout(() => {
+        this.profileForm.patchValue(res.data);
+      }, 100);
       this.countries = res.countries;
       this.states = res.states;
       this.cities = res.cities;
@@ -72,6 +81,17 @@ export class ProfileModalComponent implements OnInit {
     });
   }
 
+  onCountryChange(event : any) {
+    this.locationService.getStatesByCountry(event.value).subscribe((res : any) => {
+      this.states = res['data'];
+    });
+  }
+  
+  onStateChange(event : any) {
+    this.locationService.getCitiesByState(event.value).subscribe((res : any) => {
+      this.cities = res['data'];
+    });
+  }
 
   submit(valid: boolean, value : any) {
     this.isSubmitted = true;

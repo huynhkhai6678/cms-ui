@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -7,6 +7,9 @@ import moment from 'moment';
 import { PatientDetailAppointmentComponent } from './patient-detail-appointment/patient-detail-appointment.component';
 import { ShareService } from '../../../services/share.service';
 import { DiffForHumansPipe } from '../../../pipes/diff-for-humans.pipe';
+import { Location } from '@angular/common';
+import { FormService } from '../../../services/form.service';
+import { PatientModalComponent } from '../patient-modal/patient-modal.component';
 
 @Component({
   selector: 'app-patient-detail',
@@ -14,7 +17,6 @@ import { DiffForHumansPipe } from '../../../pipes/diff-for-humans.pipe';
     TabsModule,
     TranslatePipe,
     PatientDetailAppointmentComponent,
-    RouterLink,
     DiffForHumansPipe
   ],
   templateUrl: './patient-detail.component.html',
@@ -30,7 +32,13 @@ export class PatientDetailComponent implements OnInit {
   BLOOD_GROUP : Record<string, any> = {};
   GENDER : Record<string, any> = {}
 
-  constructor(private activeRoute : ActivatedRoute, private apiService : ApiService, private shareService : ShareService) {}
+  constructor(
+    private activeRoute : ActivatedRoute,
+    private apiService : ApiService,
+    private shareService : ShareService,
+    private location : Location,
+    private formService : FormService
+  ) {}
   
   ngOnInit(): void {
     this.BLOOD_GROUP = this.shareService.BLOOD_GROUP;
@@ -58,6 +66,19 @@ export class PatientDetailComponent implements OnInit {
       this.completedAppointment = this.data.appointments.filter(
         (appt : any) => moment(appt.date).isBefore(today, 'day')
       );
+    });
+  }
+
+  goBack() {
+    this.location.back();
+  }
+
+  openEditModal() {
+    this.formService.openEditCreateModal(PatientModalComponent, 'modal-xl', {
+      title: 'messages.patient.edit',
+      id : this.id,
+    }, () => {
+      this.loadData()
     });
   }
 }

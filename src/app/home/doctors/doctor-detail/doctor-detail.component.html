@@ -4,9 +4,7 @@
             <h1 class="mb-0 me-1">{{'messages.doctor.doctor_detail' | translate}}</h1>
             <div class="text-end mt-4 mt-md-0">
                 <button type="button" class="btn btn-primary me-4" (click)="edit(id)">{{'messages.common.edit' | translate}}</button>
-                <a routerLink="/home/doctors">
-                    <button type="button" class="btn btn-outline-primary float-end">{{'messages.common.back' | translate}}</button>
-                </a>
+                <button type="button" class="btn btn-outline-primary float-end" (click)="goBack()">{{'messages.common.back' | translate}}</button>
             </div>
         </div>
     </div>
