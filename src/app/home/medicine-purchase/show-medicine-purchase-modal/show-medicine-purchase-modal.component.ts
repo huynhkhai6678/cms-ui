@@ -4,11 +4,13 @@ import { ApiService } from '../../../services/api.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { PAYMENT_TYPE } from '../medicine-purchase.constant';
 import { DiffForHumansPipe } from '../../../pipes/diff-for-humans.pipe';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-show-medicine-purchase-modal',
   imports: [
     TranslatePipe,
+    DecimalPipe,
     DiffForHumansPipe
   ],
   templateUrl: './show-medicine-purchase-modal.component.html',
@@ -28,10 +30,6 @@ export class ShowMedicinePurchaseModalComponent implements OnInit {
     this.apiService.get(`medicine-purchase/${this.id}`).subscribe((res : any) => {
       this.data = res['data'];
     });
-  }
-
-  formatNumber(value: string) {
-    return Number(value).toFixed(2);
   }
 
   getBuyingPrice(item: any) {

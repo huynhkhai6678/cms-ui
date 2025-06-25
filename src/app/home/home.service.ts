@@ -5,15 +5,19 @@ import { io, Socket } from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../services/auth.service';
+import { SingleSelect2Option } from '../services/share.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HomeService {
   collapseSider = signal<boolean>(false);
+  currentClinic = signal<Clinic | null>(null);
+
   clinics : Clinic[] = [];
-  selectClinics : any[] = [];
-  socket: Socket;
+  selectClinics : SingleSelect2Option[] = [];
+
+  readonly socket: Socket;
   readonly apiUrl = environment.apiUrl;
 
   constructor(private apiService: ApiService, private authService: AuthService) {
@@ -32,6 +36,12 @@ export class HomeService {
     this.apiService.get(`auth/clinics`).subscribe({
       next : (res : any) => {
         this.clinics = res['data'];
+
+        const clinic = this.clinics.find(clinic => { return clinic.id === this.authService.getUser().clinic_id});
+        if (clinic) {
+          this.currentClinic.set(clinic);
+        }
+        
         this.selectClinics = this.clinics.map(clinic => { return { value: clinic.id, label: clinic.name }});
       },
       error : (error) => {
@@ -39,6 +49,10 @@ export class HomeService {
         this.clinics = [];
       }
     });
+  }
+
+  getCurrentClinic() {
+    return this.currentClinic();
   }
 
   getDoctorByClinic(clinicId : number) {

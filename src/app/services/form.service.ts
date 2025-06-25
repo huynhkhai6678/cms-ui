@@ -78,7 +78,7 @@ export class FormService {
     const bsModalRef: BsModalRef = this.modalService.show(ComfirmModalComponent);
 
     this.translateService.get('js.are_you_sure').subscribe((message: string) => {
-      const bodyMessage = `${message} "${name}" ?`;
+      const bodyMessage = name ? `${message} "${name}" ?` : `${message}`;
       bsModalRef.content.title = title;
       bsModalRef.content.message = bodyMessage;
       bsModalRef.content.confirmBtnText = confirmText;

@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormService } from '../../../services/form.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Select2 } from 'ng-select2-component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HomeService } from '../../home.service';
@@ -10,7 +8,7 @@ import { TimeInputComponent } from '../../../shared/time-input/time-input.compon
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
 import { ShareService, SingleSelect2Option } from '../../../services/share.service';
 import moment from 'moment';
-import { ApiService } from '../../../services/api.service';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-appointment-modal',
@@ -26,17 +24,12 @@ import { ApiService } from '../../../services/api.service';
   templateUrl: './appointment-modal.component.html',
   styleUrl: './appointment-modal.component.scss'
 })
-export class AppointmentModalComponent implements OnInit {
-  url = 'appointments';
-  title = '';
-  id = 0;
+export class AppointmentModalComponent extends BaseComponent implements OnInit {
+  override url = 'appointments';
   clinicId = 0;
   startTime = '';
   endTime = '';
-  currencyCode = 'RM';
-
   appointmentForm! : FormGroup;
-  isSubmitted = false;
 
   doctors: SingleSelect2Option[] = [];
   patients: SingleSelect2Option[] = [];
@@ -46,14 +39,11 @@ export class AppointmentModalComponent implements OnInit {
   statuses : SingleSelect2Option[] = [];
   paymentStatus : SingleSelect2Option[] = [];
 
-  constructor(
-    private fb: FormBuilder,
-    public bsModalRef: BsModalRef,
-    private formService : FormService,
-    private shareService: ShareService,
-    public homeService : HomeService,
-    private apiService : ApiService
-  ) {}
+  readonly homeService = inject(HomeService);
+  readonly fb = inject(FormBuilder);
+  readonly shareService = inject(ShareService);
+
+  readonly currentClinic = this.homeService.getCurrentClinic();
 
   ngOnInit(): void {
     this.initializeForm();
@@ -163,33 +153,5 @@ export class AppointmentModalComponent implements OnInit {
   onServiceChange(event: any) {
     const option = event.options[0];
     this.appointmentForm.controls['payable_amount'].setValue(option.charges ?? 0);
-  }
-
-  onSubmit(valid : boolean, value : any) {
-    this.isSubmitted = true;
-    if (!valid) {
-      return;
-    }
-
-    this.formService.submitForm(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
-  }
-
-  delete() {
-    this.formService.showDeleteConfirm('')
-    .subscribe(confirmed => {
-      if (confirmed) {
-        this.apiService.delete(`${this.url}/${this.id}`).subscribe(() => {
-          this.bsModalRef.hide();
-        })
-      }
-    });
   }
 }

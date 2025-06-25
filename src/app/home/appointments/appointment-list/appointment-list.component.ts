@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, signal, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../../shared/data-table/data-table.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
@@ -23,6 +23,8 @@ export class AppointmentListComponent implements AfterViewInit {
   url = 'appointments';
   columnCustomTemplates : Record<string, any> = {};
   apiUrl = environment.apiUrl;
+  paymentStatus = signal<number>(0);
+  appointmentStatus = signal<number>(0);
 
   @ViewChild('patientNameTemplate') patientNameTemplate!: TemplateRef<any>;
   @ViewChild('doctorNameTemplate') doctorNameTemplate!: TemplateRef<any>;
@@ -64,6 +66,28 @@ export class AppointmentListComponent implements AfterViewInit {
           this.dataTableComponent.reloadData();
         })
       }
+    });
+  }
+
+  appointmentPaymentChange(target : any) {
+    this.paymentStatus.set(target.value);
+    this.dataTableComponent.handleFilterChange({ 
+      payment_type  : this.paymentStatus(),
+      status : this.appointmentStatus()
+    });
+  }
+
+  appointmentStatusChange(value : number) {
+    this.appointmentStatus.update(status => {
+      if (status === value) {
+        return 0;
+      }
+      return value;
+    });
+
+    this.dataTableComponent.handleFilterChange({ 
+      payment_type  : this.paymentStatus(),
+      status : this.appointmentStatus()
     });
   }
 }

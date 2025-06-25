@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../../shared/data-table/data-table.component';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { ApiService } from '../../../services/api.service';
 import { ShareService } from '../../../services/share.service';
 import { HighchartsChartModule } from 'highcharts-angular';
@@ -12,6 +12,7 @@ import moment from 'moment';
   imports: [
     HighchartsChartModule,
     DatePipe,
+    DecimalPipe,
     DataTableComponent
   ],
   templateUrl: './service-inventory-sales.component.html',

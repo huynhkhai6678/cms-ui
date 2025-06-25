@@ -19,15 +19,15 @@
                         </div>
                         <div class="col-lg-4 d-flex flex-column">
                             <span class="fw-bold text-muted py-3">{{'messages.purchase_medicine.discount' | translate}}</span>
-                            <span class="fw-bold fs-6 text-gray-800">{{formatNumber(data.discount)}}</span>
+                            <span class="fw-bold fs-6 text-gray-800">{{data.discount | number : '1.2-2'}}</span>
                         </div>
                         <div class="col-lg-4 d-flex flex-column">
                             <span class="fw-bold text-muted py-3">{{'messages.purchase_medicine.shipping_fee' | translate}}</span>
-                            <span class="fw-bold fs-6 text-gray-800">{{formatNumber(data.shipping_fee)}}</span>
+                            <span class="fw-bold fs-6 text-gray-800">{{data.shipping_fee | number : '1.2-2'}}</span>
                         </div>
                         <div class="col-lg-4 d-flex flex-column">
                             <span class="fw-bold text-muted py-3">{{'messages.purchase_medicine.net_amount' | translate}}</span>
-                            <span class="fw-bold fs-6 text-gray-800">{{formatNumber(data.net_amount)}}</span>
+                            <span class="fw-bold fs-6 text-gray-800">{{data.net_amount | number : '1.2-2'}}</span>
                         </div>
 
                         <div class="col-lg-4 d-flex flex-column">
@@ -65,7 +65,7 @@
                                                 {{purchasedMedicine.quantity}}
                                             </td>
                                             <td class="py-4 text-end ">
-                                                {{formatNumber(purchasedMedicine.amount)}}
+                                                {{purchasedMedicine.amount | number : '1.2-2'}}
                                             </td>
                                         </tr>
                                     }
@@ -80,31 +80,31 @@
                                         <tr>
                                             <td class="ps-0">{{'messages.purchase_medicine.total' | translate }}:</td>
                                             <td class="text-gray-900 text-end pe-0">
-                                                {{formatNumber(data.total)}}
+                                                {{data.total | number : '1.2-2'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="ps-0">{{'messages.purchase_medicine.tax' | translate }}:</td>
                                             <td class="text-gray-900 text-end pe-0">
-                                               {{formatNumber(data.tax)}}
+                                               {{data.tax | number : '1.2-2'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="ps-0">{{'messages.purchase_medicine.discount' | translate }}:</td>
                                             <td class="text-gray-900 text-end pe-0">
-                                                {{formatNumber(data.discount)}}
+                                                {{data.discount | number : '1.2-2'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="ps-0">{{'messages.purchase_medicine.shipping_fee' | translate }}:</td>
                                             <td class="text-gray-900 text-end pe-0">
-                                                {{formatNumber(data.shipping_fee)}}
+                                                {{data.shipping_fee | number : '1.2-2'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="ps-0">{{'messages.purchase_medicine.net_amount' | translate }}:</td>
                                             <td class="text-gray-900 text-end pe-0">
-                                                {{formatNumber(data.net_amount)}}
+                                                {{data.net_amount | number : '1.2-2'}}
                                             </td>
                                         </tr>
                                     </tbody>

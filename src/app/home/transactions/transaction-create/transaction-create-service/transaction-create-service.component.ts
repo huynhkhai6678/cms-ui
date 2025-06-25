@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Select2 } from 'ng-select2-component';
 import { SingleSelect2Option } from '../../../../services/share.service';
+import { io, Socket } from 'socket.io-client';
+import { AuthService } from '../../../../services/auth.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-transaction-create-service',
@@ -23,18 +26,31 @@ export class TransactionCreateServiceComponent implements OnInit, OnChanges {
 
   serviceForm! : FormGroup;
   isSubmitted = false;
-  avaiableQuantity = 0;
+  avaiableQuantity = signal<number>(0);
 
-  constructor(
-    private fb: FormBuilder,
-  ) {}
+  readonly authService = inject(AuthService);
+  readonly fb = inject(FormBuilder);
+  readonly socket: Socket;
+  readonly apiUrl = environment.apiUrl;
+
+  constructor() {
+    this.socket = io(this.apiUrl, {
+      auth: {
+        token : this.authService.getToken()
+      },
+    });
+
+    this.socket.on('updateTransactionAvaiable', (message: string) => {
+      console.log(message);
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['service']) {
       const service = changes['service']['currentValue'];
       if (this.serviceForm) {
         this.serviceForm.patchValue(service);
-        this.avaiableQuantity = service.avaiable_quantity ?? 0;
+        this.avaiableQuantity.set(service.avaiable_quantity ?? 0);
       }
     }
   }

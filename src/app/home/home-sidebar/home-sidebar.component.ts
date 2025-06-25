@@ -171,13 +171,6 @@ export class HomeSidebarComponent implements OnInit {
   collapseMenu() {
     this.homeService.updateCollapseSidebar();
   }
-
-  isActiveRoute(route: HomeSidebarLink): boolean {
-    const currentPath = this.router.url.split('?')[0].split('#')[0];
-
-    const routePaths = [route.link, ...(route.groups || [])];
-    return routePaths.some(path => currentPath.endsWith('/' + path) || currentPath === '/' + path);
-  }
 }
 
 export interface HomeSidebarLink {

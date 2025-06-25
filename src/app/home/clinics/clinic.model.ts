@@ -12,4 +12,9 @@ export interface Clinic {
   social_link?: string;
   country_id: number;
   type: number;
+  currency : {
+    currency_code : string;
+    currency_icon : string;
+    currency_name : string;
+  }
 }

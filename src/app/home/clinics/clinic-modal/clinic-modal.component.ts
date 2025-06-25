@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
 import { Select2 } from 'ng-select2-component';
-import { FormService } from '../../../services/form.service';
-import { LocationService } from '../../../services/location.service';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-clinic-modal',
@@ -18,9 +16,8 @@ import { LocationService } from '../../../services/location.service';
   templateUrl: './clinic-modal.component.html',
   styleUrl: './clinic-modal.component.scss'
 })
-export class ClinicModalComponent implements OnInit {
-  readonly url = 'clinics';
-  title = '';
+export class ClinicModalComponent extends BaseComponent implements OnInit {
+  override url = 'clinics';
   clinicId = 0;
 
   readonly types = [
@@ -29,18 +26,8 @@ export class ClinicModalComponent implements OnInit {
     { label: 'Specialist', value: 3}
   ]
 
-  countries = [];
-  states = [];
-  cities = [];
-
   clinicForm! : FormGroup;
-  isSubmitted = false;
-
-  constructor(public bsModalRef: BsModalRef, 
-    private fb: FormBuilder, 
-    private locationService: LocationService,
-    private formService : FormService,
-  ) {}
+  readonly fb = inject(FormBuilder);
 
   ngOnInit(): void {
     this.clinicForm = this.fb.group({
@@ -78,34 +65,4 @@ export class ClinicModalComponent implements OnInit {
 
     });
   }
-
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) {
-      return;
-    }
-
-    this.formService.submitForm(this.url, this.clinicId, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
-  }
-
-  onCountryChange(event : any) {
-    this.locationService.getStatesByCountry(event.value).subscribe((res : any) => {
-      this.states = res['data'];
-    });
-  }
-
-  onStateChange(event : any) {
-    this.locationService.getCitiesByState(event.value).subscribe((res : any) => {
-      this.cities = res['data'];
-    });
-  }
-  
 }

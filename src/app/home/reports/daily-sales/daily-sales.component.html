@@ -46,7 +46,7 @@
 </ng-template>
 
 <ng-template #netAmountTemplate let-item>
-    RM {{item.transaction_invoice_net_amount.toFixed(2)}}
+    RM {{item.transaction_invoice_net_amount | number : '1.2-2'}}
 </ng-template>
 
 <ng-template #typeTemplate let-item>

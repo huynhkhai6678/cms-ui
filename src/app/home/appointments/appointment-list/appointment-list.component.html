@@ -1,3 +1,23 @@
+<div class="d-flex flex-wrap align-items-center justify-content-end my-3">
+    <a href="javascript:void(0);" (click)="appointmentStatusChange(1)" class="d-flex align-items-center mb-xxl-0 mb-3 ms-3 text-decoration-none appointmentStatusFilter status-1" [class.active]="appointmentStatus() === 1">
+        <span class="badge bg-primary badge-circle me-1 slot-color-dot text-grey bi bi-check-lg"></span>
+        <span class="text-grey">Booked</span>
+    </a>
+    
+    <a href="javascript:void(0);" (click)="appointmentStatusChange(2)"  class="d-flex align-items-center mb-xxl-0 mb-3 ms-3 text-decoration-none appointmentStatusFilter status-2" [class.active]="appointmentStatus() === 2">
+        <span class="badge bg-success badge-circle me-1 slot-color-dot text-grey bi bi-check-lg"></span>
+        <span class="text-grey">Checked in</span>
+    </a>
+    <a href="javascript:void(0);" (click)="appointmentStatusChange(3)" class="d-flex align-items-center mb-xxl-0 mb-3 ms-3 text-decoration-none appointmentStatusFilter status-3" [class.active]="appointmentStatus() === 3">
+        <span class="badge bg-warning badge-circle me-1 slot-color-dot text-grey bi bi-check-lg"></span>
+        <span class="text-grey">Checked out</span>
+    </a>
+    <a href="javascript:void(0);" (click)="appointmentStatusChange(4)" class="d-flex align-items-center mb-xxl-0 mb-3 ms-3 text-decoration-none appointmentStatusFilter status-4" [class.active]="appointmentStatus() === 4">
+        <span class="badge bg-danger badge-circle me-1 slot-color-dot text-grey bi bi-check-lg"></span>
+        <span class="text-grey">Cancelled</span>
+    </a>
+</div>
+
 <app-data-table 
     [url]="url" 
     [headers]="tableColumns" 
@@ -5,13 +25,24 @@
     [addTemplate]="addTemplate"
     [defaultTrackingColumn]="'appointment_id'"
     [showFilterDateRange]="true"
+    [filterTemplate]="filterTemplate"
     [columnCustomTemplates]="columnCustomTemplates">
 </app-data-table>
 
+<ng-template #filterTemplate>
+    <div>
+        <select id="appointmentPaymentType" class="form-select w-auto me-5" (change)="appointmentPaymentChange($event.target)">
+            <option value="0">{{'messages.filter.all' | translate }}</option>
+            <option value="1">{{'messages.filter.pending' | translate }}</option>
+            <option value="2">{{'messages.filter.paid' | translate }}</option>
+        </select>
+    </div>
+</ng-template>
+
 <ng-template #actionTemplate let-row>
-        <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
-            <i class="fa-solid fa-trash" title="Delete"></i>
-        </button>
+    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
+        <i class="fa-solid fa-trash" title="Delete"></i>
+    </button>
 </ng-template>
 
 <ng-template #addTemplate>

@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../../shared/data-table/data-table.component';
 import { ShareService } from '../../../services/share.service';
@@ -11,6 +11,7 @@ import moment from 'moment';
   selector: 'app-daily-sales',
   imports: [
     DatePipe,
+    DecimalPipe,
     DataTableComponent,
     HighchartsChartModule
   ],

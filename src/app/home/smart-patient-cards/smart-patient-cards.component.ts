@@ -82,7 +82,7 @@ export class SmartPatientCardsComponent implements AfterViewInit {
 
   edit(id: number) {
     this.formService.openEditCreateModal(SmartPatientCardModalComponent, 'modal-xl', {
-      title: 'messages.smart_patient_card.edit_smart_card',
+      title: 'messages.smart_patient_card.edit_patient_card',
       id,
       clinicId : this.dataTableComponent.getClinicId()
     }, () => {

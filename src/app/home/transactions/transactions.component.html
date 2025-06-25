@@ -84,5 +84,5 @@
 </ng-template>
 
 <ng-template #amountTemplate let-item>
-    RM {{formatNumber(item.transaction_invoice_net_amount)}}
+    RM {{ item.transaction_invoice_net_amount | number : '1.2-2'}}
 </ng-template>

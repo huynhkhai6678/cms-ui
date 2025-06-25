@@ -147,7 +147,6 @@ export class AppointmentsComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    console.log(selectInfo.startStr);
     this.formService.openEditCreateModal(AppointmentModalComponent, 'modal-lg', {
       title: 'messages.appointment.add_new_appointment',
       clinicId: this.clinicId,

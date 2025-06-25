@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HomeService } from '../../home.service';
-import { Select2 } from 'ng-select2-component';
+import { Select2, Select2Value } from 'ng-select2-component';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DateInputComponent } from '../../../shared/date-input/date-input.component';
 import { FormService } from '../../../services/form.service';
@@ -16,6 +16,7 @@ import { MedicalCertificateComponent } from '../medical-certificate/medical-cert
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import moment from 'moment';
 import { downloadFile } from '../../../utils/download-file.util';
+import { TransactionCreateHistoryComponent } from './transaction-create-history/transaction-create-history.component';
 
 @Component({
   selector: 'app-transaction-create',
@@ -27,7 +28,8 @@ import { downloadFile } from '../../../utils/download-file.util';
     RouterLink,
     TranslatePipe,
     BsDropdownModule,
-    TransactionCreateServiceComponent
+    TransactionCreateServiceComponent,
+    TransactionCreateHistoryComponent
   ],
   templateUrl: './transaction-create.component.html',
   styleUrl: './transaction-create.component.scss'
@@ -52,6 +54,8 @@ export class TransactionCreateComponent implements OnInit {
   createService : any = {};
   currentEditIndex = -1;
   transaction : any = null;
+
+  patientId = signal<number>(0);
 
   constructor(
     private fb: FormBuilder,
@@ -125,6 +129,11 @@ export class TransactionCreateComponent implements OnInit {
       if (res['data'] && res['data']['id']) {
         this.updateClinic(res['data']['clinic_id'], res['data']);
       }
+
+      if (res['data'] && res['data']['user_id']) {
+        this.patientId.set(res['data']['user_id']);
+        console.log(this.patientId());
+      }
     })
   }
 
@@ -147,7 +156,11 @@ export class TransactionCreateComponent implements OnInit {
     });
   }
 
-  updateClinic(clinicId : any, formData : any = null) {
+  onPatientChange(patientId : any) {
+    this.patientId.set(patientId);
+  }
+
+  updateClinic(clinicId : Select2Value, formData : any = null) {
     this.transactionForm.controls['clinic_id'].setValue(clinicId);
 
     this.apiService.get(`${this.url}/get-selection/${clinicId}`).subscribe((res : any) => {

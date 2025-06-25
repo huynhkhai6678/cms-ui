@@ -8,7 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { TRANSACTION_STATUS } from './transactions.constant';
 import { ShareService } from '../../services/share.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { downloadFile } from '../../utils/download-file.util';
 
 @Component({
@@ -16,6 +16,7 @@ import { downloadFile } from '../../utils/download-file.util';
   imports: [
     DataTableComponent,
     TranslatePipe,
+    DecimalPipe,
     RouterLink,
     DatePipe
   ],
@@ -100,10 +101,6 @@ export class TransactionsComponent implements AfterViewInit {
 
   changeStatus(input: any) {
     this.dataTableComponent.handleFilterChange({ is_active : input.value});
-  }
-
-  formatNumber(value: string) {
-    return Number(value).toFixed(2);
   }
 
   openLabelPage(id: number) {

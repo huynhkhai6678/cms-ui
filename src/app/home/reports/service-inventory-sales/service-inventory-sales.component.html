@@ -63,9 +63,9 @@
 </ng-template>
 
 <ng-template #priceTemplate let-item>
-    RM {{item.transaction_invoice_service_price.toFixed(2)}}
+    RM {{item.transaction_invoice_service_price | number : '1.2-2'}}
 </ng-template>
 
 <ng-template #amountTemplate let-item>
-    RM {{item.transaction_invoice_service_sub_total.toFixed(2)}}
+    RM {{item.transaction_invoice_service_sub_total | number : '1.2-2'}}
 </ng-template>

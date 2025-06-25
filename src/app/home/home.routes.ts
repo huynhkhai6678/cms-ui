@@ -36,7 +36,7 @@ export const homeRoutes: Routes = [
           loadComponent: () => import('./clinics/clinics.component').then(mod => mod.ClinicsComponent),
           canActivate: [permissionGuard('manage_clinics')],
           data: { 
-            title: 'messages.clinics' 
+            title: 'messages.clinics.clinics' 
           }
       },
       {

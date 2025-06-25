@@ -112,7 +112,7 @@
                         <div class="input-group">
                             <input type="number" id="payableAmount" class="form-control" placeholder="{{ 'messages.appointment.total_payable_amount' | translate }}" formControlName="payable_amount">
                             <div class="input-group-text">
-                                <span class="fw-bolder text-gray-500 text-decoration-none">{{ currencyCode }}</span>
+                                <span class="fw-bolder text-gray-500 text-decoration-none">{{ currentClinic?.currency?.currency_code }}</span>
                             </div>
                         </div>
                     </div>

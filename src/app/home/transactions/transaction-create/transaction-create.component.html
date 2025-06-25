@@ -91,7 +91,7 @@
                 <div class="form-group col-sm-4 mb-5">
                     <label for="user_id" class="form-label required">{{'messages.visit.patient' | translate}}:</label>
                     <select2 [data]="patients" placeholder="{{'messages.visit.patient' | translate}}"
-                        formControlName="user_id" id="user_id"></select2>
+                        formControlName="user_id" id="user_id" (update)="onPatientChange($event.value)"></select2>
                     @if (!transactionForm.controls['user_id'].valid && (!transactionForm.controls['user_id'].pristine ||
                     isSubmitted)) {
                         <div id="patientValidation" class="invalid-feedback d-block">
@@ -265,7 +265,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1>History</h1>
-                    <div id="historyTransactionContent"><span>No history found</span></div>
+                    <app-transaction-create-history [patientId]="patientId()"></app-transaction-create-history>
                 </div>
             </div>
         </div>
