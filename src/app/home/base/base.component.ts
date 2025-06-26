@@ -3,6 +3,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormService } from '../../services/form.service';
 import { ApiService } from '../../services/api.service';
 import { LocationService } from '../../services/location.service';
+import { HomeService } from '../home.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-base',
@@ -14,6 +16,7 @@ export class BaseComponent {
   url = '';
   title = '';
   id = 0;
+  clinicId = 0;
 
   countries = [];
   states = [];
@@ -23,6 +26,8 @@ export class BaseComponent {
   readonly formService = inject(FormService);
   readonly apiService = inject(ApiService);
   readonly locationService = inject(LocationService);
+  readonly homeService = inject(HomeService);
+  readonly toastrService = inject(ToastrService);
 
   onSubmit(valid : boolean, value : any) {
     this.isSubmitted = true;
@@ -36,19 +41,14 @@ export class BaseComponent {
         this.bsModalRef.hide();
       },
       error: (error) => {
-        console.log(error);
+        this.toastrService.error(error.error.message);
       }
     })
   }
 
-  delete() {
-    this.formService.showDeleteConfirm('')
-    .subscribe(confirmed => {
-      if (confirmed) {
-        this.apiService.delete(`${this.url}/${this.id}`).subscribe(() => {
-          this.bsModalRef.hide();
-        })
-      }
+  openCreateEditModal(modelComponent : any, dataTableComponent : any, modalSize = 'modal-md', payload : any) {
+    this.formService.openEditCreateModal(modelComponent, modalSize, payload, () => {
+      dataTableComponent.reloadData();
     });
   }
 

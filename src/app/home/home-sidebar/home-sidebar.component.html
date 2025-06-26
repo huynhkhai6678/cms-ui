@@ -18,7 +18,7 @@
     <div class="sidebar-scrolling">
         <ul class="aside-menu-container__aside-menu nav flex-column">
             @for(route of filteredRoutes();track route.name) { 
-                <li class="nav-item" routerLinkActive="active">
+                <li class="nav-item" [class.active]="isActiveRoute(route)">
                     <a class="nav-link d-flex align-items-center py-4" aria-current="page" [routerLink]="route.link">
                         <span class="aside-menu-icon pe-3">
                             <i class="{{route.icon}}"></i>

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormService } from '../../../services/form.service';
 import { Select2 } from 'ng-select2-component';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-user-modal',
@@ -17,23 +16,16 @@ import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.com
   templateUrl: './user-modal.component.html',
   styleUrl: './user-modal.component.scss'
 })
-export class UserModalComponent implements OnInit {
-  readonly url = 'users';
-  title = '';
-  userId = 0;
+export class UserModalComponent extends BaseComponent implements OnInit {
+  override url = 'users';
+  readonly fb = inject(FormBuilder);
 
+  userId = 0;
   userForm! : FormGroup;
-  isSubmitted = false;
 
   chains : any[] = [];
   clinicChains : any[] = [];
   clinics : any[] = [];
-
-  constructor(
-    public bsModalRef: BsModalRef, 
-    private fb: FormBuilder, 
-    private formService : FormService,
-  ) {}
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
@@ -83,23 +75,6 @@ export class UserModalComponent implements OnInit {
     });
   }
 
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) {
-      return;
-    }
-
-    this.formService.submitForm(this.url, this.userId, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
-  }
-
   onCliniChainChange(event : any) {
     const chain = this.chains.find(chain => { return chain.id === event.value});
     if (chain) {
@@ -107,5 +82,4 @@ export class UserModalComponent implements OnInit {
       this.userForm.controls['clinic_ids'].setValue(clinicIds);
     }
   }
-
 }

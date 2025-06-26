@@ -1,9 +1,9 @@
 <div class="modal-content">
     <div class="modal-header">
         <h3>{{title | translate }}</h3>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" aria-label="Close" (click)="bsModalRef.hide()"></button>
     </div>
-    <form id="createCurrencyForm" [formGroup]="currencyForm" (ngSubmit)="submit(currencyForm.value, currencyForm.valid)">
+    <form id="createCurrencyForm" [formGroup]="currencyForm" (ngSubmit)="onSubmit(currencyForm.valid, currencyForm.value)">
         <div class="modal-body">
             <div class="alert alert-danger d-none" id="createCurrencyValidationErrorsBox" style="display: none;"></div>
             <div class="mb-5">

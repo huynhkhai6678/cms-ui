@@ -70,6 +70,18 @@ export class HomeHeaderComponent implements OnInit {
         link: 'clinic-services'
       }
     ],
+    'currencies': [
+      {
+        name : 'messages.currencies',
+        link: 'currencies'
+      }
+    ],
+    'enquiries': [
+      {
+        name : 'messages.enquiries',
+        link: 'enquiries'
+      }
+    ],
     'patients': [
       {
         name : 'messages.patients',
@@ -80,6 +92,12 @@ export class HomeHeaderComponent implements OnInit {
       {
         name : 'messages.visits',
         link: 'visits'
+      }
+    ],
+    'roles': [
+      {
+        name : 'messages.roles',
+        link: 'roles'
       }
     ],
     'transactions': [

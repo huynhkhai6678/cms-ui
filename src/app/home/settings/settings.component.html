@@ -1,12 +1,10 @@
 <div class="container-fluid">
-    <div>
-        <tabset>
-            <tab heading="{{'messages.setting.general' | translate }}" (selectTab)="generalComponent.loadData()">
-                <app-setting-general #generalComponent></app-setting-general>
-            </tab>
-            <tab heading="{{'messages.setting.contact_information' | translate }}" (selectTab)="contactComponent.loadData()">
-                <app-setting-contact-information #contactComponent></app-setting-contact-information>
-            </tab>
-        </tabset>
-    </div>
+    <tabset>
+        <tab heading="{{'messages.setting.general' | translate }}" (selectTab)="generalComponent.loadData()">
+            <app-setting-general #generalComponent></app-setting-general>
+        </tab>
+        <tab heading="{{'messages.setting.contact_information' | translate }}" (selectTab)="contactComponent.loadData()">
+            <app-setting-contact-information #contactComponent></app-setting-contact-information>
+        </tab>
+    </tabset>
 </div>

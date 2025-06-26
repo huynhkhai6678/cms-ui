@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormService } from '../../../services/form.service';
-import { HomeService } from '../../home.service';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
 import { DateInputComponent } from '../../../shared/date-input/date-input.component';
 import { Select2 } from 'ng-select2-component';
 import { ImageUploadComponent } from "../../../shared/image-upload/image-upload.component";
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-doctor-modal',
@@ -22,19 +20,13 @@ import { ImageUploadComponent } from "../../../shared/image-upload/image-upload.
   templateUrl: './doctor-modal.component.html',
   styleUrl: './doctor-modal.component.scss'
 })
-export class DoctorModalComponent implements OnInit {
-  readonly url = 'doctors';
-  title = '';
-  id = 0;
+export class DoctorModalComponent extends BaseComponent implements OnInit {
+  override url = 'doctors';
+  readonly fb = inject(FormBuilder);
+
   avatarUrl = '';
-  clinicId = 0;
-
   specializations = [];
-
   doctorForm! : FormGroup;
-  isSubmitted = false;
-
-  constructor(public bsModalRef: BsModalRef, private fb : FormBuilder, private formService: FormService, public homeService: HomeService) {}
 
   ngOnInit(): void {
     this.doctorForm = this.fb.group({
@@ -69,19 +61,5 @@ export class DoctorModalComponent implements OnInit {
         this.doctorForm.patchValue(response['data']);
       }
     });
-  }
-
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) {
-      return;
-    }
-
-    this.formService.submitFormWithImage(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      }
-    })
   }
 }

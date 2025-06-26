@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiService } from '../../../services/api.service';
@@ -18,7 +18,8 @@ export class EnquiryModalComponent implements OnInit {
   id = 0;
   enquiry?: Enquiry;
 
-  constructor(public bsModalRef: BsModalRef, private apiService: ApiService) {}
+  readonly bsModalRef = inject(BsModalRef);
+  readonly apiService = inject(ApiService);
 
   ngOnInit(): void {
     this.apiService.get(`enquiries/${this.id}`).subscribe((res : any) => {

@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormService } from '../../../services/form.service';
-import { HomeService } from '../../home.service';
 import { Select2 } from 'ng-select2-component';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-service-category-modal',
@@ -16,21 +14,11 @@ import { Select2 } from 'ng-select2-component';
   templateUrl: './service-category-modal.component.html',
   styleUrl: './service-category-modal.component.scss'
 })
-export class ServiceCategoryModalComponent implements OnInit {
-  readonly url = 'service-categories';
-  title = '';
-  id = 0;
-  clinicId = 0;
+export class ServiceCategoryModalComponent extends BaseComponent implements OnInit {
+  override url = 'service-categories';
+  readonly fb = inject(FormBuilder);
+
   serviceCategoryForm! : FormGroup;
-  isSubmitted = false;
-
-  constructor(
-    public bsModalRef: BsModalRef, 
-    private fb: FormBuilder, 
-    private formService : FormService,
-    public homeService : HomeService
-  ) {}
-
 
   ngOnInit(): void {
     this.serviceCategoryForm = this.fb.group({
@@ -53,20 +41,4 @@ export class ServiceCategoryModalComponent implements OnInit {
       }
     });
   }
-
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) return;
-
-    this.formService.submitForm(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
-  }
-
 }

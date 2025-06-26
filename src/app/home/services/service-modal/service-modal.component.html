@@ -7,7 +7,7 @@
 <div class="modal-body">
     <div class="card">
         <div class="card-body">
-            <form [formGroup]="serviceForm" (ngSubmit)="submit(serviceForm.value, serviceForm.valid)">
+            <form [formGroup]="serviceForm" (ngSubmit)="onSubmit(serviceForm.valid, serviceForm.value)">
                 <div class="row">
                     @if (homeService.clinics.length > 1) {
                         <div class="col-md-6 mb-5">

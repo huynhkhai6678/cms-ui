@@ -190,7 +190,7 @@ export class DataTableComponent {
     // Extend filter option from UI
     Object.keys(this.filterOptions()).forEach(key => {
       const value = this.filterOptions()[key];
-      if (value) {
+      if (value && value >= 0) {
         searchParams.set(key, value);
       }
     });

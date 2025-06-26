@@ -2,9 +2,18 @@
     [url]="url" 
     [headers]="tableColumns" 
     [actionTemplate]="actionTemplate" 
-    [searchTemplate]="searchTemplate" 
+    [searchTemplate]="searchTemplate"
+    [addTemplate]="addTemplate"
     [columnCustomTemplates]="[]">
 </app-data-table>
+
+<ng-template #addTemplate>
+    <div>
+        <button class="btn btn-primary ms-auto" (click)="create()">
+            {{'messages.currency.add_currency' | translate}}
+        </button>
+    </div>
+</ng-template>
 
 <ng-template #actionTemplate let-row>
     <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.id)">

@@ -5,7 +5,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <form [formGroup]="clinicChainForm" (ngSubmit)="submit(clinicChainForm.value, clinicChainForm.valid)">
+    <form [formGroup]="clinicChainForm" (ngSubmit)="onSubmit(clinicChainForm.valid, clinicChainForm.value)">
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-5">

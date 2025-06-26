@@ -3,9 +3,18 @@
     [url]="url" 
     [headers]="tableColumns" 
     [actionTemplate]="actionTemplate" 
-    [searchTemplate]="searchTemplate" 
+    [searchTemplate]="searchTemplate"
+    [addTemplate]="addTemplate"
     [columnCustomTemplates]="columnCustomTemplates">
 </app-data-table>
+
+<ng-template #addTemplate>
+    <div>
+        <button class="btn btn-primary ms-auto" (click)="create()">
+            {{'messages.role.add_role' | translate}}
+        </button>
+    </div>
+</ng-template>
 
 <ng-template #actionTemplate let-row>
     <div class="action">

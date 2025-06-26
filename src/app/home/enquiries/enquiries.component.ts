@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
@@ -18,13 +18,12 @@ import { DatePipe } from '@angular/common';
   styleUrl: './enquiries.component.scss'
 })
 export class EnquiriesComponent implements AfterViewInit {
-  url = 'enquiries';
-  STATUTES = [
+  readonly url = 'enquiries';
+  readonly STATUTES = [
     { name: 'All', value : -1 },
     { name: 'Read', value : 1},
-    { name: 'Unread', value : 1},
+    { name: 'Unread', value : 0},
   ]
-  clinics = [];
   filterParams = {
     view: -1,
   };
@@ -34,10 +33,8 @@ export class EnquiriesComponent implements AfterViewInit {
   @ViewChild('dateTemplate') dateTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
 
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
+  readonly apiService = inject(ApiService);
+  readonly formService = inject(FormService);
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
@@ -56,8 +53,6 @@ export class EnquiriesComponent implements AfterViewInit {
   view(id: number) {
     this.formService.openEditCreateModal(EnquiryModalComponent, 'modal-lg', {
       id
-    }, () => {
-      this.dataTableComponent.reloadData();
     });
   }
     
@@ -75,5 +70,4 @@ export class EnquiriesComponent implements AfterViewInit {
   filterChange() {
     this.dataTableComponent.handleFilterChange(this.filterParams);
   }
-
 }

@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Select2 } from 'ng-select2-component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { HomeService } from '../../home.service';
 import { DateInputComponent } from '../../../shared/date-input/date-input.component';
 import { TimeInputComponent } from '../../../shared/time-input/time-input.component';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
@@ -26,7 +25,7 @@ import { BaseComponent } from '../../base/base.component';
 })
 export class AppointmentModalComponent extends BaseComponent implements OnInit {
   override url = 'appointments';
-  clinicId = 0;
+  
   startTime = '';
   endTime = '';
   appointmentForm! : FormGroup;
@@ -39,7 +38,6 @@ export class AppointmentModalComponent extends BaseComponent implements OnInit {
   statuses : SingleSelect2Option[] = [];
   paymentStatus : SingleSelect2Option[] = [];
 
-  readonly homeService = inject(HomeService);
   readonly fb = inject(FormBuilder);
   readonly shareService = inject(ShareService);
 
@@ -153,5 +151,16 @@ export class AppointmentModalComponent extends BaseComponent implements OnInit {
   onServiceChange(event: any) {
     const option = event.options[0];
     this.appointmentForm.controls['payable_amount'].setValue(option.charges ?? 0);
+  }
+
+  delete() {
+    this.formService.showDeleteConfirm('')
+    .subscribe(confirmed => {
+      if (confirmed) {
+        this.apiService.delete(`${this.url}/${this.id}`).subscribe(() => {
+          this.bsModalRef.hide();
+        })
+      }
+    });
   }
 }

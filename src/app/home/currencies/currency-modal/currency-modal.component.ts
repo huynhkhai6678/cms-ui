@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormService } from '../../../services/form.service';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-currency-modal',
@@ -13,18 +12,10 @@ import { FormService } from '../../../services/form.service';
   templateUrl: './currency-modal.component.html',
   styleUrl: './currency-modal.component.scss'
 })
-export class CurrencyModalComponent implements OnInit {
-  url = 'currencies';
-  title = '';
-  id = 0;
-
+export class CurrencyModalComponent extends BaseComponent implements OnInit {
+  override url = 'currencies';
+  readonly fb = inject(FormBuilder);
   currencyForm! : FormGroup;
-  isSubmitted = false;
-
-  constructor(public bsModalRef: BsModalRef, 
-    private fb: FormBuilder, 
-    private formService : FormService,
-  ) {}
 
   ngOnInit(): void {
     this.currencyForm = this.fb.group({
@@ -38,24 +29,5 @@ export class CurrencyModalComponent implements OnInit {
         this.currencyForm.patchValue(response['data']);
       }
     });
-
   }
-
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) {
-      return;
-    }
-
-    this.formService.submitForm(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
-  }
-
 }

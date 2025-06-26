@@ -5,7 +5,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <form [formGroup]="sliderForm" (ngSubmit)="submit(sliderForm.value, sliderForm.valid)">
+    <form [formGroup]="sliderForm" (ngSubmit)="onSubmit(sliderForm.valid, sliderForm.value)">
         <div class="row">
             <div class="col-lg-12 mb-5">
                 <label for="title" class="form-label required">{{'messages.slider.title' | translate }}:</label>

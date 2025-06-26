@@ -5,7 +5,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <form [formGroup]="hodidayForm" (ngSubmit)="submit(hodidayForm.value, hodidayForm.valid)">
+    <form [formGroup]="hodidayForm" (ngSubmit)="onSubmit(hodidayForm.valid, hodidayForm.value)">
         <div class="row">
             @if (homeService.clinics.length > 1) {
                 <div class="col-md-6 mb-5">

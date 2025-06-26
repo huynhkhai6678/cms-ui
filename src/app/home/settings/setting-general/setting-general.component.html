@@ -10,144 +10,139 @@
 </div>
 }
 <form [formGroup]="generalForm" (ngSubmit)="submit(generalForm.value, generalForm.valid)">
-    <div class="d-flex flex-column">
-        <div id="settingGeneralBody" class="card-body p-0">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center justify-content-center">
-                        <h3 class="m-0">
-                            {{'messages.setting.general_details' | translate }}
-                        </h3>
-                    </div>
+    <div class="card mt-5">
+        <div class="card-header">
+            <div class="d-flex align-items-center justify-content-center">
+                <h3 class="m-0">
+                    {{'messages.setting.general_details' | translate }}
+                </h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row mb-6">
+                <label for="clinic_name" class="col-lg-4 form-label required">{{'messages.setting.clinic_name' | translate }}:</label>
+                <div class="col-lg-8">
+                    <input class="form-control" placeholder="{{'messages.setting.clinic_name' | translate }}" type="text" formControlName="clinic_name">
                 </div>
-                <div class="card-body">
-                    <div class="row mb-6">
-                        <label for="clinic_name" class="col-lg-4 form-label required">{{'messages.setting.clinic_name' | translate }}:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" placeholder="{{'messages.setting.clinic_name' | translate }}" type="text" formControlName="clinic_name">
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <label for="contact_no" class="col-lg-4 form-label required">{{'messages.patient.contact_no' | translate }}:</label>
-                        <div class="col-lg-8">
-                            <app-phone-input formControlName="phone"></app-phone-input>
-                        </div>
-                    </div>
+            </div>
+            <div class="row mb-6">
+                <label for="contact_no" class="col-lg-4 form-label required">{{'messages.patient.contact_no' | translate }}:</label>
+                <div class="col-lg-8">
+                    <app-phone-input formControlName="phone"></app-phone-input>
+                </div>
+            </div>
 
-                    <div class="row mb-6">
-                        <label for="email" class="col-lg-4 form-label required">{{'messages.patient.email' | translate }}:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control " placeholder="{{'messages.patient.email' | translate }}"  type="email" id="email" formControlName="email">
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <label for="specialities" class="col-lg-4 form-label required">{{'messages.setting.specialities' | translate }}:</label>
-                        <div class="col-lg-8">
-                            <select2 multiple [data]="specializations" formControlName="specialities" placeholder="{{ 'messages.setting.specialities' | translate }}"></select2>
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <label for="favcolor" class="col-lg-4 form-label required">{{'messages.setting.front_color' | translate }}:</label>
-                        <div class="col-lg-8">
-                            <input type="color" name="front_color" class="card_header_color_change" id="favcolor" formControlName="front_color">
-                        </div>
-                    </div>
+            <div class="row mb-6">
+                <label for="email" class="col-lg-4 form-label required">{{'messages.patient.email' | translate }}:</label>
+                <div class="col-lg-8">
+                    <input class="form-control " placeholder="{{'messages.patient.email' | translate }}"  type="email" id="email" formControlName="email">
+                </div>
+            </div>
+            <div class="row mb-6">
+                <label for="specialities" class="col-lg-4 form-label required">{{'messages.setting.specialities' | translate }}:</label>
+                <div class="col-lg-8">
+                    <select2 multiple [data]="specializations" formControlName="specialities" placeholder="{{ 'messages.setting.specialities' | translate }}"></select2>
+                </div>
+            </div>
+            <div class="row mb-6">
+                <label for="favcolor" class="col-lg-4 form-label required">{{'messages.setting.front_color' | translate }}:</label>
+                <div class="col-lg-8">
+                    <input type="color" name="front_color" class="card_header_color_change" id="favcolor" formControlName="front_color">
+                </div>
+            </div>
 
-                    <div class="row mb-6">
-                        <label for="appLogoPreview" class="col-lg-4 required form-label">{{'messages.setting.logo' | translate }}:</label>
-                        <div class="col-lg-8">
-                            <app-image-upload formControlName="logo"></app-image-upload>
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <label for="faviconPreview" class="col-lg-4 required form-label">{{'messages.setting.favicon' | translate }}:</label>
-                        <div class="col-lg-8">
-                             <app-image-upload formControlName="favicon"></app-image-upload>
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <label for="email_verified" class="col-lg-4 form-label required">
-                            <span>{{'messages.setting.do_not_allow_to_login_without_email_verification' | translate }}:</span>
-                            <i class="fas fa-question-circle ml-1 mt-1 general-question-mark"></i>
-                        </label>
-                        <div class="col-lg-8">
-                            <input id="email_verified" class="form-check-input m-0" checked="checked" name="email_verified" type="checkbox" value="1">
-                        </div>
-                    </div>
+            <div class="row mb-6">
+                <label for="appLogoPreview" class="col-lg-4 required form-label">{{'messages.setting.logo' | translate }}:</label>
+                <div class="col-lg-8">
+                    <app-image-upload formControlName="logo"></app-image-upload>
+                </div>
+            </div>
+            <div class="row mb-6">
+                <label for="faviconPreview" class="col-lg-4 required form-label">{{'messages.setting.favicon' | translate }}:</label>
+                <div class="col-lg-8">
+                        <app-image-upload formControlName="favicon"></app-image-upload>
+                </div>
+            </div>
+            <div class="row mb-6">
+                <label for="email_verified" class="col-lg-4 form-label required">
+                    <span>{{'messages.setting.do_not_allow_to_login_without_email_verification' | translate }}:</span>
+                    <i class="fas fa-question-circle ml-1 mt-1 general-question-mark"></i>
+                </label>
+                <div class="col-lg-8">
+                    <input id="email_verified" class="form-check-input m-0" checked="checked" name="email_verified" type="checkbox" value="1">
+                </div>
+            </div>
 
-                    <div class="card-header px-0">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <h3 class="m-0">{{'messages.setting.currency_settings' | translate }}
-                            </h3>
-                        </div>
-                    </div>
+            <div class="card-header px-0">
+                <div class="d-flex align-items-center justify-content-center">
+                    <h3 class="m-0">{{'messages.setting.currency_settings' | translate }}
+                    </h3>
+                </div>
+            </div>
 
-                    <div class="row">
-                        <div class="row mb-6">
-                            <label for="currencies" class="col-lg-4 form-label">
-                                <span>{{'messages.setting.currency' | translate }}:</span>
-                            </label>
-                            <div class="col-lg-8 fv-row">
-                                <select2 id="currencies" [data]="currencies" formControlName="currency" placeholder="{{ 'messages.setting.currency' | translate }}"></select2>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="row mb-6">
-                            <label for="language" class="col-lg-4 form-label">
-                                <span>{{'messages.setting.default_country_code' | translate }}:</span>
-                                <i class="fas fa-question-circle ml-1 mt-1 general-question-mark"></i>
-                            </label>
-                            <div class="col-lg-8 fv-row">
-                               <select2 for="language" [data]="LANGUAGES" formControlName="language" placeholder="{{ 'messages.setting.default_country_code' | translate }}"></select2>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-header px-0">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <h3 class="m-0">{{'messages.appointment.payment_method' | translate }}</h3>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="row mb-6">
-                            <div class="table-responsive px-0">
-                                <table>
-                                    <tbody class="d-flex flex-wrap">
-                                        @for (payment of payments; track payment['value']) {
-                                            <tr class="w-100 d-flex justify-content-between">
-                                                <td class="p-2">
-                                                    <div class="form-check form-check-custom">
-                                                        <input class="form-check-input" 
-                                                            type="checkbox" 
-                                                            value="{{payment['value']}}"
-                                                            name="payment_gateway[]" 
-                                                            id="payment-{{payment['value']}}" 
-                                                            [checked]="generalForm.value.payment_gateways.includes(payment['value'])"
-                                                            (change)="onGatewayChange($event)">
-                                                        <label class="form-label" for="payment-{{payment['value']}}">
-                                                            {{payment['label']}}
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <!-- Submit Field -->
-                        <div class="form-group col-sm-12">
-                            <input class="btn btn-primary" id="settingSubmitBtn" type="submit" value="Save Changes">
-                        </div>
+            <div class="row">
+                <div class="row mb-6">
+                    <label for="currencies" class="col-lg-4 form-label">
+                        <span>{{'messages.setting.currency' | translate }}:</span>
+                    </label>
+                    <div class="col-lg-8 fv-row">
+                        <select2 id="currencies" [data]="currencies" formControlName="currency" placeholder="{{ 'messages.setting.currency' | translate }}"></select2>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div class="row">
+                <div class="row mb-6">
+                    <label for="language" class="col-lg-4 form-label">
+                        <span>{{'messages.setting.default_country_code' | translate }}:</span>
+                        <i class="fas fa-question-circle ml-1 mt-1 general-question-mark"></i>
+                    </label>
+                    <div class="col-lg-8 fv-row">
+                        <select2 for="language" [data]="LANGUAGES" formControlName="language" placeholder="{{ 'messages.setting.default_country_code' | translate }}"></select2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header px-0">
+                <div class="d-flex align-items-center justify-content-center">
+                    <h3 class="m-0">{{'messages.appointment.payment_method' | translate }}</h3>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row mb-6">
+                    <div class="table-responsive px-0">
+                        <table>
+                            <tbody class="d-flex flex-wrap">
+                                @for (payment of payments; track payment['value']) {
+                                    <tr class="w-100 d-flex justify-content-between">
+                                        <td class="p-2">
+                                            <div class="form-check form-check-custom">
+                                                <input class="form-check-input" 
+                                                    type="checkbox" 
+                                                    value="{{payment['value']}}"
+                                                    name="payment_gateway[]" 
+                                                    id="payment-{{payment['value']}}" 
+                                                    [checked]="generalForm.value.payment_gateways.includes(payment['value'])"
+                                                    (change)="onGatewayChange($event)">
+                                                <label class="form-label" for="payment-{{payment['value']}}">
+                                                    {{payment['label']}}
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Submit Field -->
+                <div class="form-group col-sm-12">
+                    <input class="btn btn-primary" id="settingSubmitBtn" type="submit" value="Save Changes">
+                </div>
+            </div>
+        </div>
     </div>
 </form>

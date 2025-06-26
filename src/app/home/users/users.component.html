@@ -3,8 +3,17 @@
     [headers]="tableColumns" 
     [actionTemplate]="actionTemplate" 
     [searchTemplate]="searchTemplate"
+    [addTemplate]="addTemplate"
     [columnCustomTemplates]="columnCustomTemplates">
 </app-data-table>
+
+<ng-template #addTemplate>
+    <div>
+        <button class="btn btn-primary ms-auto" (click)="create()">
+            {{'messages.user_manage.add_user' | translate}}
+        </button>
+    </div>
+</ng-template>
 
 <ng-template #actionTemplate let-row>
     <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.user_id)">

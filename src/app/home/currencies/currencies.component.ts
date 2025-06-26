@@ -35,30 +35,30 @@ export class CurrenciesComponent {
   }
 
   edit(id: number) {
-      this.formService.openEditCreateModal(CurrencyModalComponent, 'modal-md', {
-        title: 'messages.currency.edit_currency',
-        id
-      }, () => {
-        this.dataTableComponent.reloadData();
-      });
-    }
-  
-    delete(id: number, name: string) {
-      this.formService.showDeleteConfirm(name)
-      .subscribe(confirmed => {
-        if (confirmed) {
-          this.apiService.delete(`${this.url}/${id}`).subscribe(() => {
-            this.dataTableComponent.reloadData();
-          })
-        }
-      });
-    }
-  
-    create() {
-      this.formService.openEditCreateModal(CurrencyModalComponent, 'modal-md', {
-        title: 'messages.currency.add_currency'
-      }, () => {
-        this.dataTableComponent.reloadData();
-      });
-    }
+    this.formService.openEditCreateModal(CurrencyModalComponent, 'modal-md', {
+      title: 'messages.currency.edit_currency',
+      id
+    }, () => {
+      this.dataTableComponent.reloadData();
+    });
+  }
+
+  delete(id: number, name: string) {
+    this.formService.showDeleteConfirm(name)
+    .subscribe(confirmed => {
+      if (confirmed) {
+        this.apiService.delete(`${this.url}/${id}`).subscribe(() => {
+          this.dataTableComponent.reloadData();
+        })
+      }
+    });
+  }
+
+  create() {
+    this.formService.openEditCreateModal(CurrencyModalComponent, 'modal-md', {
+      title: 'messages.currency.add_currency'
+    }, () => {
+      this.dataTableComponent.reloadData();
+    });
+  }
 }

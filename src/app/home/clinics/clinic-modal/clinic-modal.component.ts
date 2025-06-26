@@ -18,7 +18,6 @@ import { BaseComponent } from '../../base/base.component';
 })
 export class ClinicModalComponent extends BaseComponent implements OnInit {
   override url = 'clinics';
-  clinicId = 0;
 
   readonly types = [
     { label: 'General Practice', value: 1},

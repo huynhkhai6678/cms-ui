@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PatientMedicalRecordBloodPressureComponent } from './patient-medical-record-blood-pressure.component';
+import { PatientMedicalRecordPulseRateComponent } from './patient-medical-record-pulse-rate.component';
 
-describe('PatientMedicalRecordBloodPressureComponent', () => {
-  let component: PatientMedicalRecordBloodPressureComponent;
-  let fixture: ComponentFixture<PatientMedicalRecordBloodPressureComponent>;
+describe('PatientMedicalRecordPulseRateComponent', () => {
+  let component: PatientMedicalRecordPulseRateComponent;
+  let fixture: ComponentFixture<PatientMedicalRecordPulseRateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PatientMedicalRecordBloodPressureComponent]
+      imports: [PatientMedicalRecordPulseRateComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PatientMedicalRecordBloodPressureComponent);
+    fixture = TestBed.createComponent(PatientMedicalRecordPulseRateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

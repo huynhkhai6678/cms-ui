@@ -14,10 +14,12 @@
 </ng-template>
 
 <ng-template #actionTemplate let-row>
-    <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.id)">
-        <i class="fa-solid fa-pen-to-square" title="Edit"></i>
-    </button>
-    <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
-        <i class="fa-solid fa-trash" title="Delete"></i>
-    </button>
+    <div class="d-flex">
+        <button class="btn px-2 border-0 text-primary fs-2" (click)="edit(row.id)">
+            <i class="fa-solid fa-pen-to-square" title="Edit"></i>
+        </button>
+        <button class="btn px-2 border-0 text-danger fs-2" (click)="delete(row)">
+            <i class="fa-solid fa-trash" title="Delete"></i>
+        </button>
+    </div>
 </ng-template>

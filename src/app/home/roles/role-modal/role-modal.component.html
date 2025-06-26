@@ -1,5 +1,5 @@
 <div class="card-body p-9">
-    <form id="createCurrencyForm" [formGroup]="roleForm" (ngSubmit)="submit(roleForm.value, roleForm.valid)">
+    <form id="createCurrencyForm" [formGroup]="roleForm" (ngSubmit)="onSubmit(roleForm.valid, roleForm.value)">
         <div class="row gx-10 mb-5">
             <div class="col-md-6 mb-5">
                 <label for="display_name" class="required fs-5 fw-bolder form-label mb-2">{{'messages.common.name' | translate}}:</label>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-lg-6 col-xs-12">
                     <div class="row">
-                        @for (permission of leftList; track permission['id']) {
+                        @for (permission of leftList(); track permission['id']) {
                             <div class="col-xs-12 mb-5">
                                 <span>{{permission['display_name']}}</span>
                                 <label class="form-check form-check-sm form-check-custom form-check-solid float-end">
@@ -34,7 +34,7 @@
 
                 <div class="col-lg-6 col-xs-12">
                     <div class="row">
-                        @for (permission of rightList; track permission['id']) {
+                        @for (permission of rightList(); track permission['id']) {
                             <div class="col-xs-12 mb-5">
                                 <span>{{permission['display_name']}}</span>
                                 <label class="form-check form-check-sm form-check-custom form-check-solid float-end">

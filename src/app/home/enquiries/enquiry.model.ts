@@ -1,5 +1,5 @@
 export interface Enquiry {
-  id: string;
+  id: number;
   name: string;
   email: string;
   phone?: string;
@@ -9,5 +9,5 @@ export interface Enquiry {
   updated_at?: Date;
   view: boolean;
   region_code?: string;
-  clinic_id: string;
+  clinic_id: number;
 }

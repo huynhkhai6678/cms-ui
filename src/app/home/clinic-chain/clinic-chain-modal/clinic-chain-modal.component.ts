@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Select2 } from 'ng-select2-component';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormService } from '../../../services/form.service';
-import { ToastrService } from 'ngx-toastr';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-clinic-chain-modal',
@@ -16,22 +14,13 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './clinic-chain-modal.component.html',
   styleUrl: './clinic-chain-modal.component.scss'
 })
-export class ClinicChainModalComponent implements OnInit {
-  readonly url = 'clinic-chains';
-  title = '';
+export class ClinicChainModalComponent extends BaseComponent implements OnInit {
+  override url = 'clinic-chains';
   clinicChainId = 0;
-
   clinics = [];
-
   clinicChainForm! : FormGroup;
-  isSubmitted = false;
 
-  constructor(
-    public bsModalRef: BsModalRef, 
-    private fb: FormBuilder,
-    private toastService : ToastrService,
-    private formService : FormService,
-  ) {}
+  readonly fb = inject(FormBuilder);
 
   ngOnInit(): void {
     this.clinicChainForm = this.fb.group({
@@ -47,22 +36,4 @@ export class ClinicChainModalComponent implements OnInit {
       this.clinics = response['clinics'].map((clinic: any) => { return { value : clinic.id, label : clinic.name }});
     });
   }
-
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) {
-      return;
-    }
-
-    this.formService.submitForm(this.url, this.clinicChainId, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        this.toastService.error(error?.error?.error);
-      }
-    })
-  }
-
 }

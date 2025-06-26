@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormService } from '../../../services/form.service';
-import { HomeService } from '../../home.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Select2 } from 'ng-select2-component';
 import { ImageUploadComponent } from '../../../shared/image-upload/image-upload.component';
 import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.component';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-staff-modal',
@@ -20,19 +18,13 @@ import { PhoneInputComponent } from '../../../shared/phone-input/phone-input.com
   templateUrl: './staff-modal.component.html',
   styleUrl: './staff-modal.component.scss'
 })
-export class StaffModalComponent implements OnInit {
- readonly url = 'staffs';
-  title = '';
-  id = 0;
+export class StaffModalComponent extends BaseComponent implements OnInit {
+  override url = 'staffs';
+  readonly fb = inject(FormBuilder);
+
   avatarUrl = '';
-  clinicId = 0;
-
   roles = [];
-
   staffForm! : FormGroup;
-  isSubmitted = false;
-
-  constructor(public bsModalRef: BsModalRef, private fb : FormBuilder, private formService: FormService, public homeService: HomeService) {}
 
   ngOnInit(): void {
     this.staffForm = this.fb.group({
@@ -64,19 +56,5 @@ export class StaffModalComponent implements OnInit {
         this.staffForm.patchValue(response['data']);
       }
     });
-  }
-
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) {
-      return;
-    }
-
-    this.formService.submitFormWithImage(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      }
-    })
   }
 }

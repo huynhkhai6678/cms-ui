@@ -44,7 +44,7 @@ export const homeRoutes: Routes = [
           loadComponent: () => import('./clinic-chain/clinic-chain.component').then(mod => mod.ClinicChainComponent),
           canActivate: [permissionGuard('manage_clinic_brands')],
           data: { 
-            title: 'messages.clinic-chains' 
+            title: 'messages.clinic_chains.clinic_chains' 
           }
       },
       {

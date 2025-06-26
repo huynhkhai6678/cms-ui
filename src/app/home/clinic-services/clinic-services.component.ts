@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
@@ -16,7 +16,10 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './clinic-services.component.scss'
 })
 export class ClinicServicesComponent implements AfterViewInit {
-  url = 'clinic-services';
+  readonly apiService = inject(ApiService);
+  readonly formService = inject(FormService);
+  readonly url = 'clinic-services';
+
   columnCustomTemplates : Record<string, any> = {};
   CATEGORIES_MAP : Record<number, string> = {
     1 : 'General',
@@ -31,11 +34,6 @@ export class ClinicServicesComponent implements AfterViewInit {
   @ViewChild('activeTemplate') activeTemplate!: TemplateRef<any>;
   @ViewChild('categoryTemplate') categoryTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [

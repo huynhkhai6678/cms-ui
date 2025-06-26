@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { FormService } from '../../services/form.service';
 import { ApiService } from '../../services/api.service';
@@ -16,15 +16,13 @@ import { SpecializationModalComponent } from './specialization-modal/specializat
   styleUrl: './specializations.component.scss'
 })
 export class SpecializationsComponent {
-  url = 'specializations';
+  readonly url = 'specializations';
+  readonly apiService = inject(ApiService);
+  readonly formService = inject(FormService);
+
   columnCustomTemplates : Record<string, any> = {};
 
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [

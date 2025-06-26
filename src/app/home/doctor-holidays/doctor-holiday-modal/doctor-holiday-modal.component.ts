@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DateInputComponent } from '../../../shared/date-input/date-input.component';
 import { Select2 } from 'ng-select2-component';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormService } from '../../../services/form.service';
-import { HomeService } from '../../home.service';
 import moment from 'moment';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-doctor-holiday-modal',
@@ -19,19 +17,13 @@ import moment from 'moment';
   templateUrl: './doctor-holiday-modal.component.html',
   styleUrl: './doctor-holiday-modal.component.scss'
 })
-export class DoctorHolidayModalComponent implements OnInit {
-  readonly url = 'doctor-holidays';
-  title = '';
-  id = 0;
-  clinicId = 0;
+export class DoctorHolidayModalComponent extends BaseComponent implements OnInit {
+  override url = 'doctor-holidays';
+  readonly fb = inject(FormBuilder);
 
   doctors = [];
-
   hodidayForm! : FormGroup;
-  isSubmitted = false;
   minDate = '';
-
-  constructor(public bsModalRef: BsModalRef, private fb : FormBuilder, private formService: FormService, public homeService: HomeService) {}
 
   ngOnInit(): void {
     this.hodidayForm = this.fb.group({

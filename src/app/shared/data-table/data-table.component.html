@@ -24,7 +24,7 @@
                             [bsConfig]="{ ranges: ranges, dateInputFormat: 'DD/MM/YYYY', rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-default'}">
                     </div>
                 }
-                @if (showClinicFilterTemplate) {
+                @if (showClinicFilterTemplate && homeService.clinics.length > 1) {
                     <div class="mb-5 me-5">
                         <select id="filterClinic" class="form-select" [ngModel]="clinicId()" (ngModelChange)="clinicId.set($event);this.clinicChange.emit(this.clinicId());">
                             @for(clinic of homeService.clinics; track clinic.id) {
