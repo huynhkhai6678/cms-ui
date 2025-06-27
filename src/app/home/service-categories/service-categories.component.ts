@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../services/api.service';
@@ -16,8 +16,11 @@ import { ServiceCategoryModalComponent } from './service-category-modal/service-
   styleUrl: './service-categories.component.scss'
 })
 export class ServiceCategoriesComponent implements AfterViewInit {
-  url = 'service-categories';
+  readonly url = 'service-categories';
   columnCustomTemplates : Record<string, any> = {};
+
+  apiService = inject(ApiService);
+  formService = inject(FormService);
 
   @ViewChild('totalServiceTemplate') totalServiceTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
@@ -28,11 +31,6 @@ export class ServiceCategoriesComponent implements AfterViewInit {
     ['services', 'messages.web.total_services', 'text-center', false, 'template'],
     ['action', 'messages.common.action', '', false, 'action'],
   ];
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   ngAfterViewInit(): void {
     this.columnCustomTemplates['services'] = this.totalServiceTemplate;

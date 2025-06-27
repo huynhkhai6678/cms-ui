@@ -10,9 +10,11 @@
             <form [formGroup]="medicinePurchaseForm" (ngSubmit)="onSubmit(medicinePurchaseForm.valid, medicinePurchaseForm.value)">
                 <div class="row">
                     <div class="row">
-                        <div class="col-md-3">
-                        <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId" (update)="updateClinic($event.value)"></select2>
-                        </div>
+                        @if (homeService.selectClinics.length > 1) {
+                            <div class="col-md-3">
+                                <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId" (update)="updateClinic($event.value)"></select2>
+                            </div>
+                        }
                         <div class="col-sm-3">
                             <select2 [data]="suppliers" placeholder="{{'messages.common.select_brand' | translate}}" formControlName="brand_id" id="brand_id" (update)="updateSupplier($event.value)"></select2>
                         </div>

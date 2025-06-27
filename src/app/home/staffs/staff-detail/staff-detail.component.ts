@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../../services/api.service';
 import { ShareService } from '../../../services/share.service';
@@ -7,13 +7,13 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormService } from '../../../services/form.service';
 import { StaffModalComponent } from '../staff-modal/staff-modal.component';
 import { DiffForHumansPipe } from '../../../pipes/diff-for-humans.pipe';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-staff-detail',
   imports: [
     TabsModule,
     TranslatePipe,
-    RouterLink,
     DiffForHumansPipe
   ],
   templateUrl: './staff-detail.component.html',
@@ -22,9 +22,13 @@ import { DiffForHumansPipe } from '../../../pipes/diff-for-humans.pipe';
 export class StaffDetailComponent implements OnInit {
   id = 0;
   data : any = null;
-  GENDER : Record<string, any> = {}
+  GENDER : Record<string, any> = {};
 
-  constructor(private activeRoute : ActivatedRoute, private apiService : ApiService, public shareService : ShareService, private formService : FormService) {}
+  location = inject(Location);
+  activeRoute = inject(ActivatedRoute);
+  apiService = inject(ApiService);
+  shareService = inject(ShareService);
+  formService = inject(FormService);
   
   ngOnInit(): void {
     this.GENDER = this.shareService.GENDER;
@@ -48,5 +52,9 @@ export class StaffDetailComponent implements OnInit {
     }, () => {
       this.loadData();
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

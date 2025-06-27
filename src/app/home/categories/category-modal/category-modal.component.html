@@ -5,9 +5,9 @@
     </button>
 </div>
 <div class="modal-body">
-    <form [formGroup]="categoryForm" (ngSubmit)="submit(categoryForm.value, categoryForm.valid)">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit(categoryForm.valid, categoryForm.value)">
         <div class="row">
-            @if (homeService.clinics.length > 1) {
+            @if (homeService.selectClinics.length > 1) {
                 <div class="col-md-12 mb-5">
                     <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
                     <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId"></select2>

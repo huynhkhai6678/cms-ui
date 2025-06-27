@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Select2 } from 'ng-select2-component';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormService } from '../../../services/form.service';
-import { HomeService } from '../../home.service';
-import { ToastrService } from 'ngx-toastr';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-category-modal',
@@ -17,22 +14,11 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './category-modal.component.html',
   styleUrl: './category-modal.component.scss'
 })
-export class CategoryModalComponent implements OnInit {
-  readonly url = 'categories';
-  title = '';
-  id = 0;
-  clinicId = 0;
+export class CategoryModalComponent extends BaseComponent implements OnInit {
+  override url = 'categories';
+  readonly fb = inject(FormBuilder);
 
   categoryForm! : FormGroup;
-  isSubmitted = false;
-
-  constructor(
-    public bsModalRef: BsModalRef, 
-    private fb: FormBuilder, 
-    private formService : FormService,
-    public homeService : HomeService,
-    private toastrService: ToastrService
-  ) {}
 
   ngOnInit() {
     this.categoryForm = this.fb.group({
@@ -46,7 +32,7 @@ export class CategoryModalComponent implements OnInit {
       this.categoryForm.controls['clinic_id'].updateValueAndValidity();
     }
 
-    if (!this.id) {
+    if (!this.clinicId) {
       this.categoryForm.controls['clinic_id'].setValue(this.clinicId);
     }
 
@@ -55,20 +41,5 @@ export class CategoryModalComponent implements OnInit {
         this.categoryForm.patchValue(response['data']);
       }
     });
-  }
-
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) return;
-
-    this.formService.submitForm(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        this.toastrService.error(error);
-      }
-    })
   }
 }

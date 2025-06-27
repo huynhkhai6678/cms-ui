@@ -55,18 +55,4 @@ export class DoctorHolidayModalComponent extends BaseComponent implements OnInit
       }
     });
   }
-
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) {
-      return;
-    }
-
-    this.formService.submitForm(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      }
-    })
-  }
 }

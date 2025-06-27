@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../services/api.service';
@@ -17,8 +17,11 @@ import { environment } from '../../../environments/environment';
   styleUrl: './testimonials.component.scss'
 })
 export class TestimonialsComponent implements AfterViewInit {
-  url = 'testimonials';
-  apiUrl = environment.apiUrl;
+  readonly url = 'testimonials';
+  readonly apiUrl = environment.apiUrl;
+  readonly apiService = inject(ApiService);
+  readonly formService = inject(FormService);
+
   columnCustomTemplates : Record<string, any> = {};
 
   @ViewChild('nameTemplate') nameTemplate!: TemplateRef<any>;
@@ -30,11 +33,6 @@ export class TestimonialsComponent implements AfterViewInit {
     ['short_description', 'messages.front_patient_testimonial.short_description', '', false, 'string'],
     ['action', 'messages.common.action', '', false, 'action'],
   ];
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   ngAfterViewInit(): void {
     this.columnCustomTemplates['name'] = this.nameTemplate;

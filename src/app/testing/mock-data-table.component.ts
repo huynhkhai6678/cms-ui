@@ -9,4 +9,5 @@ export class MockDataTableComponent {
   @Input() data: any;
   reloadData = jasmine.createSpy('reloadData');
   handleFilterChange = jasmine.createSpy('handleFilterChange');
+  getClinicId = jasmine.createSpy('getClinicId');
 }

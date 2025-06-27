@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, Input, TemplateRef, ViewChild } from '@angular/core';
 import { DoctorModalComponent } from '../../doctor-modal/doctor-modal.component';
 import { environment } from '../../../../../environments/environment';
 import { DataTableComponent } from '../../../../shared/data-table/data-table.component';
@@ -18,20 +18,19 @@ import { FormService } from '../../../../services/form.service';
   styleUrl: './doctor-detail-appointment.component.scss'
 })
 export class DoctorDetailAppointmentComponent implements AfterViewInit {
-  url = 'doctors/appointments';
+  readonly url = 'doctors/appointments';
+  readonly apiUrl = environment.apiUrl;
+
+  apiService = inject(ApiService);
+  formService = inject(FormService);
+
   columnCustomTemplates : Record<string, any> = {};
-  apiUrl = environment.apiUrl;
 
   @Input() doctorId = 0;
 
   @ViewChild('fullNameTemplate') fullNameTemplate!: TemplateRef<any>;
   @ViewChild('appointmetAtTemplate') appointmetAtTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [

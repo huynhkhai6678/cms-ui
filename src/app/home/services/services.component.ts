@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
@@ -17,8 +17,12 @@ import { environment } from '../../../environments/environment';
   styleUrl: './services.component.scss'
 })
 export class ServicesComponent implements AfterViewInit {
-  url = 'services';
-  apiUrl = environment.apiUrl;
+  readonly url = 'services';
+  readonly apiUrl = environment.apiUrl;
+  
+  apiService = inject(ApiService);
+  formService = inject(FormService);
+
   columnCustomTemplates : Record<string, any> = {};
 
   @ViewChild('iconTemplate') iconTemplate!: TemplateRef<any>;
@@ -34,11 +38,6 @@ export class ServicesComponent implements AfterViewInit {
     ['status', 'messages.common.state', '', false, 'template'],
     ['action', 'messages.common.action', '', false, 'action'],
   ];
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   ngAfterViewInit(): void {
     this.columnCustomTemplates['icon'] = this.iconTemplate;
@@ -82,5 +81,4 @@ export class ServicesComponent implements AfterViewInit {
       this.dataTableComponent.reloadData();
     })
   }
-  
 }

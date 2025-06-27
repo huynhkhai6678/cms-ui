@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../../shared/data-table/data-table.component';
 import { ShareService } from '../../../services/share.service';
 import { HighchartsChartModule } from 'highcharts-angular';
@@ -20,6 +20,11 @@ import moment from 'moment';
 })
 export class DailySalesComponent implements AfterViewInit {
   readonly url = 'reports/sales';
+  
+  apiService = inject(ApiService);
+  shareService = inject(ShareService);
+  cdr = inject(ChangeDetectorRef);
+
   columnCustomTemplates : Record<string, any> = {};
   PAYMENT_METHOD : Record<string, any> = {};
 
@@ -36,10 +41,6 @@ export class DailySalesComponent implements AfterViewInit {
   @ViewChild('netAmountTemplate') netAmountTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
 
-  constructor(
-    public shareService: ShareService,
-    private apiService: ApiService,
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
@@ -62,6 +63,7 @@ export class DailySalesComponent implements AfterViewInit {
     this.columnCustomTemplates['bill_date'] = this.dateTemplate;
     this.dataTableComponent.setDateFilter('today');
     this.getDailyChart();
+    this.cdr.detectChanges();
   }
 
   getDailyChart() {

@@ -1,14 +1,46 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BrandModalComponent } from './brand-modal.component';
+import { FormService } from '../../../services/form.service';
+import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormBuilder } from '@angular/forms';
+import { HomeService } from '../../home.service';
+import { ApiService } from '../../../services/api.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 describe('BrandModalComponent', () => {
   let component: BrandModalComponent;
   let fixture: ComponentFixture<BrandModalComponent>;
+  let mockFormService: jasmine.SpyObj<FormService>;
+  let mockHomeService: any;
+  let mockBsModalRef: any;
+  let mockApiService: any;
+  let mocktoastrService: any;
 
   beforeEach(async () => {
+    mockFormService = jasmine.createSpyObj('FormService', ['getInitData', 'submitForm']);
+    mockFormService.getInitData.and.returnValue(of({ data: { name: 'Test brand', clinic_id: 123 } }));
+    mockFormService.submitForm.and.returnValue(of({}));
+
+    mockHomeService = {
+      selectClinics: []
+    };
+
+    mockBsModalRef = jasmine.createSpyObj('BsModalRef', ['hide']);
+    
     await TestBed.configureTestingModule({
-      imports: [BrandModalComponent]
+      imports: [BrandModalComponent, TranslateModule.forRoot()],
+      providers: [
+        provideAnimations(),
+        FormBuilder,
+        { provide: FormService, useValue: mockFormService },
+        { provide: HomeService, useValue: mockHomeService },
+        { provide: ApiService, useValue: mockApiService },
+        { provide: ToastrService, useValue: mocktoastrService },
+        { provide: BsModalRef, useValue: mockBsModalRef },
+      ]
     })
     .compileComponents();
 
@@ -19,5 +51,23 @@ describe('BrandModalComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should initialize form on ngOnInit', () => {
+    component.id = 123;
+    component.ngOnInit();
+
+    expect(component.labelForm).toBeDefined();
+    expect(mockFormService.getInitData).toHaveBeenCalledWith('brands/123');
+    expect(component.labelForm.value.name).toBe('Test brand');
+  });
+
+  it('should initialize  clinicId form on ngOnInit', () => {
+    component.clinicId = 123;
+    component.ngOnInit();
+
+    expect(component.labelForm).toBeDefined();
+    expect(mockFormService.getInitData).toHaveBeenCalledWith('brands/0');
+    expect(component.labelForm.value.clinic_id).toBe(123);
   });
 });

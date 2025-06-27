@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SpecializationModalComponent } from './specialization-modal.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,7 +12,7 @@ import { of } from 'rxjs';
 describe('SpecializationModalComponent', () => {
   let component: SpecializationModalComponent;
   let fixture: ComponentFixture<SpecializationModalComponent>;
-  let mockFormService: jasmine.SpyObj<FormService>;
+  let mockFormService: any;
   let mockHomeService: any;
   let mockBsModalRef: any;
   let mockApiService: any;

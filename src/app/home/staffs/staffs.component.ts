@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { StaffModalComponent } from './staff-modal/staff-modal.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -18,15 +18,17 @@ import { environment } from '../../../environments/environment';
   styleUrl: './staffs.component.scss'
 })
 export class StaffsComponent implements AfterViewInit {
-  url = 'staffs';
+  readonly url = 'staffs';
+  readonly apiUrl = environment.apiUrl;
   columnCustomTemplates : Record<string, any> = {};
-  apiUrl = environment.apiUrl;
+
+  apiService = inject(ApiService);
+  formService = inject(FormService);
 
   @ViewChild('fullNameTemplate') fullNameTemplate!: TemplateRef<any>;
   @ViewChild('emailVerifyTemplate') emailVerifyTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
 
-  constructor(private apiService: ApiService, private formService: FormService,) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
@@ -52,7 +54,6 @@ export class StaffsComponent implements AfterViewInit {
     });
   }
 
-  // Specific create function
   create() {
     this.formService.openEditCreateModal(StaffModalComponent, 'modal-lg', {
       title: 'messages.staff.add_staff',
@@ -62,7 +63,6 @@ export class StaffsComponent implements AfterViewInit {
     });
   }
 
-  // Specific edit function
   edit(id: number) {
     this.formService.openEditCreateModal(StaffModalComponent, 'modal-lg', {
       title: 'messages.staff.edit_staff',

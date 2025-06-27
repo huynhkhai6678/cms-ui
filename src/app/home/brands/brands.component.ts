@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
@@ -17,19 +17,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class BrandsComponent implements AfterViewInit {
   url = 'brands';
-  clinics = [];
-  filterParams = {
-    view: -1,
-  };
+  readonly apiService = inject(ApiService);
+  readonly formService = inject(FormService);
   columnCustomTemplates : Record<string, any> = {};
 
   @ViewChild('phoneTemplate') phoneTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [

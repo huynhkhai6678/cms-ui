@@ -1,14 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormService } from '../../../services/form.service';
-import { ToastrService } from 'ngx-toastr';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Select2 } from 'ng-select2-component';
 import { PAYMENT_TYPE_ARRAY } from '../medicine-purchase.constant';
 import { CommonModule } from '@angular/common';
-import { HomeService } from '../../home.service';
-import { ApiService } from '../../../services/api.service';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-medicine-purchase-modal',
@@ -21,30 +17,19 @@ import { ApiService } from '../../../services/api.service';
   templateUrl: './medicine-purchase-modal.component.html',
   styleUrl: './medicine-purchase-modal.component.scss'
 })
-export class MedicinePurchaseModalComponent implements OnInit {
-  readonly url = 'medicine-purchase';
-  title = '';
-  isSubmitted = false;
-  id = 0;
-  clinicId = 0;
+export class MedicinePurchaseModalComponent extends BaseComponent implements OnInit {
+  override url = 'medicine-purchase';
+  readonly types = PAYMENT_TYPE_ARRAY;
+  readonly fb = inject(FormBuilder);
+
   medicinePurchaseForm!: FormGroup;
   medicineInventoryId = 0;
   address = '';
 
-  types = PAYMENT_TYPE_ARRAY;
   clinics = [];
   suppliers = [];
   inventories = [];
   labels = [];
-
-  constructor( 
-    private fb: FormBuilder,
-    private formService : FormService,
-    private apiService : ApiService,
-    private toastrService: ToastrService,
-    public homeService: HomeService,
-    public bsModalRef: BsModalRef 
-  ) {}
 
   ngOnInit(): void {
     this.medicinePurchaseForm = this.fb.group({
@@ -110,21 +95,6 @@ export class MedicinePurchaseModalComponent implements OnInit {
 
   removeMedicine(index: number): void {
     this.medicines.removeAt(index);
-  }
-
-  onSubmit(valid : boolean, value : any) {
-    this.isSubmitted = true;
-    if (!valid) return;
-
-    this.formService.submitForm(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        this.toastrService.error(error);
-      }
-    })
   }
 
   updateClinic(clinicId : any) {

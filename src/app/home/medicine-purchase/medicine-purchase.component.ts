@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { ApiService } from '../../services/api.service';
@@ -20,21 +20,17 @@ import { downloadFile } from '../../utils/download-file.util';
   styleUrl: './medicine-purchase.component.scss'
 })
 export class MedicinePurchaseComponent implements AfterViewInit {
-  url = 'medicine-purchase';
-  clinics = [];
-  columnCustomTemplates : Record<string, any> = {};
+  readonly url = 'medicine-purchase';
+  readonly PAYMENT_TYPE = PAYMENT_TYPE;
+  apiService = inject(ApiService);
+  formService = inject(FormService);
 
-  PAYMENT_TYPE = PAYMENT_TYPE;
+  columnCustomTemplates : Record<string, any> = {};
 
   @ViewChild('createTemplate') createTemplate!: TemplateRef<any>;
   @ViewChild('purchaseNumberTemplate') purchaseNumberTemplate!: TemplateRef<any>;
   @ViewChild('paymentTemplate') paymentTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
@@ -67,8 +63,6 @@ export class MedicinePurchaseComponent implements AfterViewInit {
   show(id: number) {
     this.formService.openEditCreateModal(ShowMedicinePurchaseModalComponent, 'modal-xl', {
       id
-    }, () => {
-      this.dataTableComponent.reloadData();
     });
   }
     
@@ -85,7 +79,6 @@ export class MedicinePurchaseComponent implements AfterViewInit {
 
   export() {
     const clinicId = this.dataTableComponent.getClinicId();
-
     this.apiService.downloadFile(`medicine-purchase/export/${clinicId}`).subscribe({
         next : (response) => {
           downloadFile(response, 'report.xlsx')

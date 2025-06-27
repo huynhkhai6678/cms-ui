@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../services/api.service';
@@ -20,8 +20,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './medicines.component.scss'
 })
 export class MedicinesComponent implements AfterViewInit {
-  url = 'medicines';
-  clinics = [];
+  readonly url = 'medicines';
+  readonly apiService = inject(ApiService);
+  readonly formService = inject(FormService);
+  toastrService = inject(ToastrService);
+
   columnCustomTemplates : Record<string, any> = {};
 
   @ViewChild('nameTemplate') nameTemplate!: TemplateRef<any>;
@@ -31,12 +34,6 @@ export class MedicinesComponent implements AfterViewInit {
   @ViewChild('expiryTemplate') expiryTemplate!: TemplateRef<any>;
   @ViewChild('activeTemplate') activeTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-    private toastrService: ToastrService
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [

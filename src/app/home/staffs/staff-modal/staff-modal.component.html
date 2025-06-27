@@ -7,7 +7,7 @@
 <div class="modal-body">
     <form [formGroup]="staffForm" (ngSubmit)="onSubmit(staffForm.valid, staffForm.value)">
         <div class="row">
-                @if (homeService.clinics.length > 1) {
+                @if (homeService.selectClinics.length > 1) {
                 <div class="col-md-12 mb-5">
                     <label for="clinicId" class="form-label required">{{'messages.common.name' | translate}}:</label>
                     <select2 multiple [data]="homeService.selectClinics" placeholder="{{'messages.common.name' | translate}}" formControlName="clinic_ids" id="clinicId"></select2>

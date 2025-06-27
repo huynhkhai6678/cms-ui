@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../services/api.service';
@@ -17,21 +17,15 @@ import { LABEL_TYPE } from './label.contant';
   styleUrl: './labels.component.scss'
 })
 export class LabelsComponent implements AfterViewInit {
-  url = 'labels';
-  TYPES = LABEL_TYPE;
-  clinics = [];
-  filterParams = {
-    view: -1,
-  };
+  readonly url = 'labels';
+  readonly TYPES = LABEL_TYPE;
+  readonly apiService = inject(ApiService);
+  readonly formService = inject(FormService);
+
   columnCustomTemplates : Record<string, any> = {};
 
   @ViewChild('typeTemplate') typeTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [

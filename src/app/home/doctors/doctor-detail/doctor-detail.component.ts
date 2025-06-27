@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -32,13 +32,12 @@ export class DoctorDetailComponent implements OnInit {
   BLOOD_GROUP : Record<string, any> = {};
   GENDER : Record<string, any> = {}
 
-  constructor(
-    private activeRoute : ActivatedRoute,
-    private apiService : ApiService,
-    public shareService : ShareService,
-    private formService : FormService,
-    private location : Location
-  ) {}
+  location = inject(Location);
+  activeRoute = inject(ActivatedRoute);
+  apiService = inject(ApiService);
+  shareService = inject(ShareService);
+  formService = inject(FormService);
+
   
   ngOnInit(): void {
     this.BLOOD_GROUP = this.shareService.BLOOD_GROUP;

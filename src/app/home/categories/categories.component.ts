@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../services/api.service';
@@ -17,18 +17,15 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './categories.component.scss'
 })
 export class CategoriesComponent implements AfterViewInit {
-  url = 'categories';
-  clinics = [];
+  readonly url = 'categories';
+  readonly apiService = inject(ApiService);
+  readonly formService = inject(FormService);
+  readonly toastrService = inject(ToastrService);
+
   columnCustomTemplates : Record<string, any> = {};
 
   @ViewChild('activeTemplate') activeTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-    private toastrService : ToastrService
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ImageUploadComponent } from '../../shared/image-upload/image-upload.component';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HomeService } from '../home.service';
@@ -30,20 +30,16 @@ export class CmsComponent implements OnInit {
   aboutImage2 = '';
   aboutImage3 = '';
   data! : Cms;
+  cmsForm! : FormGroup;
+
+  fb = inject(FormBuilder);
+  apiService = inject(ApiService);
+  authService = inject(AuthService);
+  homeService = inject(HomeService);
+  toastr = inject(ToastrService);
 
   Editor: typeof ClassicEditor | null = null;
   config: EditorConfig | null = null;
-
-  cmsForm! : FormGroup;
-  isSubmitted = false;
-
-  constructor(
-    private fb: FormBuilder, 
-    private apiService: ApiService,
-    private authService: AuthService,
-    public homeService : HomeService,
-    private toastr : ToastrService
-  ) {}
 
   ngOnInit(): void {
     this.cmsForm = this.fb.group({

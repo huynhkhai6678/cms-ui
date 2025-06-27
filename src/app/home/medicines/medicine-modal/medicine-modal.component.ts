@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Select2 } from 'ng-select2-component';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { HomeService } from '../../home.service';
 import { MEDICINE_TYPE_ARRAY } from '../medicines.constant';
 import { ImageUploadComponent } from "../../../shared/image-upload/image-upload.component";
-import { FormService } from '../../../services/form.service';
-import { ToastrService } from 'ngx-toastr';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-medicine-modal',
@@ -20,31 +17,19 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './medicine-modal.component.html',
   styleUrl: './medicine-modal.component.scss'
 })
-export class MedicineModalComponent implements OnInit {
-  readonly url = 'medicines';
-  title = '';
-  clinicId = 0;
-  isSubmitted = false;
-  id = 0;
+export class MedicineModalComponent extends BaseComponent implements OnInit {
+  override url = 'medicines';
+  readonly fb = inject(FormBuilder);
 
   medicineForm!: FormGroup;
 
-  types = MEDICINE_TYPE_ARRAY;
-
+  readonly types = MEDICINE_TYPE_ARRAY;
   categories: any[] = [];
   brands: any[] = [];
   uoms: any[] = [];
   frequencies: any[] = []; 
   purposes: any[] = []; 
   medicine: any;
-
-  constructor( 
-    private fb: FormBuilder,
-    private formService : FormService,
-    private toastrService: ToastrService,
-    public bsModalRef: BsModalRef, 
-    public homeService : HomeService
-  ) {}
 
   ngOnInit(): void {
     this.medicineForm = this.fb.group({
@@ -95,6 +80,10 @@ export class MedicineModalComponent implements OnInit {
       this.medicineForm.controls['clinic_id'].updateValueAndValidity();
     }
 
+    if (!this.clinicId) {
+      this.medicineForm.controls['clinic_id'].setValue(this.clinicId);
+    }
+
     // Example for fetching data from an API
     this.loadData();
     this.loadFormSelection(this.clinicId);
@@ -118,20 +107,5 @@ export class MedicineModalComponent implements OnInit {
       this.frequencies = response['frequencies'];
       this.purposes = response['purposes'];
     });
-  }
-
-  onSubmit(valid : boolean, value : any) {
-    this.isSubmitted = true;
-    if (!valid) return;
-
-    this.formService.submitFormWithImage(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        this.toastrService.error(error);
-      }
-    })
   }
 }

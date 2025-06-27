@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { ApiService } from '../../services/api.service';
 import { FormService } from '../../services/form.service';
@@ -21,20 +21,17 @@ import { environment } from '../../../environments/environment';
   styleUrl: './doctors.component.scss'
 })
 export class DoctorsComponent implements AfterViewInit {
-  url = 'doctors';
+  readonly url = 'doctors';
   columnCustomTemplates : Record<string, any> = {};
-  apiUrl = environment.apiUrl;
+  readonly apiUrl = environment.apiUrl;
+  apiService = inject(ApiService);
+  formService = inject(FormService);
 
   @ViewChild('fullNameTemplate') fullNameTemplate!: TemplateRef<any>;
   @ViewChild('statusTemplate') statusTemplate!: TemplateRef<any>;
   @ViewChild('emailVerifyTemplate') emailVerifyTemplate!: TemplateRef<any>;
   @ViewChild('createdAtTemplate') createdAtTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    private apiService: ApiService,
-    private formService: FormService,
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [

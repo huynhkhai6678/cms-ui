@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '../../../services/api.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -19,12 +19,9 @@ import { DecimalPipe } from '@angular/common';
 export class ShowMedicinePurchaseModalComponent implements OnInit {
   id = 0;
   data : any;
-  PAYMENT_TYPE = PAYMENT_TYPE;
-
-  constructor( 
-    private apiService : ApiService,
-    public bsModalRef: BsModalRef 
-  ) {}
+  readonly PAYMENT_TYPE = PAYMENT_TYPE;
+  apiService = inject(ApiService);
+  bsModalRef = inject(BsModalRef);
 
   ngOnInit(): void {
     this.apiService.get(`medicine-purchase/${this.id}`).subscribe((res : any) => {

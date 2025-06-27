@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { DataTableComponent } from '../../../shared/data-table/data-table.component';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { ApiService } from '../../../services/api.service';
-import { ShareService } from '../../../services/share.service';
 import { HighchartsChartModule } from 'highcharts-angular';
 import * as Highcharts from 'highcharts';
 import moment from 'moment';
@@ -20,6 +19,9 @@ import moment from 'moment';
 })
 export class ServiceInventorySalesComponent implements AfterViewInit {
   readonly url = 'reports/services';
+  apiService = inject(ApiService);
+  cdr = inject(ChangeDetectorRef);
+  
   columnCustomTemplates : Record<string, any> = {};
 
   Highcharts: typeof Highcharts = Highcharts;
@@ -40,11 +42,6 @@ export class ServiceInventorySalesComponent implements AfterViewInit {
   @ViewChild('priceTemplate') priceTemplate!: TemplateRef<any>;
   @ViewChild('amountTemplate') amountTemplate!: TemplateRef<any>;
   @ViewChild(DataTableComponent) dataTableComponent!: DataTableComponent;
-
-  constructor(
-    public shareService: ShareService,
-    private apiService : ApiService
-  ) {}
 
   // field, header name, css, sortable, type
   readonly tableColumns : any = [
@@ -78,6 +75,7 @@ export class ServiceInventorySalesComponent implements AfterViewInit {
     this.getServiceAndInventoryChart(clinicId, startDate, endDate);
     this.getServiceChart(clinicId, startDate, endDate);
     this.getInventoryChart(clinicId, startDate, endDate);
+    this.cdr.detectChanges();
   }
 
   getServiceAndInventoryChart(clinicId : number, startDate : string, endDate: string) {

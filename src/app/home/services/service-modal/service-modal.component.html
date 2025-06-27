@@ -9,7 +9,7 @@
         <div class="card-body">
             <form [formGroup]="serviceForm" (ngSubmit)="onSubmit(serviceForm.valid, serviceForm.value)">
                 <div class="row">
-                    @if (homeService.clinics.length > 1) {
+                    @if (homeService.selectClinics.length > 1) {
                         <div class="col-md-6 mb-5">
                             <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
                             <select2 [data]="homeService.selectClinics" placeholder="{{'messages.common.clinic' | translate}}" formControlName="clinic_id" id="clinicId"></select2>

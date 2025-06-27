@@ -7,7 +7,6 @@ import { HomeService } from '../../home.service';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { MockDataTableComponent } from '../../../testing/mock-data-table.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('TestimonialModalComponent', () => {
@@ -31,7 +30,7 @@ describe('TestimonialModalComponent', () => {
     mockBsModalRef = jasmine.createSpyObj('BsModalRef', ['hide']);
 
     await TestBed.configureTestingModule({
-      imports: [TestimonialModalComponent, MockDataTableComponent, TranslateModule.forRoot()],
+      imports: [TestimonialModalComponent, TranslateModule.forRoot()],
       providers: [
         FormBuilder,
         { provide: FormService, useValue: mockFormService },

@@ -16,7 +16,7 @@
 
 <ng-template #fullNameTemplate let-item>
     <div class="d-flex align-items-center">
-        <a [routerLink]="item.patient_id">
+        <a [routerLink]="`/home/patients/${item.patient_id}`">
             <div class="image image-circle image-mini me-3">
                 @if (item.image_url) {
                     <img [src]="`${apiUrl}${item.image_url}`" alt="" class="user-img" loading="lazy">
@@ -28,7 +28,7 @@
         <div class="d-flex flex-column">
             <div class="d-inline-block align-top">
                 <div class="d-inline-block align-self-center d-flex">
-                    <a [routerLink]="item.patient_id" class="mb-1 text-decoration-none fs-6">
+                    <a [routerLink]="`/home/patients/${item.patient_id}`" class="mb-1 text-decoration-none fs-6">
                         {{item.full_name}}
                     </a>
                 </div>

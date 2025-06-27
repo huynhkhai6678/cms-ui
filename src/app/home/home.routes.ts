@@ -132,7 +132,7 @@ export const homeRoutes: Routes = [
         loadComponent: () => import('./cms/cms.component').then(mod => mod.CmsComponent),
         canActivate: [permissionGuard('manage_front_cms')],
         data: { 
-          title: 'messages.cms' 
+          title: 'messages.cms.cms' 
         }
       },
       {

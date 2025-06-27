@@ -50,13 +50,13 @@
                                     @for (purchasedMedicine of data.purchased_medicines; track purchasedMedicine.id) {
                                         <tr>
                                             <td class="py-4">
-                                                {{purchasedMedicine.medicine.name ? purchasedMedicine.medicine.name : 'N/A'}}
+                                                {{purchasedMedicine.medicine ? purchasedMedicine.medicine.name : 'N/A'}}
                                             </td>
                                             <td class="py-4">
-                                                {{purchasedMedicine.label.name ? purchasedMedicine.label.name : 'N/A'}}
+                                                {{purchasedMedicine.label ? purchasedMedicine.label.name : 'N/A'}}
                                             </td>
                                             <td class="py-4">
-                                                {{getBuyingPrice(purchasedMedicine)}}
+                                                {{getBuyingPrice(purchasedMedicine) }}
                                             </td>
                                             <td class="py-4">
                                                 {{purchasedMedicine.tax}}%

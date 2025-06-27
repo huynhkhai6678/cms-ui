@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormService } from '../../../services/form.service';
-import { HomeService } from '../../home.service';
 import { Select2 } from 'ng-select2-component';
-import { ToastrService } from 'ngx-toastr';
 import { LABEL_TYPE_ARRAY } from '../label.contant';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-label-modal',
@@ -18,24 +15,12 @@ import { LABEL_TYPE_ARRAY } from '../label.contant';
   templateUrl: './label-modal.component.html',
   styleUrl: './label-modal.component.scss'
 })
-export class LabelModalComponent implements OnInit{
-  readonly url = 'labels';
-  title = '';
-  id = 0;
-  clinicId = 0;
+export class LabelModalComponent extends BaseComponent implements OnInit{
+  override url = 'labels';
+  readonly types = LABEL_TYPE_ARRAY;
+  readonly fb = inject(FormBuilder);
 
   labelForm! : FormGroup;
-  isSubmitted = false;
-
-  types = LABEL_TYPE_ARRAY;
-
-  constructor(
-    public bsModalRef: BsModalRef, 
-    private fb: FormBuilder, 
-    private formService : FormService,
-    public homeService : HomeService,
-    private toastrService: ToastrService
-  ) {}
 
   ngOnInit() {
     this.labelForm = this.fb.group({
@@ -49,7 +34,7 @@ export class LabelModalComponent implements OnInit{
       this.labelForm.controls['clinic_id'].updateValueAndValidity();
     }
 
-    if (!this.id) {
+    if (!this.clinicId) {
       this.labelForm.controls['clinic_id'].setValue(this.clinicId);
     }
 
@@ -58,20 +43,5 @@ export class LabelModalComponent implements OnInit{
         this.labelForm.patchValue(response['data']);
       }
     });
-  }
-
-  submit(value : any, valid : boolean) {
-    this.isSubmitted = true;
-    if (!valid) return;
-
-    this.formService.submitForm(this.url, this.id, value).subscribe({
-      next: () => {
-        this.isSubmitted = false;
-        this.bsModalRef.hide();
-      },
-      error: (error) => {
-        this.toastrService.error(error);
-      }
-    })
   }
 }

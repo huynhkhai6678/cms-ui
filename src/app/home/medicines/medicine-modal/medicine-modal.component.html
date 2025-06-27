@@ -8,7 +8,7 @@
     <form [formGroup]="medicineForm" (ngSubmit)="onSubmit(medicineForm.valid, medicineForm.value)">
         <div class="row">
             <div class="col-sm-12 mb-5">
-                @if (homeService.clinics.length > 1) {
+                @if (homeService.selectClinics.length > 1) {
                     <div class="col-md-12 mb-5">
                         <label for="clinicId" class="form-label required">{{'messages.common.clinic' | translate}}:</label>
                         @if (id) {
